@@ -6,6 +6,10 @@
           <option name="url" value="https://github.com/Alejandro1793/Proyecto" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/Alejandro1793/Libreria" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
     <option name="cloneParentDir" value="C:\Users\Think\Documents\DAM\PROYECTO" />
