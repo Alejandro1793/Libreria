@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "227332467776",
+    "firebase_url": "https://e-storybook.firebaseio.com",
+    "project_id": "e-storybook",
+    "storage_bucket": "e-storybook.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:227332467776:android:5155ad686fe40cc76bc3a5",
+        "android_client_info": {
+          "package_name": "com.frutosajniahperez.libreria"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "227332467776-50onrtqaigncmu3fjeoes2g4qcu83s0r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAh67nft5NgbWX0-jK8kGIaBZhwZPj8tx8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "227332467776-50onrtqaigncmu3fjeoes2g4qcu83s0r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:227332467776:android:c5958d3eff7dcb676bc3a5",
+        "android_client_info": {
+          "package_name": "com.frutosajniahperez.proyecto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "227332467776-50onrtqaigncmu3fjeoes2g4qcu83s0r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAh67nft5NgbWX0-jK8kGIaBZhwZPj8tx8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "227332467776-50onrtqaigncmu3fjeoes2g4qcu83s0r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
