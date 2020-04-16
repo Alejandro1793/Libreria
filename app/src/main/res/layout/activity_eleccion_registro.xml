@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EleccionRegistro">
+
+    <ImageView
+        android:id="@+id/btnRegresar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:contentDescription="@string/imagenizq"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.025"
+        app:srcCompat="@drawable/izq" />
+
+    <Button
+        android:id="@+id/btnISProfe"
+        android:layout_width="340dp"
+        android:layout_height="50dp"
+        android:background="@drawable/forma_boton_contraria"
+        android:fontFamily="@font/yanone_kaffeesatz"
+        android:text="@string/registrarse_como_profesor"
+        android:textColor="#6680D4"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.282" />
+
+    <Button
+        android:id="@+id/btnISAlumno"
+        android:layout_width="340dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="213dp"
+        android:background="@drawable/forma_boton_contraria"
+        android:fontFamily="@font/yanone_kaffeesatz"
+        android:text="@string/registrarse_como_alumno"
+        android:textColor="#6680D4"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.867" />
+
+    <Button
+        android:id="@+id/btnISAdmin"
+        android:layout_width="340dp"
+        android:layout_height="50dp"
+        android:background="@drawable/forma_boton"
+        android:fontFamily="@font/yanone_kaffeesatz"
+        android:text="@string/registrarse_como_administrador"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.429" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
