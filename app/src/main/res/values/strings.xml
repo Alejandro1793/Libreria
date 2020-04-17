@@ -14,7 +14,7 @@
     <string name="registrarse_como_profesor">Registro como profesor</string>
     <string name="registrarse_como_alumno">Registro como alumno</string>
     <string name="confirmar_registro">Confirmar Registro</string>
-    <string name="apunta_tu_contrase_a_en_un_lugar_seguro">Apunta tu contraseña en un lugar seguro</string>
+    <string name="requisitos_contrasenia">La contraseña debe tener entre 8 y 16 caracteres, contener al menos una mayúscula, una minúscula, un número y un caracter especial.</string>
     <string name="crear_colegio">Crear colegio</string>
     <string name="modificar_colegio">Modificar colegio</string>
     <string name="introduce_el_id">Introduce el ID</string>
@@ -35,5 +35,6 @@
     <string name="tu_colegio_es">Tu colegio es:</string>
     <string name="registrar_aula">Registrar aula</string>
     <string name="registrar_profesor">Registrar profesor</string>
+    <string name="introduce_tu_contrasenia">Introduce tu contraseña</string>
 
 </resources>

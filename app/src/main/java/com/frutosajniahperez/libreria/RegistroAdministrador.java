@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,8 +29,9 @@ import java.util.regex.Pattern;
 
 public class RegistroAdministrador extends AppCompatActivity {
 
-    Button btnGenerar, btnAceptarDatos;
+    Button btnAceptarDatos;
     TextView txtPassGenerada, txtEmail, txtRegistroCole;
+    EditText txtContrasenia;
     FirebaseAuth mAuth;
     ImageView btnRegresar;
     Boolean existe = false;
@@ -40,36 +42,30 @@ public class RegistroAdministrador extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro_administrador);
 
-        btnGenerar = findViewById(R.id.btnGenerar);
         btnRegresar = findViewById(R.id.btnRegresar);
-        txtPassGenerada = findViewById(R.id.txtPassGenerada);
         txtEmail = findViewById(R.id.txtEmail);
         btnAceptarDatos = findViewById(R.id.btnAceptarDatos);
         txtRegistroCole = findViewById(R.id.txtRegistroCole);
+        txtContrasenia = findViewById(R.id.txtContraseniaAdmin);
 
         mAuth = FirebaseAuth.getInstance();
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
-
-        btnGenerar.setOnClickListener(new View.OnClickListener() {
+        btnAceptarDatos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (comprobarEmail(txtEmail.getText().toString())) {
-                    txtPassGenerada.setText(GeneradorContrasena.getPassword());
                     txtEmail.setEnabled(false);
-                    btnGenerar.setEnabled(false);
-                    btnAceptarDatos.setEnabled(true);
                 } else {
                     Toast.makeText(RegistroAdministrador.this, "Email incorrecto", Toast.LENGTH_LONG).show();
                     txtEmail.setText("");
                 }
-            }
-        });
-
-        btnAceptarDatos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //
+                if (comprobarContrasenia(txtContrasenia.getText().toString())) {
+                    txtContrasenia.setEnabled(false);
+                } else {
+                    txtContrasenia.setText("");
+                }
                 if (comprobarID(txtRegistroCole.getText().toString())) {
                     database.collection("Colegios").document(txtRegistroCole.getText().toString()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
@@ -80,14 +76,14 @@ public class RegistroAdministrador extends AppCompatActivity {
                                     Toast.makeText(RegistroAdministrador.this, "Fallo en el registro. El colegio ya existe",
                                             Toast.LENGTH_SHORT).show();
                                 } else {
-                                    mAuth.createUserWithEmailAndPassword(txtEmail.getText().toString(), txtPassGenerada.getText().toString())
+                                    mAuth.createUserWithEmailAndPassword(txtEmail.getText().toString(), txtContrasenia.getText().toString())
                                             .addOnCompleteListener(RegistroAdministrador.this, new OnCompleteListener<AuthResult>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                                     if (task.isSuccessful()) {
                                                         // Registro del usuario realizado con éxito
                                                         FirebaseUser user = mAuth.getCurrentUser();
-                                                        usuario = new Usuario(txtEmail.getText().toString(), txtPassGenerada.getText().toString(), txtRegistroCole.getText().toString(), "Administrador");
+                                                        usuario = new Usuario(txtEmail.getText().toString(), txtContrasenia.getText().toString(), txtRegistroCole.getText().toString(), "Administrador");
                                                         database.collection("users").document(txtEmail.getText().toString()).set(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {
@@ -154,5 +150,38 @@ public class RegistroAdministrador extends AppCompatActivity {
             return false;
         }
 
+    }
+
+    public boolean comprobarContrasenia(String contrasenia) {
+        boolean valida = true;
+
+        int minuscula = 0;
+        int mayuscula = 0;
+        int numero = 0;
+        int especial = 0;
+
+        if (contrasenia.length() < 8 || contrasenia.length() > 16) {
+            Toast.makeText(RegistroAdministrador.this, "La contraseña debe tener 8-16 carácteres", Toast.LENGTH_LONG).show();
+            return false; // tamaño
+        }
+        for (int i = 0; i < contrasenia.length(); i++) {
+            char c = contrasenia.charAt(i);
+            if (c <= ' ' || c > '~') {
+                valida = false; //Espacio o fuera de rango
+                break;
+            }
+            if ((c > ' ' && c < '0') || (c >= ':' && c < 'A') || (c >= '[' && c < 'a') || (c >= '{' && c < 127)) {
+                especial++;
+            }
+            if (c >= '0' && c < ':') numero++;
+            if (c >= 'A' && c < '[') mayuscula++;
+            if (c >= 'a' && c < '{') minuscula++;
+
+        }
+        valida = valida && especial > 0 && numero > 0 && minuscula > 0 && mayuscula > 0;
+        if (!valida) {
+            Toast.makeText(RegistroAdministrador.this, "La contraseña debe contener una mayúscula, una minúscula, un número y un carcacter especial", Toast.LENGTH_LONG).show();
+        }
+        return valida;
     }
 }

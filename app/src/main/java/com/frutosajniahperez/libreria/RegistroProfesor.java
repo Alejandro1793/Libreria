@@ -33,7 +33,7 @@ public class RegistroProfesor extends AppCompatActivity {
 
     Button btnGenerar, btnAceptarDatos;
     TextView txtPassGenerada;
-    EditText txtEmail, txtIdProfeRegistro;
+    EditText txtEmail, txtIdProfeRegistro, txtContrasenia;
     FirebaseAuth mAuth;
     ImageView btnRegresar;
     ArrayList<String> listadoColegios;
@@ -54,12 +54,11 @@ public class RegistroProfesor extends AppCompatActivity {
         listadoColegios = new ArrayList<>();
         colegios = new HashMap<>();
 
-        btnGenerar = findViewById(R.id.btnGenerar);
         btnRegresar = findViewById(R.id.btnRegresar);
-        txtPassGenerada = findViewById(R.id.txtPassGenerada);
         txtEmail = findViewById(R.id.txtEmail);
         txtIdProfeRegistro = findViewById(R.id.txtIdProfeRegistro);
         btnAceptarDatos = findViewById(R.id.btnAceptarDatos);
+        txtContrasenia = findViewById((R.id.txtContraseniaProfe));
         final Spinner spIdColegios = findViewById(R.id.spIdColegios);
 
         database.collection("Colegios").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -78,35 +77,31 @@ public class RegistroProfesor extends AppCompatActivity {
             }
         });
 
-        btnGenerar.setOnClickListener(new View.OnClickListener() {
+        btnAceptarDatos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (comprobarEmail(txtEmail.getText().toString())) {
-                    txtPassGenerada.setText(GeneradorContrasena.getPassword());
                     txtEmail.setEnabled(false);
-                    btnGenerar.setEnabled(false);
-                    btnAceptarDatos.setEnabled(true);
                 } else {
                     Toast.makeText(RegistroProfesor.this, "Email incorrecto", Toast.LENGTH_LONG).show();
                     txtEmail.setText("");
                 }
-            }
-        });
-
-        btnAceptarDatos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                if (comprobarContrasenia(txtContrasenia.getText().toString())) {
+                    txtContrasenia.setEnabled(false);
+                } else {
+                    txtContrasenia.setText("");
+                }
                 idCole = spIdColegios.getSelectedItem().toString();
                 cole = colegios.get(idCole);
                 if (cole.getProfesorado().containsKey(txtIdProfeRegistro.getText().toString())){
-                    mAuth.createUserWithEmailAndPassword(txtEmail.getText().toString(), txtPassGenerada.getText().toString())
+                    mAuth.createUserWithEmailAndPassword(txtEmail.getText().toString(), txtContrasenia.getText().toString())
                             .addOnCompleteListener(RegistroProfesor.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
                                         // Registro del usuario realizado con éxito
                                         FirebaseUser user = mAuth.getCurrentUser();
-                                        usuario = new Usuario(txtEmail.getText().toString(), txtPassGenerada.getText().toString(), idCole, "Profesor");
+                                        usuario = new Usuario(txtEmail.getText().toString(), txtContrasenia.getText().toString(), idCole, "Profesor");
                                         database.collection("users").document(txtEmail.getText().toString()).set(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
@@ -159,5 +154,38 @@ public class RegistroProfesor extends AppCompatActivity {
             finish();
         }
 
+    }
+
+    public boolean comprobarContrasenia(String contrasenia) {
+        boolean valida = true;
+
+        int minuscula = 0;
+        int mayuscula = 0;
+        int numero = 0;
+        int especial = 0;
+
+        if (contrasenia.length() < 8 || contrasenia.length() > 16) {
+            Toast.makeText(RegistroProfesor.this, "La contraseña debe tener 8-16 carácteres", Toast.LENGTH_LONG).show();
+            return false; // tamaño
+        }
+        for (int i = 0; i < contrasenia.length(); i++) {
+            char c = contrasenia.charAt(i);
+            if (c <= ' ' || c > '~') {
+                valida = false; //Espacio o fuera de rango
+                break;
+            }
+            if ((c > ' ' && c < '0') || (c >= ':' && c < 'A') || (c >= '[' && c < 'a') || (c >= '{' && c < 127)) {
+                especial++;
+            }
+            if (c >= '0' && c < ':') numero++;
+            if (c >= 'A' && c < '[') mayuscula++;
+            if (c >= 'a' && c < '{') minuscula++;
+
+        }
+        valida = valida && especial > 0 && numero > 0 && minuscula > 0 && mayuscula > 0;
+        if (!valida) {
+            Toast.makeText(RegistroProfesor.this, "La contraseña debe contener una mayúscula, una minúscula, un número y un carcacter especial", Toast.LENGTH_LONG).show();
+        }
+        return valida;
     }
 }
