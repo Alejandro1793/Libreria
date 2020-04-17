@@ -25,7 +25,7 @@ public class EleccionRegistro extends AppCompatActivity {
         btnRegistroProfe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(EleccionRegistro.this, RegistroProfesor.class));
+                startActivity(new Intent(EleccionRegistro.this, RegistroProfesor.class));
             }
         });
 

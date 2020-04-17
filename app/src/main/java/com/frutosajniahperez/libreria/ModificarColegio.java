@@ -33,7 +33,6 @@ public class ModificarColegio extends AppCompatActivity implements Dialogo_aula.
     OvershootInterpolator interpolator = new OvershootInterpolator();
 
     Context context;
-    Boolean exito = true;
     Colegio cole;
     HashMap<String, Aula> aulas;
     HashMap<String, Profesor> profesorado;
@@ -175,19 +174,15 @@ public class ModificarColegio extends AppCompatActivity implements Dialogo_aula.
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
                             Toast.makeText(ModificarColegio.this, "Colegio modificado con éxito", Toast.LENGTH_SHORT).show();
+                            CerrarSesion.cerrarSesion(mAuth);
+                            Intent intent = new Intent(ModificarColegio.this, Principal.class);
+                            startActivity(intent);
+                            finish();
                         } else {
-                            exito = false;
                             Toast.makeText(ModificarColegio.this, "Fallo al modificar el colegio", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-
-                if (exito){
-                    CerrarSesion.cerrarSesion(mAuth);
-                    Intent intent = new Intent(ModificarColegio.this, Principal.class);
-                    startActivity(intent);
-                    finish();
-                }
             }
         });
 

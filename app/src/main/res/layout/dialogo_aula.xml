@@ -26,6 +26,7 @@
             android:fontFamily="@font/nova_slim"
             android:hint="@string/introduce_id_aula"
             android:inputType="textPersonName"
+            android:maxLength="15"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

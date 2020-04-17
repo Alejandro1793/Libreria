@@ -77,39 +77,37 @@ public class RegistroAdministrador extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 DocumentSnapshot document = task.getResult();
                                 if (document.exists()) {
-                                    existe = true;
+                                    Toast.makeText(RegistroAdministrador.this, "Fallo en el registro. El colegio ya existe",
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
+                                    mAuth.createUserWithEmailAndPassword(txtEmail.getText().toString(), txtPassGenerada.getText().toString())
+                                            .addOnCompleteListener(RegistroAdministrador.this, new OnCompleteListener<AuthResult>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                                    if (task.isSuccessful()) {
+                                                        // Registro del usuario realizado con éxito
+                                                        FirebaseUser user = mAuth.getCurrentUser();
+                                                        usuario = new Usuario(txtEmail.getText().toString(), txtPassGenerada.getText().toString(), txtRegistroCole.getText().toString(), "Administrador");
+                                                        database.collection("users").document(txtEmail.getText().toString()).set(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                Toast.makeText(RegistroAdministrador.this, "Usuario creado con éxito.",
+                                                                        Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        });
+                                                        updateUI(user);
+                                                    } else {
+                                                        Toast.makeText(RegistroAdministrador.this, "Error al registrar el usuario",
+                                                                Toast.LENGTH_SHORT).show();
+                                                        mAuth.getCurrentUser().delete();
+                                                        startActivity(new Intent(RegistroAdministrador.this, EleccionRegistro.class));
+                                                    }
+                                                }
+                                            });
                                 }
                             }
                         }
                     });
-                    if (!existe) {
-                        mAuth.createUserWithEmailAndPassword(txtEmail.getText().toString(), txtPassGenerada.getText().toString())
-                                .addOnCompleteListener(RegistroAdministrador.this, new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                        if (task.isSuccessful()) {
-                                            // Registro del usuario realizado con éxito
-                                            FirebaseUser user = mAuth.getCurrentUser();
-                                            usuario = new Usuario(txtEmail.getText().toString(), txtPassGenerada.getText().toString(), txtRegistroCole.getText().toString(), "Administrador");
-                                            database.collection("users").document(txtEmail.getText().toString()).set(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    Toast.makeText(RegistroAdministrador.this, "Usuario creado con éxito.",
-                                                            Toast.LENGTH_SHORT).show();
-                                                }
-                                            });
-                                            updateUI(user);
-                                        } else {
-                                            Toast.makeText(RegistroAdministrador.this, "Error al registrar el usuario",
-                                                    Toast.LENGTH_SHORT).show();
-                                            mAuth.getCurrentUser().delete();
-                                            startActivity(new Intent(RegistroAdministrador.this, EleccionRegistro.class));
-                                        }
-                                    }
-                                });
-                    } else {
-                        Toast.makeText(RegistroAdministrador.this, "Fallo en el registro. El colegio ya existe", Toast.LENGTH_LONG).show();
-                    }
                 } else {
                     Toast.makeText(RegistroAdministrador.this, "El ID tiene que tener 8 números", Toast.LENGTH_LONG).show();
                     txtRegistroCole.setText("");

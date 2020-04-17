@@ -9,6 +9,7 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".RegistroProfesor"></activity>
         <activity android:name=".IniciarSesion" />
         <activity android:name=".ModificarColegio" />
         <activity android:name=".RegistroColegio" />
