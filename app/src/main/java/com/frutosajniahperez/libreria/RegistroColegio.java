@@ -76,6 +76,7 @@ public class RegistroColegio extends AppCompatActivity implements Dialogo_aula.R
             @Override
             public void onClick(View v) {
 
+                cole.setIdColegio(idCole);
                 cole.setAulas(aulas);
                 cole.setProfesorado(profesorado);
 
@@ -93,10 +94,10 @@ public class RegistroColegio extends AppCompatActivity implements Dialogo_aula.R
                 });
 
                 if (exito) {
-                    /*Intent intent = new Intent(RegistroColegio.this, ModificarColegio4.class);
+                    Intent intent = new Intent(RegistroColegio.this, ModificarColegio.class);
                     intent.putExtra("idcole", idCole);
                     startActivity(intent);
-                    finish();*/
+                    finish();
                 }
 
             }

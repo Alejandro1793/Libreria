@@ -1,63 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:clickable="false"
+    tools:context=".Dialogo_eliminar_aula">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="370dp"
         android:layout_height="260dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
         android:background="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.425">
-
-        <EditText
-            android:id="@+id/etIdProfe"
-            android:layout_width="340sp"
-            android:layout_height="50sp"
-            android:layout_marginTop="36dp"
-            android:ems="10"
-            android:fontFamily="@font/nova_slim"
-            android:hint="Introduce ID de profesor"
-            android:inputType="textPersonName"
-            android:maxLength="9"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Spinner
-            android:id="@+id/spAulas"
-            android:layout_width="170dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="116dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintVertical_bias="0.431">
 
         <TextView
-            android:id="@+id/btnAceptarProfe"
+            android:id="@+id/lblMod4"
+            android:layout_width="168dp"
+            android:layout_height="22dp"
+            android:fontFamily="@font/nova_slim"
+            android:text="@string/selecciona_el_id_del_aula"
+            android:textColor="#6680D4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.154" />
+
+        <Spinner
+            android:id="@+id/spAulaBorrado"
+            android:layout_width="170dp"
+            android:layout_height="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.352" />
+
+        <TextView
+            android:id="@+id/btnEliminarAula"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/yanone_kaffeesatz"
-            android:text="@string/aceptar"
+            android:text="@string/eliminar_aula"
             android:textColor="#6680D4"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.863" />
+            app:layout_constraintVertical_bias="0.718" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

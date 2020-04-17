@@ -49,7 +49,7 @@ public class Dialogo_profe {
                     interfaz.ResultadoDialogoProfe(etIdProfe.getText().toString(), spAulas.getSelectedItem().toString());
                     dialog.dismiss();
                 } else {
-                    Toast.makeText(dialog.getContext(), "El ID tiene que ser de longitud 8", Toast.LENGTH_LONG).show();
+                    Toast.makeText(dialog.getContext(), "El ID tiene que ser de longitud 9", Toast.LENGTH_LONG).show();
                 }
 
             }
