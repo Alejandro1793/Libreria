@@ -36,5 +36,9 @@
     <string name="registrar_aula">Registrar aula</string>
     <string name="registrar_profesor">Registrar profesor</string>
     <string name="introduce_tu_contrasenia">Introduce tu contraseña</string>
+    <string name="title_activity_principal_profesor">PrincipalProfesor</string>
+    <string name="title_home">Inicio</string>
+    <string name="title_libreria">Librería</string>
+    <string name="title_alumnos">Alumnos</string>
 
 </resources>
