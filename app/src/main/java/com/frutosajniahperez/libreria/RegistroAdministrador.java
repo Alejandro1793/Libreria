@@ -83,7 +83,7 @@ public class RegistroAdministrador extends AppCompatActivity {
                                                     if (task.isSuccessful()) {
                                                         // Registro del usuario realizado con éxito
                                                         FirebaseUser user = mAuth.getCurrentUser();
-                                                        usuario = new Usuario(txtEmail.getText().toString(), txtContrasenia.getText().toString(), txtRegistroCole.getText().toString(), "Administrador");
+                                                        usuario = new Usuario(txtEmail.getText().toString(), txtContrasenia.getText().toString(), txtRegistroCole.getText().toString(), null, "Administrador");
                                                         database.collection("users").document(txtEmail.getText().toString()).set(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {

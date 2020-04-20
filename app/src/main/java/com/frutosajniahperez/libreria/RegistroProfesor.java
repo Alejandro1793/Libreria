@@ -32,7 +32,6 @@ import java.util.regex.Pattern;
 public class RegistroProfesor extends AppCompatActivity {
 
     Button btnGenerar, btnAceptarDatos;
-    TextView txtPassGenerada;
     EditText txtEmail, txtIdProfeRegistro, txtContrasenia;
     FirebaseAuth mAuth;
     ImageView btnRegresar;
@@ -101,7 +100,7 @@ public class RegistroProfesor extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         // Registro del usuario realizado con éxito
                                         FirebaseUser user = mAuth.getCurrentUser();
-                                        usuario = new Usuario(txtEmail.getText().toString(), txtContrasenia.getText().toString(), idCole, "Profesor");
+                                        usuario = new Usuario(txtEmail.getText().toString(), txtContrasenia.getText().toString(), idCole, txtIdProfeRegistro.getText().toString(),"Profesor");
                                         database.collection("users").document(txtEmail.getText().toString()).set(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
@@ -148,8 +147,9 @@ public class RegistroProfesor extends AppCompatActivity {
 
     public void updateUI(FirebaseUser user) {
         if (user != null) {
-            Intent intent = new Intent(RegistroProfesor.this, Principal.class);
+            Intent intent = new Intent(RegistroProfesor.this, PrincipalProfesor.class);
             intent.putExtra("idcole", idCole);
+            intent.putExtra("idprofe", txtIdProfeRegistro.getText().toString());
             startActivity(intent);
             finish();
         }

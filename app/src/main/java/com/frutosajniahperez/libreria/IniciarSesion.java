@@ -103,6 +103,8 @@ public class IniciarSesion extends AppCompatActivity {
                                 intent = new Intent(IniciarSesion.this, ModificarColegio.class);
                                 break;
                             case "Profesor":
+                                intent = new Intent(IniciarSesion.this, PrincipalProfesor.class);
+                                intent.putExtra("idprofe", usuario.getIdUsuario());
                                 break;
                         }
                     } else {
