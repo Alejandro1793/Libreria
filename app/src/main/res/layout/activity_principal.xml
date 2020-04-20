@@ -24,8 +24,8 @@
 
     <Button
         android:id="@+id/btnRegistro"
-        android:layout_width="356dp"
-        android:layout_height="54dp"
+        android:layout_width="340dp"
+        android:layout_height="50dp"
         android:background="@drawable/forma_boton_contraria"
         android:fontFamily="@font/yanone_kaffeesatz"
         android:text="@string/registrarse"
