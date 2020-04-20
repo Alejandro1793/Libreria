@@ -8,8 +8,8 @@
 
     <Button
         android:id="@+id/btnInicioSesion"
-        android:layout_width="356dp"
-        android:layout_height="54dp"
+        android:layout_width="340dp"
+        android:layout_height="50dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/forma_boton"

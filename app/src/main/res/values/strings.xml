@@ -40,5 +40,9 @@
     <string name="title_home">Inicio</string>
     <string name="title_libreria">Librería</string>
     <string name="title_alumnos">Alumnos</string>
+    <string name="seleccion_el_id_de_tu_colegio">Seleccion el Id de tu colegio</string>
+    <string name="titulo">TITULO</string>
+    <string name="fecha_de_pr_stamo">FECHA DE PRÉSTAMO</string>
+    <string name="fecha_de_entrega">FECHA DE ENTREGA</string>
 
 </resources>

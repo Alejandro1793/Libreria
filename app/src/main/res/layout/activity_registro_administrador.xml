@@ -10,13 +10,15 @@
         android:id="@+id/label3"
         android:layout_width="335dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="412dp"
         android:fontFamily="@font/nova_slim"
         android:text="@string/requisitos_contrasenia"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtContraseniaAdmin" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -59,16 +61,17 @@
 
     <Button
         android:id="@+id/btnAceptarDatos"
-        android:layout_width="205dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="112dp"
+        android:layout_width="340dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="124dp"
         android:background="@drawable/forma_boton"
         android:enabled="true"
+        android:fontFamily="@font/yanone_kaffeesatz"
         android:text="@string/confirmar_registro"
         android:textColor="#FFFFFF"
-        android:textSize="14sp"
+        android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
@@ -113,15 +116,18 @@
         android:id="@+id/txtContraseniaAdmin"
         android:layout_width="335dp"
         android:layout_height="42dp"
+        android:autofillHints=""
+        android:backgroundTint="#6680d4"
         android:ems="10"
+        android:fontFamily="@font/nova_slim"
         android:hint="@string/introduce_tu_contrasenia"
         android:inputType="textPassword"
+        android:textColor="#6680d4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.305"
-        android:autofillHints="" />
+        app:layout_constraintVertical_bias="0.305" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
