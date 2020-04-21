@@ -44,5 +44,6 @@
     <string name="titulo">TITULO</string>
     <string name="fecha_de_pr_stamo">FECHA DE PRÉSTAMO</string>
     <string name="fecha_de_entrega">FECHA DE ENTREGA</string>
+    <string name="introduce_id_de_profesor">Introduce ID de profesor</string>
 
 </resources>
