@@ -11,6 +11,7 @@
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
+
     <fragment
         android:id="@+id/navigation_libreria"
         android:name="com.frutosajniahperez.libreria.ui.libreria.LibreriaFragment"
