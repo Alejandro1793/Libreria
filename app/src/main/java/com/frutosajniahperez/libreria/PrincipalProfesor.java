@@ -19,6 +19,8 @@ import androidx.navigation.ui.NavigationUI;
 
 public class PrincipalProfesor extends AppCompatActivity {
 
+    Bundle bundle = new Bundle();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,28 +30,20 @@ public class PrincipalProfesor extends AppCompatActivity {
         final String idCole = getIntent().getStringExtra("idcole");
         final String idProfe = getIntent().getStringExtra("idprofe");
 
-        /*Bundle bundle = new Bundle();
+        //Cargamos el bundle y lanzamos el fragment_home
         bundle.putString("idcole", idCole);
         bundle.putString("idprofe", idProfe);
         HomeFragment inicio = new HomeFragment();
         inicio.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, inicio).commit();*/
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_libreria, R.id.navigation_alumnos)
-                .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, inicio).commit();
 
-
-
-        /*navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        //Acciones a realizar cada vez que se selecciona un apartado del menú
+        navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment selectedFragment = null;
-                Bundle bundle = new Bundle();
                 switch (item.getItemId()){
                     case R.id.navigation_home:
                         selectedFragment = new HomeFragment();
@@ -67,7 +61,7 @@ public class PrincipalProfesor extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, selectedFragment).commit();
                 return true;
             }
-        });*/
+        });
 
     }
 

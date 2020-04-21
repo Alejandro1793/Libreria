@@ -11,7 +11,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".PrincipalProfesor"
-            android:label="@string/title_activity_principal_profesor"></activity>
+            android:label="@string/title_activity_principal_profesor"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".RegistroProfesor" />
         <activity android:name=".IniciarSesion" />
         <activity android:name=".ModificarColegio" />

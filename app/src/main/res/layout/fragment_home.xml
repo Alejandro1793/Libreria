@@ -17,12 +17,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
-    <SearchView
-        android:id="@+id/buscadorInicio"
-        android:layout_width="377dp"
-        android:layout_height="49dp"
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="No ha cargado"
         app:layout_constraintBottom_toTopOf="@+id/listInicio"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.083" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
