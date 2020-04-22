@@ -4,34 +4,34 @@ import java.util.Date;
 
 public class Prestamo {
 
-    private Alumno alumno;
-    private Libro libro;
+    private String alumno;
+    private String libro;
     private Date fechaPrestamo;
     private Date fechaEntrega;
 
     public Prestamo() {
     }
 
-    public Prestamo(Alumno alumno, Libro libro, Date fechaPrestamo, Date fechaEntrega) {
+    public Prestamo(String alumno, String libro, Date fechaPrestamo, Date fechaEntrega) {
         this.alumno = alumno;
         this.libro = libro;
         this.fechaPrestamo = fechaPrestamo;
         this.fechaEntrega = fechaEntrega;
     }
 
-    public Alumno getAlumno() {
+    public String getAlumno() {
         return alumno;
     }
 
-    public void setAlumno(Alumno alumno) {
+    public void setAlumno(String alumno) {
         this.alumno = alumno;
     }
 
-    public Libro getLibro() {
+    public String getLibro() {
         return libro;
     }
 
-    public void setLibro(Libro libro) {
+    public void setLibro(String libro) {
         this.libro = libro;
     }
 

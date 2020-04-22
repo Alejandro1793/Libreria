@@ -16,4 +16,9 @@
         android:icon="@drawable/ic_person_black_24dp"
         android:title="@string/title_alumnos" />
 
+    <item
+        android:id="@+id/navigation_prestamos"
+        android:icon="@drawable/ic_book_black_24dp"
+        android:title="@string/prestamos" />
+
 </menu>

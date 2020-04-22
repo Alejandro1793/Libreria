@@ -18,14 +18,13 @@ public class Colegio implements Serializable {
         this.aulas = aulas;
     }
 
-    public String getIdColegio() {
+    public java.lang.String getIdColegio() {
         return idColegio;
     }
 
     public void setIdColegio(String idColegio) {
         this.idColegio = idColegio;
     }
-
 
     public HashMap<String, Profesor> getProfesorado() {
         return profesorado;

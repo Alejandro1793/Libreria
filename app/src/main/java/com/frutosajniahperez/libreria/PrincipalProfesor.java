@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import com.frutosajniahperez.libreria.ui.alumnos.AlumnosFragment;
 import com.frutosajniahperez.libreria.ui.home.HomeFragment;
 import com.frutosajniahperez.libreria.ui.libreria.LibreriaFragment;
+import com.frutosajniahperez.libreria.ui.prestamos.PrestamosFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -47,8 +48,6 @@ public class PrincipalProfesor extends AppCompatActivity {
                 switch (item.getItemId()){
                     case R.id.navigation_home:
                         selectedFragment = new HomeFragment();
-                        bundle.putString("idcole", idCole);
-                        bundle.putString("idprofe", idProfe);
                         break;
                     case R.id.navigation_libreria:
                         selectedFragment = new LibreriaFragment();
@@ -56,7 +55,12 @@ public class PrincipalProfesor extends AppCompatActivity {
                     case R.id.navigation_alumnos:
                         selectedFragment = new AlumnosFragment();
                         break;
+                    case R.id.navigation_prestamos:
+                        selectedFragment = new PrestamosFragment();
+                        break;
                 }
+                bundle.putString("idcole", idCole);
+                bundle.putString("idprofe", idProfe);
                 selectedFragment.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, selectedFragment).commit();
                 return true;
