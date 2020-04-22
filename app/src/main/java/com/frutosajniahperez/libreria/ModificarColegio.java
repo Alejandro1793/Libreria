@@ -16,13 +16,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 public class ModificarColegio extends AppCompatActivity implements Dialogo_aula.ResultadoDialogoAula, Dialogo_profe.ResultadoDialogoProfe, Dialogo_eliminar_aula.ResultadoDialogoEliminarAula, Dialogo_eliminar_profe.ResultadoDialogoEliminarProfe, Dialogo_modificar_profe.ResultadoDialogoModificarProfe {
@@ -37,7 +35,7 @@ public class ModificarColegio extends AppCompatActivity implements Dialogo_aula.
     HashMap<String, Aula> aulas;
     HashMap<String, Profesor> profesorado;
     ArrayList<String> listadoAulas, listadoProfes;
-    String idColegio;
+    java.lang.String idColegio;
     FirebaseAuth mAuth;
 
     boolean menuAbierto = false;
@@ -50,6 +48,7 @@ public class ModificarColegio extends AppCompatActivity implements Dialogo_aula.
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         idColegio = getIntent().getStringExtra("idcole");
+
 
         context = this;
         listadoAulas = new ArrayList<>();
