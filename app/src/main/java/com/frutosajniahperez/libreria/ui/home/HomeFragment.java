@@ -26,7 +26,7 @@ import java.util.Map;
 
 public class HomeFragment extends Fragment {
 
-    String idCole, idProfe;
+    String idCole, idAula, idProfe;
     Colegio cole;
     Map<String, Prestamo> prestamos;
     ArrayList<Prestamo> listaPrestamos;
@@ -38,12 +38,16 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        database = FirebaseFirestore.getInstance();
         if (getArguments() != null) {
             idCole = getArguments().getString("idcole");
+            idAula = getArguments().getString("idaula");
             idProfe = getArguments().getString("idprofe");
         }
-        database = FirebaseFirestore.getInstance();
+
     }
+
+    //MODIFICAR LISTVIEW!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -59,8 +63,11 @@ public class HomeFragment extends Fragment {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
                             cole = document.toObject(Colegio.class);
-                            prestamos = cole.getProfesorado().get(idProfe).getAula().getListadoPrestamos();
-                            if (prestamos == null) {
+                            if (idAula == null) {
+                                idAula = cole.getProfesorado().get(idProfe).getIdAula();
+                            }
+                                prestamos = cole.getAulas().get(idAula).getListadoPrestamos();
+                            if (prestamos.isEmpty()) {
                                 Toast.makeText(getContext(), "Todavía no hay préstamos", Toast.LENGTH_SHORT).show();
                             } else {
                                 listaPrestamos = new ArrayList<>(prestamos.values());
