@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
 
 public class RegistroProfesor extends AppCompatActivity {
 
-    Button btnGenerar, btnAceptarDatos;
+    Button btnAceptarDatos;
     EditText txtEmail, txtIdProfeRegistro, txtContrasenia;
     FirebaseAuth mAuth;
     ImageView btnRegresar;
@@ -149,7 +149,7 @@ public class RegistroProfesor extends AppCompatActivity {
         if (user != null) {
             Intent intent = new Intent(RegistroProfesor.this, PrincipalProfesor.class);
             intent.putExtra("idcole", idCole);
-            intent.putExtra("idprofe", txtIdProfeRegistro.getText().toString());
+            intent.putExtra("idaula", cole.getProfesorado().get(txtIdProfeRegistro.getText().toString()).getIdAula());
             startActivity(intent);
             finish();
         }

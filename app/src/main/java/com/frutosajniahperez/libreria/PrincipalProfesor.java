@@ -29,10 +29,12 @@ public class PrincipalProfesor extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
         final String idCole = getIntent().getStringExtra("idcole");
+        final String idAula = getIntent().getStringExtra("idaula");
         final String idProfe = getIntent().getStringExtra("idprofe");
 
         //Cargamos el bundle y lanzamos el fragment_home
         bundle.putString("idcole", idCole);
+        bundle.putString("idaula", idAula);
         bundle.putString("idprofe", idProfe);
         HomeFragment inicio = new HomeFragment();
         inicio.setArguments(bundle);
@@ -60,6 +62,7 @@ public class PrincipalProfesor extends AppCompatActivity {
                         break;
                 }
                 bundle.putString("idcole", idCole);
+                bundle.putString("idaula", idAula);
                 bundle.putString("idprofe", idProfe);
                 selectedFragment.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, selectedFragment).commit();

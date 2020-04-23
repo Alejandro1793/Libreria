@@ -5,14 +5,14 @@ import java.io.Serializable;
 public class Profesor implements Serializable {
 
     private String idProfesor;
-    private Aula aula;
+    private String idAula;
 
     public Profesor() {
     }
 
-    public Profesor(String idProfesor, String contraseña, Aula aula) {
+    public Profesor(String idProfesor, String contraseña, String idAula) {
         this.idProfesor = idProfesor;
-        this.aula = aula;
+        this.idAula = idAula;
     }
 
     public String getIdProfesor() {
@@ -23,11 +23,11 @@ public class Profesor implements Serializable {
         this.idProfesor = idProfesor;
     }
 
-    public Aula getAula() {
-        return aula;
+    public String getIdAula() {
+        return idAula;
     }
 
-    public void setAula(Aula aula) {
-        this.aula = aula;
+    public void setIdAula(String idAula) {
+        this.idAula = idAula;
     }
 }

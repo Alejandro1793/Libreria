@@ -32,7 +32,7 @@ import java.util.Set;
 
 public class PrestamosFragment extends Fragment {
 
-    String idCole, idProfe;
+    String idCole, idAula, idProfe;
     Colegio cole;
     Map<String, Alumno> alumnado;
     Map<String, Libro> libreria;
@@ -46,6 +46,7 @@ public class PrestamosFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             idCole = getArguments().getString("idcole");
+            idAula = getArguments().getString("idaula");
             idProfe = getArguments().getString("idprofe");
         }
         database = FirebaseFirestore.getInstance();
@@ -68,9 +69,12 @@ public class PrestamosFragment extends Fragment {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()){
                             cole = document.toObject(Colegio.class);
-                            alumnado = cole.getProfesorado().get(idProfe).getAula().getListadoAlumnos();
-                            libreria = cole.getProfesorado().get(idProfe).getAula().getLibreria();
-                            if (alumnado != null && libreria != null) {
+                            if (idAula == null) {
+                                idAula = cole.getProfesorado().get(idProfe).getIdAula();
+                            }
+                            alumnado =cole.getAulas().get(idAula).getListadoAlumnos();
+                            libreria = cole.getAulas().get(idAula).getLibreria();
+                            if (!alumnado.isEmpty() && !libreria.isEmpty()) {
                                 for (Alumno alumno : alumnado.values()) {
                                     listadoAlumnos.add(alumno.getNombre());
                                 }
@@ -94,7 +98,7 @@ public class PrestamosFragment extends Fragment {
         btnAceptarPrestamo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cole.getProfesorado().get(idProfe).getAula().getListadoPrestamos().put(spAlumno.getSelectedItem().toString(), new Prestamo(spAlumno.getSelectedItem().toString(), spTituloLibro.getSelectedItem().toString(), new Date(), new Date(calendarView.getDate() * 1000)));
+                cole.getAulas().get(idAula).getListadoPrestamos().put(spAlumno.getSelectedItem().toString(), new Prestamo(spAlumno.getSelectedItem().toString(), spTituloLibro.getSelectedItem().toString(), new Date(), new Date(calendarView.getDate() * 1000)));
                 database.collection("Colegios").document(idCole).set(cole).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

@@ -2,11 +2,13 @@ package com.frutosajniahperez.libreria;
 
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,6 +37,7 @@ public class IniciarSesion extends AppCompatActivity {
         final FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         Button btnInicioSesion = findViewById(R.id.btnInicioSesion);
+        ImageView btnRegresar = findViewById(R.id.btnRegresar);
         final EditText txtEmail = findViewById(R.id.txtCorreo);
         final EditText txtPassword = findViewById(R.id.txtContrasenia);
 
@@ -82,6 +85,14 @@ public class IniciarSesion extends AppCompatActivity {
                         }
                     }
                 });
+            }
+        });
+
+        btnRegresar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(IniciarSesion.this, Principal.class));
+                finish();
             }
         });
     }

@@ -7,19 +7,19 @@ public class Alumno {
     private String idAlumno;
     private String nombre;
     private String email;
-    private Aula aula;
+    private String idAula;
     private ArrayList<Libro> librosLeidos;
 
     public Alumno(){
 
     }
 
-    public Alumno(String idAlumno, String nombre, String email, ArrayList<Libro> librosLeidos, Aula aula) {
+    public Alumno(String idAlumno, String nombre, String email, ArrayList<Libro> librosLeidos, String idAula) {
         this.idAlumno = idAlumno;
         this.nombre = nombre;
         this.email = email;
         this.librosLeidos = librosLeidos;
-        this.aula = aula;
+        this.idAula = idAula;
     }
 
     public String getIdAlumno() {
@@ -54,11 +54,11 @@ public class Alumno {
         this.librosLeidos = librosLeidos;
     }
 
-    public Aula getAula() {
-        return aula;
+    public String getIdAula() {
+        return idAula;
     }
 
-    public void setAula(Aula aula) {
-        this.aula = aula;
+    public void setIdAula(String idAula) {
+        this.idAula = idAula;
     }
 }

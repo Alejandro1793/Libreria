@@ -252,6 +252,9 @@ public class ModificarColegio extends AppCompatActivity implements Dialogo_aula.
         } else {
             Aula aula = new Aula();
             aula.setIdAula(idAula);
+            aula.setLibreria(new HashMap<String, Libro>());
+            aula.setListadoAlumnos(new HashMap<String, Alumno>());
+            aula.setListadoPrestamos(new HashMap<String, Prestamo>());
             aulas.put(idAula, aula);
             Toast.makeText(ModificarColegio.this, "Aula creada", Toast.LENGTH_LONG).show();
         }
@@ -265,7 +268,7 @@ public class ModificarColegio extends AppCompatActivity implements Dialogo_aula.
         } else {
             Profesor profe = new Profesor();
             profe.setIdProfesor(idProfe);
-            profe.setAula(aulas.get(idAula));
+            profe.setIdAula(idAula);
             profesorado.put(idProfe, profe);
             Toast.makeText(ModificarColegio.this, "Profesor creado", Toast.LENGTH_LONG).show();
         }
@@ -283,6 +286,6 @@ public class ModificarColegio extends AppCompatActivity implements Dialogo_aula.
 
     @Override
     public void ResultadoDialogoModificarProfe(String idProfe, String idAula) {
-        profesorado.get(idProfe).setAula(aulas.get(idAula));
+        profesorado.get(idProfe).setIdAula(idAula);
     }
 }

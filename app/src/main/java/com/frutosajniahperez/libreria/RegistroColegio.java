@@ -112,6 +112,9 @@ public class RegistroColegio extends AppCompatActivity implements Dialogo_aula.R
         } else {
             Aula aula = new Aula();
             aula.setIdAula(idAula);
+            aula.setLibreria(new HashMap<String, Libro>());
+            aula.setListadoAlumnos(new HashMap<String, Alumno>());
+            aula.setListadoPrestamos(new HashMap<String, Prestamo>());
             aulas.put(idAula, aula);
             Toast.makeText(RegistroColegio.this, "Aula creada", Toast.LENGTH_LONG).show();
 
@@ -133,7 +136,7 @@ public class RegistroColegio extends AppCompatActivity implements Dialogo_aula.R
         } else {
             Profesor profe = new Profesor();
             profe.setIdProfesor(idProfe);
-            profe.setAula(aulas.get(idAula));
+            profe.setIdAula(idAula);
             profesorado.put(idProfe, profe);
             Toast.makeText(RegistroColegio.this, "Profesor creado", Toast.LENGTH_LONG).show();
 
