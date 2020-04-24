@@ -6,14 +6,91 @@
     android:layout_height="match_parent"
     tools:context=".ui.libreria.LibreriaFragment">
 
-    <TextView
-        android:id="@+id/textView"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/title_libreria"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.904"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.838">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end">
+
+            <TextView
+                android:id="@+id/lbAñadirLibroManual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="5dp"
+                android:fontFamily="@font/yanone_kaffeesatz"
+                android:text="@string/anadir_manualmente"
+                android:textSize="18sp" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_añadirLibroManual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:tint="@color/white"
+                app:backgroundTint="#6680d4"
+                app:fabSize="mini"
+                app:srcCompat="@drawable/ic_add_black_24dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end">
+
+            <TextView
+                android:id="@+id/lbAnadirLibroGoogle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="5dp"
+                android:fontFamily="@font/yanone_kaffeesatz"
+                android:text="@string/anadir_mediante_google"
+                android:textSize="18sp" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_añadirLibroGoogle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:tint="@color/white"
+                app:backgroundTint="#6680d4"
+                app:fabSize="mini"
+                app:srcCompat="@drawable/ic_add_black_24dp" />
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_opciones_libro"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="4dp"
+            android:tint="@color/white"
+            app:backgroundTint="#6680d4"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/ic_view_headline_black_24dp" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listaLibros"
+        android:layout_width="0dp"
+        android:layout_height="574dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.092" />
+        app:layout_constraintVertical_bias="0.007" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

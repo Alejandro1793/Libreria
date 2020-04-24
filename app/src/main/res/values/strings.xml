@@ -46,5 +46,7 @@
     <string name="fecha_de_entrega">FECHA DE ENTREGA</string>
     <string name="introduce_id_de_profesor">Introduce ID de profesor</string>
     <string name="prestamos">Préstamos</string>
+    <string name="anadir_manualmente">Añadir Manualmente</string>
+    <string name="anadir_mediante_google">Añadir Mediante Google</string>
 
 </resources>

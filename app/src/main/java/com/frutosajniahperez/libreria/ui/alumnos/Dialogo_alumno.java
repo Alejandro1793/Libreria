@@ -1,11 +1,9 @@
 package com.frutosajniahperez.libreria.ui.alumnos;
 
 import android.app.Dialog;
-import android.content.ContentProvider;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
@@ -13,7 +11,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.fragment.app.FragmentManager;
 
 import com.frutosajniahperez.libreria.R;
 
