@@ -33,13 +33,12 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/francois_one"
             android:gravity="center"
-            android:text="TextView"
             android:textSize="18sp" />
 
         <View
             android:id="@+id/view"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="5dp"
             android:background="@drawable/separador" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

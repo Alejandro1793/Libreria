@@ -1,7 +1,0 @@
-<application>
-  <component name="GithubAccounts">
-    <account id="65d367dd-7dfd-4b44-911e-2d70015328bd" name="VeronicaFS20">
-      <server useHttp="false" host="github.com" />
-    </account>
-  </component>
-</application>
