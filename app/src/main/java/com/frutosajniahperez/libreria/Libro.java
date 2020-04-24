@@ -1,23 +1,27 @@
 package com.frutosajniahperez.libreria;
 
+import java.util.ArrayList;
+
 public class Libro {
 
     private String isbn;
     private String titulo;
-    private String autor;
+    private ArrayList<String> autores;
     private String editorial;
     private String sinopsis;
     private String año;
+    private boolean imagen;
 
     public Libro() {}
 
-    public Libro(String isbn, String titulo, String autor, String editorial, String sinopsis, String año) {
+    public Libro(String isbn, String titulo, ArrayList<String> autores, String editorial, String sinopsis, String año) {
         this.isbn = isbn;
         this.titulo = titulo;
-        this.autor = autor;
+        this.autores = autores;
         this.editorial = editorial;
         this.sinopsis = sinopsis;
         this.año = año;
+        this.imagen = false;
     }
 
     public String getIsbn() {
@@ -36,12 +40,12 @@ public class Libro {
         this.titulo = titulo;
     }
 
-    public String getAutor() {
-        return autor;
+    public ArrayList<String> getAutores() {
+        return autores;
     }
 
-    public void setAutor(String autor) {
-        this.autor = autor;
+    public void setAutores(ArrayList<String> autor) {
+        this.autores = autores;
     }
 
     public String getEditorial() {
@@ -66,5 +70,13 @@ public class Libro {
 
     public void setAño(String año) {
         this.año = año;
+    }
+
+    public boolean hasImagen() {
+        return imagen;
+    }
+
+    public void setImagen(boolean imagen) {
+        this.imagen = imagen;
     }
 }

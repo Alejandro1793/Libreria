@@ -1,9 +1,12 @@
 package com.frutosajniahperez.libreria.ui.alumnos;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -28,13 +31,14 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class AlumnosFragment extends Fragment implements Dialogo_alumno.ResultadoDialogoAlumno {
 
     String idCole, idAula, idProfe;
     Colegio cole;
-    Map<String, Alumno> alumnos;
+    HashMap<String, Alumno> alumnos;
     ArrayList<Alumno> listaAlumnos;
     FirebaseFirestore database;
     ListView listAlumno;
@@ -82,6 +86,35 @@ public class AlumnosFragment extends Fragment implements Dialogo_alumno.Resultad
             });
         }
 
+        listAlumno.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Borrado")
+                        .setMessage("¿Seguro que quieres eliminar este alumno?")
+                        .setPositiveButton("Sí",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        alumnos.remove(listaAlumnos.get(position).getIdAlumno());
+                                        listaAlumnos.remove(position);
+                                        cole.getAulas().get(idAula).setListadoAlumnos(alumnos);
+                                        subirDatos();
+                                    }
+                                })
+                        .setNegativeButton("No",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                return true;
+            }
+        });
+
 
         btnAnadirAlumno.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,24 +136,27 @@ public class AlumnosFragment extends Fragment implements Dialogo_alumno.Resultad
             alumno.setIdAula(idAula);
             alumno.setLibrosLeidos(new ArrayList<Libro>());
             cole.getAulas().get(idAula).getListadoAlumnos().put(idAlumno, alumno);
-
-            database.collection("Colegios").document(idCole).set(cole).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()){
-                        Toast.makeText(getContext(), "Alumno registrado", Toast.LENGTH_SHORT).show();
-                        cargarDatos();
-                    }
-                }
-            });
+            subirDatos();
         } else {
             Toast.makeText(getContext(), "Ya existe un alumno con este ID", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void cargarDatos(){
+    public void cargarDatos() {
         listaAlumnos = new ArrayList<>(alumnos.values());
         ArrayAdapterAlumnos adapterInicio = new ArrayAdapterAlumnos(getContext(), listaAlumnos);
         listAlumno.setAdapter(adapterInicio);
+    }
+
+    public void subirDatos() {
+        database.collection("Colegios").document(idCole).set(cole).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(getContext(), "Base de datos actualizada", Toast.LENGTH_SHORT).show();
+                    cargarDatos();
+                }
+            }
+        });
     }
 }
