@@ -38,8 +38,6 @@ public class PrincipalProfesor extends AppCompatActivity {
         bundle.putString("idprofe", idProfe);
         HomeFragment inicio = new HomeFragment();
         inicio.setArguments(bundle);
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupWithNavController(navView, navController);
         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, inicio).commit();
 
         //Acciones a realizar cada vez que se selecciona un apartado del menú
