@@ -35,7 +35,7 @@
             android:layout_gravity="bottom|end">
 
             <TextView
-                android:id="@+id/lbAñadirLibroManual"
+                android:id="@+id/lbAnadirLibroManual"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -45,7 +45,7 @@
                 android:textSize="18sp" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_añadirLibroManual"
+                android:id="@+id/fab_anadirLibroManual"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
@@ -71,7 +71,7 @@
                 android:textSize="18sp" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_añadirLibroGoogle"
+                android:id="@+id/fab_anadirLibroGoogle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
