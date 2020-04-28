@@ -1,9 +1,10 @@
 package com.frutosajniahperez.libreria;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +28,18 @@ public class IniciarSesion extends AppCompatActivity {
     Usuario usuario;
     String email, password;
     FirebaseFirestore database;
+
+    private ProgressDialog progressDialog;
+
+
+    public void mostrarDialogo(){
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle("Iniciando sesión");
+        progressDialog.setMessage("cargando tu sesión...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,33 +71,43 @@ public class IniciarSesion extends AppCompatActivity {
                     Toast.makeText(IniciarSesion.this, "La contraseña no puede estar vacía", Toast.LENGTH_LONG).show();
                     return;
                 }
-
-                mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                progressDialog = new ProgressDialog(IniciarSesion.this);
+                mostrarDialogo();
+                new Handler().postDelayed(new Runnable() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(IniciarSesion.this, "Sesión Iniciada",
-                                    Toast.LENGTH_SHORT).show();
-                            //Obtiene el usuario de la base de datos
-                            database.collection("users").document(email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                    if (task.isSuccessful()){
-                                        DocumentSnapshot document = task.getResult();
-                                        if (document.exists()){
-                                            usuario = document.toObject(Usuario.class);
-                                            comprobacionUsuario(usuario);
-                                        }
-                                    }
-                                }
-                            });
-                        } else {
-                            Toast.makeText(IniciarSesion.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                    public void run() {
+                        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
 
-                        }
+                                    Toast.makeText(IniciarSesion.this, "Sesión Iniciada",
+                                            Toast.LENGTH_SHORT).show();
+                                    //Obtiene el usuario de la base de datos
+                                    database.collection("users").document(email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                            if (task.isSuccessful()){
+                                                DocumentSnapshot document = task.getResult();
+                                                if (document.exists()){
+                                                    usuario = document.toObject(Usuario.class);
+                                                    comprobacionUsuario(usuario);
+                                                }
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    Toast.makeText(IniciarSesion.this, "Authentication failed.",
+                                            Toast.LENGTH_SHORT).show();
+
+                                }
+                            }
+                        });
+                        progressDialog.dismiss();
                     }
-                });
+                },12000);
+
+
             }
         });
 
@@ -106,7 +129,7 @@ public class IniciarSesion extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     Intent intent = null;
                     if (document.exists()){
-                        //FALTAN LOS ROLES DE ALUMNO Y PROFESOR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        //FALTAN LOS ROLES DE ALUMNO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                         switch (usuario.getRol()){
                             case "Alumno":
                                 break;
