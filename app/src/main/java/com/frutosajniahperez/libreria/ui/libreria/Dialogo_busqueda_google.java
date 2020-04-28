@@ -4,19 +4,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.frutosajniahperez.libreria.Libro;
 import com.frutosajniahperez.libreria.R;
-import com.frutosajniahperez.libreria.ui.alumnos.Dialogo_alumno;
 
 public class Dialogo_busqueda_google {
 
@@ -49,8 +44,13 @@ public class Dialogo_busqueda_google {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                new EncontrarLibro(portada, txtTitulo, txtAutor, txtEditorial, txtAnioPublicacion, txtIsbn).execute(query);
-                return true;
+                if (query.length() != 0) {
+                    new EncontrarLibro(portada, txtTitulo, txtAutor, txtEditorial, txtAnioPublicacion, txtIsbn, dialog.getContext()).execute(query);
+
+                    return true;
+                } else {
+                    return false;
+                }
             }
 
             @Override

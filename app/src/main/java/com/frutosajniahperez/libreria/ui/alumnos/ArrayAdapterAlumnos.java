@@ -34,8 +34,7 @@ public class ArrayAdapterAlumnos extends ArrayAdapter<Alumno> {
         tv = v.findViewById(R.id.txtListaLibrosLeidos);
         StringBuilder cadena = new StringBuilder();
         for (Libro libro : alumno.getLibrosLeidos()){
-            cadena.append(libro.getTitulo());
-            cadena.append("\n");
+            cadena.append(libro.getTitulo()).append(System.getProperty("line.separator"));
         }
         tv.setText(cadena);
         return v;

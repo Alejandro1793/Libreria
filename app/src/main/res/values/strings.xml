@@ -55,5 +55,6 @@
     <string name="introduce_id_alumno">Introduce ID Alumno</string>
     <string name="introduce_email_alumno">Introduce Email Alumno</string>
     <string name="introduce_nombre_alumno">Introduce Nombre Alumno</string>
+    <string name="no_ha_dado_resultados">No ha dado resultado</string>
 
 </resources>
