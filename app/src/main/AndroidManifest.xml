@@ -9,11 +9,14 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+
         <activity
             android:name=".PrincipalProfesor"
             android:label="@string/title_activity_principal_profesor"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
+
         <activity android:name=".RegistroProfesor" />
         <activity android:name=".IniciarSesion" />
         <activity android:name=".ModificarColegio" />

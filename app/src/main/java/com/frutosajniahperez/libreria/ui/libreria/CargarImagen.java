@@ -24,7 +24,7 @@ public class CargarImagen extends AsyncTask <String, Void, Bitmap> {
     @Override
     protected Bitmap doInBackground(String... strings) {
         try {
-            //https://guides.codepath.com/android/Displaying-Images-with-the-Glide-Library || QUITAR ISBN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            //QUITAR ISBN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             return BitmapFactory.decodeStream((InputStream)new URL(strings[0]).getContent());
         } catch (IOException e) {
             e.printStackTrace();
