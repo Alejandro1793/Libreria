@@ -35,15 +35,8 @@ public class ArrayAdapterLibreria extends ArrayAdapter<Libro> {
         tv.setText(libro.getTitulo());
         tv = v.findViewById(R.id.txtAutorLibro);
         StringBuilder cadena = new StringBuilder();
-        int tamaño = libro.getAutores().size();
-        if (libro.getAutores().size() > 1) {
-            for (int i = 0; i < tamaño - 1; i++) {
-                cadena.append(libro.getAutores().get(i));
-                cadena.append(", ");
-            }
-            cadena.append(libro.getAutores().get(tamaño - 1));
-        } else {
-            cadena.append(libro.getAutores().get(0));
+        for (String autor : libro.getAutores()){
+            cadena.append(autor).append(System.getProperty("line.separator"));
         }
         tv.setText(cadena);
         tv = v.findViewById(R.id.txtAnioPublicacion);
@@ -52,9 +45,7 @@ public class ArrayAdapterLibreria extends ArrayAdapter<Libro> {
         tv.setText(libro.getEditorial());
         tv = v.findViewById(R.id.txtIsbnLibro);
         tv.setText(libro.getIsbn());
-        if (libro.hasImagen()){
 
-        }
 
         return v;
     }
