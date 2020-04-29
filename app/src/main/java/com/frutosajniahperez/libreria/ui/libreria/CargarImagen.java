@@ -10,35 +10,18 @@ import java.net.URL;
 
 public class CargarImagen extends AsyncTask <String, Void, Bitmap> {
 
-    private Listener mListener;
 
-    public CargarImagen(Listener listener){
-        mListener = listener;
-    }
-
-    public interface Listener {
-        void onImageLoaded(Bitmap bitmap);
-        void onError();
+    public CargarImagen(){
     }
 
     @Override
     protected Bitmap doInBackground(String... strings) {
         try {
-            //QUITAR ISBN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             return BitmapFactory.decodeStream((InputStream)new URL(strings[0]).getContent());
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
 
-    }
-
-    @Override
-    protected void onPostExecute(Bitmap bitmap) {
-        if (bitmap != null) {
-            mListener.onImageLoaded(bitmap);
-        } else {
-            mListener.onError();
-        }
     }
 }

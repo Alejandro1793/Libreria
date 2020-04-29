@@ -12,8 +12,23 @@
         android:background="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/lbIsbn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/yanone_kaffeesatz"
+            android:text="INTRODUCE EL ISBN PARA ENCONTRAR TU LIBRO"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.100000024" />
 
         <TextView
             android:id="@+id/btnAceptarLibroGoogle"
@@ -28,18 +43,19 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.844" />
+            app:layout_constraintVertical_bias="0.90999997" />
 
         <SearchView
             android:id="@+id/svLibros"
             android:layout_width="0dp"
             android:layout_height="61dp"
             android:background="@drawable/forma_boton_contraria"
+            android:inputType="number"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.120000005" />
+            app:layout_constraintVertical_bias="0.25" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -49,11 +65,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.58000004">
 
             <ImageView
                 android:id="@+id/ivPortada"
-                android:layout_width="91dp"
+                android:layout_width="67dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:contentDescription="@string/imglibro"
@@ -106,15 +123,6 @@
                     android:paddingRight="3dp"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/txtIsbnLibro"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/yanone_kaffeesatz"
-                    android:paddingLeft="3dp"
-                    android:paddingTop="1dp"
-                    android:paddingRight="3dp"
-                    android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

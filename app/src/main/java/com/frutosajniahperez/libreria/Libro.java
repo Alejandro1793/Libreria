@@ -1,12 +1,12 @@
 package com.frutosajniahperez.libreria;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Libro {
 
     private String isbn;
     private String titulo;
-    private ArrayList<String> autores;
+    private HashMap<String, String> autores;
     private String editorial;
     private String sinopsis;
     private String año;
@@ -14,7 +14,7 @@ public class Libro {
 
     public Libro() {}
 
-    public Libro(String isbn, String titulo, ArrayList<String> autores, String editorial, String sinopsis, String año, String imagen) {
+    public Libro(String isbn, String titulo, HashMap<String, String> autores, String editorial, String sinopsis, String año, String imagen) {
         this.isbn = isbn;
         this.titulo = titulo;
         this.autores = autores;
@@ -40,11 +40,11 @@ public class Libro {
         this.titulo = titulo;
     }
 
-    public ArrayList<String> getAutores() {
+    public HashMap<String, String> getAutores() {
         return autores;
     }
 
-    public void setAutores(ArrayList<String> autor) {
+    public void setAutores(HashMap<String, String> autores) {
         this.autores = autores;
     }
 
