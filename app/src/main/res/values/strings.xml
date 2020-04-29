@@ -56,5 +56,6 @@
     <string name="introduce_email_alumno">Introduce Email Alumno</string>
     <string name="introduce_nombre_alumno">Introduce Nombre Alumno</string>
     <string name="no_ha_dado_resultados">No ha dado resultado</string>
+    <string name="introduce_el_isbn_para_buscar_el_libro">Introduce el ISBN para buscar el libro</string>
 
 </resources>
