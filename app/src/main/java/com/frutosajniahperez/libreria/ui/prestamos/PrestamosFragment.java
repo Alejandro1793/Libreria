@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
@@ -94,11 +95,11 @@ public class PrestamosFragment extends Fragment {
                 }
             });
         }
-
+        //ARREGLAR FECHA || EMPEZAR LIBROS LEIDOS
         btnAceptarPrestamo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cole.getAulas().get(idAula).getListadoPrestamos().put(spAlumno.getSelectedItem().toString(), new Prestamo(spAlumno.getSelectedItem().toString(), spTituloLibro.getSelectedItem().toString(), new Date(), new Date(calendarView.getDate() * 1000)));
+                cole.getAulas().get(idAula).getListadoPrestamos().put(spAlumno.getSelectedItem().toString(), new Prestamo(spAlumno.getSelectedItem().toString(), spTituloLibro.getSelectedItem().toString(), new Timestamp(new Date().getTime()), new Timestamp(calendarView.getDate())));
                 database.collection("Colegios").document(idCole).set(cole).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

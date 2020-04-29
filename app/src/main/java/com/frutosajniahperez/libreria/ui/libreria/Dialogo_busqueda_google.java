@@ -2,6 +2,7 @@ package com.frutosajniahperez.libreria.ui.libreria;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
@@ -9,11 +10,25 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.frutosajniahperez.libreria.Libro;
 import com.frutosajniahperez.libreria.R;
 
-public class Dialogo_busqueda_google {
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
+public class Dialogo_busqueda_google implements EncontrarLibro.ObtenerDatos {
+
+    private ImageView portada;
+    private TextView txtTitulo, txtAutores, txtEditorial, txtAnioPublicacion;
+    private Dialog dialog;
+    private String titulo, editorial, anio, isbn, imagen, sinopsis;
+    private HashMap<String, String> autores = new HashMap<>();
+    private int contAutores = 1;
 
     public interface ResultadoDialogoBusquedaGoogle {
         void ResultadoDialogoBusquedaGoogle(Libro libro);
@@ -25,7 +40,7 @@ public class Dialogo_busqueda_google {
         interfaz = actividad;
 
         //Creamos el dialogo con las características necesarias
-        final Dialog dialog = new Dialog(context);
+        dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -33,20 +48,18 @@ public class Dialogo_busqueda_google {
         dialog.setCanceledOnTouchOutside(true);
 
         final SearchView searchView = dialog.findViewById(R.id.svLibros);
-        final ImageView portada = dialog.findViewById(R.id.ivPortada);
-        final TextView txtTitulo = dialog.findViewById(R.id.txtTituloLibro);
-        final TextView txtAutor = dialog.findViewById(R.id.txtAutorLibro);
-        final TextView txtEditorial = dialog.findViewById(R.id.txtEditorialLibro);
-        final TextView txtAnioPublicacion = dialog.findViewById(R.id.txtAnioPublicacion);
-        final TextView txtIsbn = dialog.findViewById(R.id.txtIsbnLibro);
+        portada = dialog.findViewById(R.id.ivPortada);
+        txtTitulo = dialog.findViewById(R.id.txtTituloLibro);
+        txtAutores = dialog.findViewById(R.id.txtAutorLibro);
+        txtEditorial = dialog.findViewById(R.id.txtEditorialLibro);
+        txtAnioPublicacion = dialog.findViewById(R.id.txtAnioPublicacion);
         TextView btnAceptarLibroGoogle  = dialog.findViewById(R.id.btnAceptarLibroGoogle);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (query.length() != 0) {
-                    new EncontrarLibro(portada, txtTitulo, txtAutor, txtEditorial, txtAnioPublicacion, txtIsbn, dialog.getContext()).execute(query);
-
+                    new EncontrarLibro(Dialogo_busqueda_google.this).execute(query);
                     return true;
                 } else {
                     return false;
@@ -62,9 +75,80 @@ public class Dialogo_busqueda_google {
         btnAceptarLibroGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Libro libro = new Libro(isbn, titulo, autores, editorial, sinopsis, anio, imagen);
+                interfaz.ResultadoDialogoBusquedaGoogle(libro);
+                dialog.dismiss();
             }
         });
         dialog.show();
+    }
+
+    @Override
+    public void datosJson(String s) {
+        try {
+            JSONObject jsonObject = new JSONObject(s);
+            JSONArray itemsArray = jsonObject.getJSONArray("items");
+
+            JSONObject libro = itemsArray.getJSONObject(0);
+            try {
+                JSONObject libroInfo = libro.getJSONObject("volumeInfo");
+                try {
+                    titulo = libroInfo.getString("title");
+                    txtTitulo.setText(titulo);
+                } catch (JSONException e) {
+                    txtTitulo.setText(R.string.no_ha_dado_resultados);
+                }
+                try {
+                    JSONArray authors = libroInfo.getJSONArray("authors");
+                    for (int i = 0; i < authors.length(); i++) {
+                        autores.put(String.valueOf(contAutores), authors.getString(i));
+                        contAutores++;
+                    }
+                    StringBuilder aut = new StringBuilder();
+                    for (String autor : autores.values()){
+                        aut.append(autor).append(System.getProperty("line.separator"));
+                    }
+                    txtAutores.setText(aut);
+                } catch (JSONException e) {
+                    txtAutores.setText(R.string.no_ha_dado_resultados);
+                }
+                try {
+                    editorial = libroInfo.getString("publisher");
+                    txtEditorial.setText(editorial);
+                } catch (JSONException e) {
+                    txtEditorial.setText(R.string.no_ha_dado_resultados);
+                }
+                try {
+                    sinopsis = libroInfo.getString("description");
+                } catch (JSONException e) {
+                    sinopsis = "Sin sinopsis";
+                }
+                try {
+                    anio = libroInfo.getString("publishedDate");
+                    txtAnioPublicacion.setText(anio);
+                } catch (JSONException e) {
+                    txtAnioPublicacion.setText(R.string.no_ha_dado_resultados);
+                }
+                try {
+                    JSONArray isbnArray = libroInfo.getJSONArray("industryIdentifiers");
+                    JSONObject isbn13 = isbnArray.getJSONObject(1);
+                    isbn = isbn13.getString("identifier");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    JSONObject imagenes = libroInfo.getJSONObject("imageLinks");
+                    imagen = imagenes.getString("smallThumbnail");
+                    portada.setImageBitmap(new CargarImagen().execute(imagen).get());
+                } catch (JSONException e) {
+                    imagen = "Sin imagen";
+                    portada.setImageResource(R.drawable.noimg);
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        } catch (Exception ex){
+            Toast.makeText(dialog.getContext(), "No se encuentra el libro", Toast.LENGTH_SHORT).show();
+        }
     }
 }
