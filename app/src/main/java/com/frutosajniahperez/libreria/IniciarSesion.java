@@ -32,7 +32,7 @@ public class IniciarSesion extends AppCompatActivity {
     private ProgressDialog progressDialog;
 
 
-    public void mostrarDialogo(){
+    public void mostrarDialogo() {
         progressDialog.setCancelable(false);
         progressDialog.setTitle("Iniciando sesión");
         progressDialog.setMessage("cargando tu sesión...");
@@ -73,41 +73,35 @@ public class IniciarSesion extends AppCompatActivity {
                 }
                 progressDialog = new ProgressDialog(IniciarSesion.this);
                 mostrarDialogo();
-                new Handler().postDelayed(new Runnable() {
+
+                mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void run() {
-                        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
 
-                                    Toast.makeText(IniciarSesion.this, "Sesión Iniciada",
-                                            Toast.LENGTH_SHORT).show();
-                                    //Obtiene el usuario de la base de datos
-                                    database.collection("users").document(email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                            if (task.isSuccessful()){
-                                                DocumentSnapshot document = task.getResult();
-                                                if (document.exists()){
-                                                    usuario = document.toObject(Usuario.class);
-                                                    comprobacionUsuario(usuario);
-                                                }
-                                            }
+                            Toast.makeText(IniciarSesion.this, "Sesión Iniciada",
+                                    Toast.LENGTH_SHORT).show();
+                            //Obtiene el usuario de la base de datos
+                            database.collection("users").document(email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        progressDialog.dismiss();
+                                        DocumentSnapshot document = task.getResult();
+                                        if (document.exists()) {
+                                            usuario = document.toObject(Usuario.class);
+                                            comprobacionUsuario(usuario);
                                         }
-                                    });
-                                } else {
-                                    Toast.makeText(IniciarSesion.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
-
+                                    }
                                 }
-                            }
-                        });
-                        progressDialog.dismiss();
+                            });
+                        } else {
+                            Toast.makeText(IniciarSesion.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+
+                        }
                     }
-                },12000);
-
-
+                });
             }
         });
 
@@ -120,17 +114,17 @@ public class IniciarSesion extends AppCompatActivity {
         });
     }
 
-    public void comprobacionUsuario(final Usuario usuario){
+    public void comprobacionUsuario(final Usuario usuario) {
 
         database.collection("Colegios").document(usuario.getIdColegio()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     Intent intent = null;
-                    if (document.exists()){
+                    if (document.exists()) {
                         //FALTAN LOS ROLES DE ALUMNO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                        switch (usuario.getRol()){
+                        switch (usuario.getRol()) {
                             case "Alumno":
                                 break;
                             case "Administrador":
