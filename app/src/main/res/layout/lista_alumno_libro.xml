@@ -50,7 +50,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:padding="5sp" />
+                android:padding="3sp" />
 
         </LinearLayout>
 
@@ -82,7 +82,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:padding="5sp" />
+                android:padding="3sp" />
 
 
         </LinearLayout>
@@ -115,7 +115,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:padding="5sp" />
+                android:padding="3sp" />
         </LinearLayout>
 
         <View

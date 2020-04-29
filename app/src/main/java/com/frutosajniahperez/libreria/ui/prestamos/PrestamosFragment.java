@@ -17,7 +17,6 @@ import androidx.fragment.app.Fragment;
 import com.frutosajniahperez.libreria.Alumno;
 import com.frutosajniahperez.libreria.Colegio;
 import com.frutosajniahperez.libreria.Libro;
-import com.frutosajniahperez.libreria.ModificarColegio;
 import com.frutosajniahperez.libreria.Prestamo;
 import com.frutosajniahperez.libreria.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,7 +28,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
-import java.util.Set;
 
 public class PrestamosFragment extends Fragment {
 
@@ -99,6 +97,7 @@ public class PrestamosFragment extends Fragment {
         btnAceptarPrestamo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 cole.getAulas().get(idAula).getListadoPrestamos().put(spAlumno.getSelectedItem().toString(), new Prestamo(spAlumno.getSelectedItem().toString(), spTituloLibro.getSelectedItem().toString(), new Timestamp(new Date().getTime()), new Timestamp(calendarView.getDate())));
                 database.collection("Colegios").document(idCole).set(cole).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

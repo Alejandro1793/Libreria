@@ -19,7 +19,6 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -41,9 +40,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginEnd="5dp"
+                android:background="#FFFFFF"
                 android:fontFamily="@font/yanone_kaffeesatz"
+                android:padding="3sp"
                 android:text="@string/anadir_manualmente"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_anadirLibroManual"
@@ -67,9 +69,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginEnd="5dp"
+                android:background="#FFFFFF"
                 android:fontFamily="@font/yanone_kaffeesatz"
+                android:padding="3sp"
                 android:text="@string/anadir_mediante_google"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_anadirLibroGoogle"
