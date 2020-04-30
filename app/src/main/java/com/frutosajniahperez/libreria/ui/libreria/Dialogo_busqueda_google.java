@@ -26,7 +26,7 @@ import java.util.HashMap;
 import me.dm7.barcodescanner.zbar.Result;
 import me.dm7.barcodescanner.zbar.ZBarScannerView;
 
-public class Dialogo_busqueda_google implements EncontrarLibro.ObtenerDatos, ZBarScannerView.ResultHandler {
+public class Dialogo_busqueda_google implements EncontrarLibro.ObtenerDatos {
 
     private ImageView portada;
     private TextView txtTitulo, txtAutores, txtEditorial, txtAnioPublicacion, btnIniciarCamara;
@@ -34,14 +34,8 @@ public class Dialogo_busqueda_google implements EncontrarLibro.ObtenerDatos, ZBa
     private String titulo, editorial, anio, isbn, imagen, sinopsis;
     private HashMap<String, String> autores = new HashMap<>();
     private int contAutores = 1;
-    private ZBarScannerView mScannerView;
 
-    @Override
-    public void handleResult(Result rawResult) {
-        new EncontrarLibro(Dialogo_busqueda_google.this).execute(rawResult.getContents());
-        // If you would like to resume scanning, call this method below:
-        mScannerView.resumeCameraPreview(this);
-    }
+
 
     public interface ResultadoDialogoBusquedaGoogle {
         void ResultadoDialogoBusquedaGoogle(Libro libro);
@@ -51,7 +45,7 @@ public class Dialogo_busqueda_google implements EncontrarLibro.ObtenerDatos, ZBa
     public Dialogo_busqueda_google(Context context, ResultadoDialogoBusquedaGoogle actividad) {
 
 
-        dialog.setContentView(mScannerView);
+
         interfaz = actividad;
 
         //Creamos el dialogo con las características necesarias
@@ -62,7 +56,6 @@ public class Dialogo_busqueda_google implements EncontrarLibro.ObtenerDatos, ZBa
         dialog.setContentView(R.layout.dialogo_busqueda_google);
         dialog.setCanceledOnTouchOutside(true);
 
-        mScannerView = new ZBarScannerView(dialog.getContext());
 
         final SearchView searchView = dialog.findViewById(R.id.svLibros);
         portada = dialog.findViewById(R.id.ivPortada);
@@ -93,9 +86,7 @@ public class Dialogo_busqueda_google implements EncontrarLibro.ObtenerDatos, ZBa
         btnIniciarCamara.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.setContentView(mScannerView);
-                mScannerView.setResultHandler(Dialogo_busqueda_google.this); // Register ourselves as a handler for scan results.
-                mScannerView.startCamera();
+
             }
         });
 
