@@ -60,5 +60,6 @@
     <string name="introduce_las_iniciales_del_alumno">Introduce las iniciales del alumno</string>
     <string name="selecciona_el_id_del_alumno">Selecciona el ID del alumno</string>
     <string name="pulsa_aqu_para_leer_el_codigo_de_barras">Pulsa aquí para leer el código de barras</string>
+    <string name="o">o</string>
 
 </resources>
