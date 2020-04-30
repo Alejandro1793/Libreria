@@ -57,5 +57,8 @@
     <string name="introduce_nombre_alumno">Introduce Nombre Alumno</string>
     <string name="no_ha_dado_resultados">No ha dado resultado</string>
     <string name="introduce_el_isbn_para_buscar_el_libro">Introduce el ISBN para buscar el libro</string>
+    <string name="introduce_las_iniciales_del_alumno">Introduce las iniciales del alumno</string>
+    <string name="selecciona_el_id_del_alumno">Selecciona el ID del alumno</string>
+    <string name="pulsa_aqu_para_leer_el_codigo_de_barras">Pulsa aquí para leer el código de barras</string>
 
 </resources>

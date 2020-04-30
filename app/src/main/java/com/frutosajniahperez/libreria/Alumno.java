@@ -8,13 +8,13 @@ public class Alumno {
     private String nombre;
     private String email;
     private String idAula;
-    private ArrayList<Libro> librosLeidos;
+    private ArrayList<String> librosLeidos;
 
     public Alumno(){
 
     }
 
-    public Alumno(String idAlumno, String nombre, String email, ArrayList<Libro> librosLeidos, String idAula) {
+    public Alumno(String idAlumno, String nombre, String email, ArrayList<String> librosLeidos, String idAula) {
         this.idAlumno = idAlumno;
         this.nombre = nombre;
         this.email = email;
@@ -46,11 +46,11 @@ public class Alumno {
         this.email = email;
     }
 
-    public ArrayList<Libro> getLibrosLeidos() {
+    public ArrayList<String> getLibrosLeidos() {
         return librosLeidos;
     }
 
-    public void setLibrosLeidos(ArrayList<Libro> librosLeidos) {
+    public void setLibrosLeidos(ArrayList<String> librosLeidos) {
         this.librosLeidos = librosLeidos;
     }
 
