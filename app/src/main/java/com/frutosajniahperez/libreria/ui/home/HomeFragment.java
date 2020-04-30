@@ -1,9 +1,12 @@
 package com.frutosajniahperez.libreria.ui.home;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -13,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 
+import com.frutosajniahperez.libreria.Alumno;
 import com.frutosajniahperez.libreria.Colegio;
 import com.frutosajniahperez.libreria.Prestamo;
 import com.frutosajniahperez.libreria.R;
@@ -22,15 +26,17 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.HashMap;
 
 public class HomeFragment extends Fragment {
 
     String idCole, idAula, idProfe;
     Colegio cole;
-    Map<String, Prestamo> prestamos;
+    HashMap<String, Prestamo> prestamos;
+    HashMap<String, Alumno> alumnos;
     ArrayList<Prestamo> listaPrestamos;
     FirebaseFirestore database;
+    ListView lvPrestamos;
 
     public HomeFragment() {
     }
@@ -50,7 +56,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final ListView lv = root.findViewById(R.id.listInicio);
+        lvPrestamos = root.findViewById(R.id.listInicio);
         //Cargar lista de préstamos de la base de datos
         if (idCole != null) {
             database.collection("Colegios").document(idCole).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -63,19 +69,66 @@ public class HomeFragment extends Fragment {
                             if (idAula == null) {
                                 idAula = cole.getProfesorado().get(idProfe).getIdAula();
                             }
-                                prestamos = cole.getAulas().get(idAula).getListadoPrestamos();
+                            prestamos = cole.getAulas().get(idAula).getListadoPrestamos();
+                            alumnos = cole.getAulas().get(idAula).getListadoAlumnos();
                             if (prestamos.isEmpty()) {
                                 Toast.makeText(getContext(), "Todavía no hay préstamos", Toast.LENGTH_SHORT).show();
                             } else {
-                                listaPrestamos = new ArrayList<>(prestamos.values());
-                                ArrayAdapterInicio adapterInicio = new ArrayAdapterInicio(getContext(), listaPrestamos);
-                                lv.setAdapter(adapterInicio);
+                                cargarDatos();
                             }
                         }
                     }
                 }
             });
         }
+
+        lvPrestamos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Entregar")
+                        .setMessage("¿Seguro que quieres marcar este préstamo como entregado?")
+                        .setPositiveButton("Sí",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        alumnos.get(listaPrestamos.get(position).getAlumno()).getLibrosLeidos().add(listaPrestamos.get(position).getLibro());
+                                        prestamos.remove(listaPrestamos.get(position).getAlumno());
+                                        listaPrestamos.remove(position);
+                                        cole.getAulas().get(idAula).setListadoPrestamos(prestamos);
+                                        subirDatos();
+                                    }
+                                })
+                        .setNegativeButton("No",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                return true;
+            }
+        });
         return root;
+    }
+
+    public void cargarDatos() {
+        listaPrestamos = new ArrayList<>(prestamos.values());
+        ArrayAdapterInicio adapterInicio = new ArrayAdapterInicio(getContext(), listaPrestamos, alumnos);
+        lvPrestamos.setAdapter(adapterInicio);
+    }
+
+    public void subirDatos() {
+        database.collection("Colegios").document(idCole).set(cole).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(getContext(), "Base de datos actualizada", Toast.LENGTH_SHORT).show();
+                    cargarDatos();
+                }
+            }
+        });
     }
 }

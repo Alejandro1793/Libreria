@@ -134,7 +134,7 @@ public class AlumnosFragment extends Fragment implements Dialogo_alumno.Resultad
             alumno.setNombre(nombreAlumno);
             alumno.setEmail(email);
             alumno.setIdAula(idAula);
-            alumno.setLibrosLeidos(new ArrayList<Libro>());
+            alumno.setLibrosLeidos(new ArrayList<String>());
             cole.getAulas().get(idAula).getListadoAlumnos().put(idAlumno, alumno);
             subirDatos();
         } else {

@@ -15,20 +15,33 @@ import android.widget.Toast;
 import com.frutosajniahperez.libreria.Libro;
 import com.frutosajniahperez.libreria.R;
 
+import net.sourceforge.zbar.ImageScanner;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 
-public class Dialogo_busqueda_google implements EncontrarLibro.ObtenerDatos {
+import me.dm7.barcodescanner.zbar.Result;
+import me.dm7.barcodescanner.zbar.ZBarScannerView;
+
+public class Dialogo_busqueda_google implements EncontrarLibro.ObtenerDatos, ZBarScannerView.ResultHandler {
 
     private ImageView portada;
-    private TextView txtTitulo, txtAutores, txtEditorial, txtAnioPublicacion;
+    private TextView txtTitulo, txtAutores, txtEditorial, txtAnioPublicacion, btnIniciarCamara;
     private Dialog dialog;
     private String titulo, editorial, anio, isbn, imagen, sinopsis;
     private HashMap<String, String> autores = new HashMap<>();
     private int contAutores = 1;
+    private ZBarScannerView mScannerView;
+
+    @Override
+    public void handleResult(Result rawResult) {
+        new EncontrarLibro(Dialogo_busqueda_google.this).execute(rawResult.getContents());
+        // If you would like to resume scanning, call this method below:
+        mScannerView.resumeCameraPreview(this);
+    }
 
     public interface ResultadoDialogoBusquedaGoogle {
         void ResultadoDialogoBusquedaGoogle(Libro libro);
@@ -37,6 +50,8 @@ public class Dialogo_busqueda_google implements EncontrarLibro.ObtenerDatos {
 
     public Dialogo_busqueda_google(Context context, ResultadoDialogoBusquedaGoogle actividad) {
 
+
+        dialog.setContentView(mScannerView);
         interfaz = actividad;
 
         //Creamos el dialogo con las características necesarias
@@ -47,12 +62,15 @@ public class Dialogo_busqueda_google implements EncontrarLibro.ObtenerDatos {
         dialog.setContentView(R.layout.dialogo_busqueda_google);
         dialog.setCanceledOnTouchOutside(true);
 
+        mScannerView = new ZBarScannerView(dialog.getContext());
+
         final SearchView searchView = dialog.findViewById(R.id.svLibros);
         portada = dialog.findViewById(R.id.ivPortada);
         txtTitulo = dialog.findViewById(R.id.txtTituloLibro);
         txtAutores = dialog.findViewById(R.id.txtAutorLibro);
         txtEditorial = dialog.findViewById(R.id.txtEditorialLibro);
         txtAnioPublicacion = dialog.findViewById(R.id.txtAnioPublicacion);
+        btnIniciarCamara = dialog.findViewById(R.id.btnIniciarCamara);
         TextView btnAceptarLibroGoogle  = dialog.findViewById(R.id.btnAceptarLibroGoogle);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -69,6 +87,15 @@ public class Dialogo_busqueda_google implements EncontrarLibro.ObtenerDatos {
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;
+            }
+        });
+
+        btnIniciarCamara.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.setContentView(mScannerView);
+                mScannerView.setResultHandler(Dialogo_busqueda_google.this); // Register ourselves as a handler for scan results.
+                mScannerView.startCamera();
             }
         });
 
