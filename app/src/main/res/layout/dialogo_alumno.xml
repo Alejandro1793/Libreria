@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -60,9 +59,9 @@
             android:drawableStart="@drawable/ic_person_color"
             android:ems="10"
             android:fontFamily="@font/nova_slim"
-            android:hint="@string/introduce_nombre_alumno"
+            android:hint="@string/introduce_las_iniciales_del_alumno"
             android:inputType="textPersonName"
-            android:maxLength="30"
+            android:maxLength="3"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.489"

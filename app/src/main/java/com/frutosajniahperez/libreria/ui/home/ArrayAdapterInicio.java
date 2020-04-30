@@ -10,15 +10,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.frutosajniahperez.libreria.Alumno;
+import com.frutosajniahperez.libreria.Colegio;
 import com.frutosajniahperez.libreria.Prestamo;
 import com.frutosajniahperez.libreria.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ArrayAdapterInicio extends ArrayAdapter<Prestamo> {
 
-    public ArrayAdapterInicio(@NonNull Context context, ArrayList<Prestamo> listaPrestamos) {
+    HashMap<String, Alumno> alumnos;
+
+    public ArrayAdapterInicio(@NonNull Context context, ArrayList<Prestamo> listaPrestamos, HashMap<String, Alumno> alumnos) {
         super(context, 0, listaPrestamos);
+        this.alumnos = alumnos;
     }
 
     @NonNull
@@ -29,13 +36,17 @@ public class ArrayAdapterInicio extends ArrayAdapter<Prestamo> {
         View v;
         v = LayoutInflater.from(getContext()).inflate(R.layout.lista_alumno_libro, parent, false);
         TextView tv = v.findViewById(R.id.txtNombreAlumno);
-        tv.setText(prestamo.getAlumno());
+        String nombre = alumnos.get(prestamo.getAlumno()).getNombre();
+        tv.setText(nombre);
         tv = v.findViewById(R.id.txtTitulo);
         tv.setText(prestamo.getLibro());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         tv = v.findViewById(R.id.txtFechaPrestamo);
-        tv.setText(prestamo.getFechaPrestamo().toString());
+        String fechaPrestamo = sdf.format(prestamo.getFechaPrestamo());
+        tv.setText(fechaPrestamo);
         tv = v.findViewById(R.id.txtFechaEntrega);
-        tv.setText(prestamo.getFechaEntrega().toString());
+        String fechaEntrega = sdf.format(prestamo.getFechaEntrega());
+        tv.setText(fechaEntrega);
         return v;
     }
 }
