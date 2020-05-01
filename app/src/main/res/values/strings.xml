@@ -61,5 +61,11 @@
     <string name="selecciona_el_id_del_alumno">Selecciona el ID del alumno</string>
     <string name="pulsa_aqu_para_leer_el_codigo_de_barras">Pulsa aquí para leer el código de barras</string>
     <string name="o">o</string>
+    <string name="introduce_el_isbn">Introduce el ISBN</string>
+    <string name="introduce_el_titulo_del_libro">Introduce el título del libro</string>
+    <string name="introduce_el_autor">Introduce el autor</string>
+    <string name="introduce_la_editorial">Introduce la editorial</string>
+    <string name="introduce_una_breve_sinopsis">Introduce una breve sinopsis</string>
+    <string name="introduce_el_ano_de_publicacion">Introduce el año de publicación</string>
 
 </resources>
