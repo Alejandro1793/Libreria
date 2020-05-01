@@ -7,9 +7,10 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="#FFFFFF"
+        android:padding="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.508"
@@ -21,21 +22,19 @@
             android:id="@+id/btnAceptarLibro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="45dp"
             android:fontFamily="@font/yanone_kaffeesatz"
             android:text="@string/aceptar"
             android:textColor="#6680D4"
             android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.932" />
+            app:layout_constraintTop_toBottomOf="@+id/etSinopsis" />
 
         <EditText
             android:id="@+id/etTituloLibro"
-            android:layout_width="340dp"
-            android:layout_height="50dp"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
             android:autofillHints=""
             android:backgroundTint="#6680d4"
             android:ems="10"
@@ -43,17 +42,17 @@
             android:hint="@string/introduce_el_titulo_del_libro"
             android:inputType="text"
             android:maxLength="30"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:padding="12dp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.484"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.04" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/etIsbn"
-            android:layout_width="340dp"
-            android:layout_height="50dp"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:autofillHints=""
             android:backgroundTint="#6680d4"
             android:ems="10"
@@ -61,36 +60,37 @@
             android:hint="@string/introduce_el_isbn"
             android:inputType="number"
             android:maxLength="30"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:padding="12dp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.484"
+            app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.264" />
+            app:layout_constraintTop_toBottomOf="@+id/etTituloLibro" />
 
         <EditText
             android:id="@+id/etAutor1"
-            android:layout_width="340dp"
-            android:layout_height="50dp"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:autofillHints=""
             android:backgroundTint="#6680d4"
-            android:drawableStart="@drawable/ic_person_color"
             android:ems="10"
             android:fontFamily="@font/nova_slim"
             android:hint="@string/introduce_el_autor"
             android:inputType="textPersonName"
             android:maxLength="30"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:padding="12dp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.484"
+            app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.152" />
+            app:layout_constraintTop_toBottomOf="@+id/etIsbn" />
 
         <EditText
             android:id="@+id/etEditorial"
-            android:layout_width="340dp"
-            android:layout_height="50dp"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:autofillHints=""
             android:backgroundTint="#6680d4"
             android:ems="10"
@@ -98,17 +98,17 @@
             android:hint="@string/introduce_la_editorial"
             android:inputType="text"
             android:maxLength="30"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:padding="12dp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.515"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.387" />
+            app:layout_constraintTop_toBottomOf="@+id/etAnioPublicacion" />
 
         <EditText
             android:id="@+id/etAnioPublicacion"
-            android:layout_width="340dp"
-            android:layout_height="50dp"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:autofillHints=""
             android:backgroundTint="#6680d4"
             android:ems="10"
@@ -116,16 +116,18 @@
             android:hint="@string/introduce_el_ano_de_publicacion"
             android:inputType="number"
             android:maxLength="30"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:padding="12dp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.484"
+            app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/etAutor1" />
 
         <EditText
             android:id="@+id/etSinopsis"
-            android:layout_width="340dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:backgroundTint="#6680d4"
             android:ems="10"
             android:fontFamily="@font/nova_slim"
@@ -134,12 +136,11 @@
             android:importantForAutofill="no"
             android:inputType="textMultiLine"
             android:maxLength="140"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:padding="12dp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.484"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.616" />
+            app:layout_constraintTop_toBottomOf="@+id/etEditorial" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
