@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 
 public class EncontrarLibro extends AsyncTask<String, Void, String> {
 
-    ObtenerDatos datos;
+    private ObtenerDatos datos;
 
     public EncontrarLibro(ObtenerDatos datos) {
         this.datos = datos;

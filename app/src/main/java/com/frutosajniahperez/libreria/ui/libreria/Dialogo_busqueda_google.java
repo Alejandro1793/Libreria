@@ -2,7 +2,7 @@ package com.frutosajniahperez.libreria.ui.libreria;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Bitmap;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
@@ -15,26 +15,23 @@ import android.widget.Toast;
 import com.frutosajniahperez.libreria.Libro;
 import com.frutosajniahperez.libreria.R;
 
-import net.sourceforge.zbar.ImageScanner;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 
-import me.dm7.barcodescanner.zbar.Result;
-import me.dm7.barcodescanner.zbar.ZBarScannerView;
+
 
 public class Dialogo_busqueda_google implements EncontrarLibro.ObtenerDatos {
 
     private ImageView portada;
+    public static TextView txtBuscaIsbn;
     private TextView txtTitulo, txtAutores, txtEditorial, txtAnioPublicacion, btnIniciarCamara;
     private Dialog dialog;
     private String titulo, editorial, anio, isbn, imagen, sinopsis;
     private HashMap<String, String> autores = new HashMap<>();
     private int contAutores = 1;
-
 
 
     public interface ResultadoDialogoBusquedaGoogle {
@@ -43,8 +40,6 @@ public class Dialogo_busqueda_google implements EncontrarLibro.ObtenerDatos {
     private ResultadoDialogoBusquedaGoogle interfaz;
 
     public Dialogo_busqueda_google(Context context, ResultadoDialogoBusquedaGoogle actividad) {
-
-
 
         interfaz = actividad;
 
@@ -64,29 +59,25 @@ public class Dialogo_busqueda_google implements EncontrarLibro.ObtenerDatos {
         txtEditorial = dialog.findViewById(R.id.txtEditorialLibro);
         txtAnioPublicacion = dialog.findViewById(R.id.txtAnioPublicacion);
         btnIniciarCamara = dialog.findViewById(R.id.btnIniciarCamara);
+        txtBuscaIsbn = dialog.findViewById(R.id.txtBuscaIsbn);
         TextView btnAceptarLibroGoogle  = dialog.findViewById(R.id.btnAceptarLibroGoogle);
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                if (query.length() != 0) {
+            public void onClick(View v) {
+                String query = txtBuscaIsbn.getText().toString();
+                if (query.length() > 0) {
                     new EncontrarLibro(Dialogo_busqueda_google.this).execute(query);
-                    return true;
                 } else {
-                    return false;
+                    Toast.makeText(dialog.getContext(), "Tienes que introducir un ISBN", Toast.LENGTH_SHORT).show();
                 }
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
             }
         });
 
         btnIniciarCamara.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                dialog.getContext().startActivity(new Intent(dialog.getContext(), LectorCodigoBarras.class));
             }
         });
 

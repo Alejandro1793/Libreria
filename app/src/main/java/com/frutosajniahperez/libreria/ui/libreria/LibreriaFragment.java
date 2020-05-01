@@ -29,7 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class LibreriaFragment extends Fragment implements Dialogo_busqueda_google.ResultadoDialogoBusquedaGoogle {
+public class LibreriaFragment extends Fragment implements Dialogo_busqueda_google.ResultadoDialogoBusquedaGoogle, Dialogo_libreria_manual.ResultadoDialogoBusqueda {
 
     Float translationY = 100f;
     OvershootInterpolator interpolator = new OvershootInterpolator();
@@ -43,7 +43,7 @@ public class LibreriaFragment extends Fragment implements Dialogo_busqueda_googl
     ArrayList<Libro> libros;
     ListView listLibros;
 
-
+    //CAMBIAR EL FONDO CUANDO PASE FECHA || AVISAR SI VA A REPETIR LIBRO || COMENZAR CON ALUMNO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     boolean menuAbierto = false;
 
     @Override
@@ -66,6 +66,7 @@ public class LibreriaFragment extends Fragment implements Dialogo_busqueda_googl
         fab_opcionesLibro = root.findViewById(R.id.fab_opciones_libro);
         fab_anadirLibroManual = root.findViewById(R.id.fab_anadirLibroManual);
         btnAnadirGoogle = root.findViewById(R.id.fab_anadirLibroGoogle);
+
 
         lbAnadirLibroGoogle = root.findViewById(R.id.lbAnadirLibroGoogle);
         lbAnadirLibroManual = root.findViewById(R.id.lbAnadirLibroManual);
@@ -153,11 +154,27 @@ public class LibreriaFragment extends Fragment implements Dialogo_busqueda_googl
             }
         });
 
+        fab_anadirLibroManual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Dialogo_libreria_manual(getContext(), LibreriaFragment.this);
+            }
+        });
+
         return root;
     }
 
     @Override
     public void ResultadoDialogoBusquedaGoogle(Libro libro) {
+        subirLibro(libro);
+    }
+
+    @Override
+    public void ResultadoDialogoBusqueda(Libro libro) {
+        subirLibro(libro);
+    }
+
+    public void subirLibro(Libro libro){
         if (!cole.getAulas().get(idAula).getLibreria().containsKey(libro.getIsbn())) {
             libreria.put(libro.getIsbn(), libro);
             cole.getAulas().get(idAula).setLibreria(libreria);

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="373dp"
+        android:layout_height="700dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.326">
+
+        <TextView
+            android:id="@+id/btnAceptarLibro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/yanone_kaffeesatz"
+            android:text="@string/aceptar"
+            android:textColor="#6680D4"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.932" />
+
+        <EditText
+            android:id="@+id/etTituloLibro"
+            android:layout_width="340dp"
+            android:layout_height="50dp"
+            android:autofillHints=""
+            android:backgroundTint="#6680d4"
+            android:ems="10"
+            android:fontFamily="@font/nova_slim"
+            android:hint="@string/introduce_el_titulo_del_libro"
+            android:inputType="text"
+            android:maxLength="30"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.484"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.04" />
+
+        <EditText
+            android:id="@+id/etIsbn"
+            android:layout_width="340dp"
+            android:layout_height="50dp"
+            android:autofillHints=""
+            android:backgroundTint="#6680d4"
+            android:ems="10"
+            android:fontFamily="@font/nova_slim"
+            android:hint="@string/introduce_el_isbn"
+            android:inputType="number"
+            android:maxLength="30"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.484"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.264" />
+
+        <EditText
+            android:id="@+id/etAutor1"
+            android:layout_width="340dp"
+            android:layout_height="50dp"
+            android:autofillHints=""
+            android:backgroundTint="#6680d4"
+            android:drawableStart="@drawable/ic_person_color"
+            android:ems="10"
+            android:fontFamily="@font/nova_slim"
+            android:hint="@string/introduce_el_autor"
+            android:inputType="textPersonName"
+            android:maxLength="30"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.484"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.152" />
+
+        <EditText
+            android:id="@+id/etEditorial"
+            android:layout_width="340dp"
+            android:layout_height="50dp"
+            android:autofillHints=""
+            android:backgroundTint="#6680d4"
+            android:ems="10"
+            android:fontFamily="@font/nova_slim"
+            android:hint="@string/introduce_la_editorial"
+            android:inputType="text"
+            android:maxLength="30"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.515"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.387" />
+
+        <EditText
+            android:id="@+id/etAnioPublicacion"
+            android:layout_width="340dp"
+            android:layout_height="50dp"
+            android:autofillHints=""
+            android:backgroundTint="#6680d4"
+            android:ems="10"
+            android:fontFamily="@font/nova_slim"
+            android:hint="@string/introduce_el_ano_de_publicacion"
+            android:inputType="number"
+            android:maxLength="30"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.484"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/etSinopsis"
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#6680d4"
+            android:ems="10"
+            android:fontFamily="@font/nova_slim"
+            android:gravity="start|top"
+            android:hint="@string/introduce_una_breve_sinopsis"
+            android:inputType="textMultiLine"
+            android:maxLength="140"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.484"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.616"
+            android:importantForAutofill="no" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

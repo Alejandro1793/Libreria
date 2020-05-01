@@ -2,13 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="389dp"
-        android:layout_height="450dp"
+        android:layout_width="399dp"
+        android:layout_height="548dp"
         android:background="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,23 +81,25 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.96" />
+            app:layout_constraintVertical_bias="0.937" />
 
         <SearchView
             android:id="@+id/svLibros"
-            android:layout_width="0dp"
-            android:layout_height="61dp"
+            android:layout_width="49dp"
+            android:layout_height="50dp"
             android:background="@drawable/forma_boton_contraria"
             android:inputType="number"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.917"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.44" />
+            app:layout_constraintVertical_bias="0.42" />
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout2"
+            android:layout_width="356dp"
+            android:layout_height="137dp"
             android:orientation="horizontal"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -109,15 +110,15 @@
 
             <ImageView
                 android:id="@+id/ivPortada"
-                android:layout_width="67dp"
-                android:layout_height="match_parent"
+                android:layout_width="239dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:contentDescription="@string/imglibro"
                 app:srcCompat="@drawable/noimg" />
 
             <LinearLayout
-                android:layout_width="218dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -164,6 +165,20 @@
 
             </LinearLayout>
         </LinearLayout>
+
+        <EditText
+            android:id="@+id/txtBuscaIsbn"
+            android:layout_width="260dp"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:hint="@string/introduce_el_isbn"
+            android:inputType="number"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.403"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.42" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
