@@ -37,6 +37,8 @@
         android:id="@+id/btnInicioSesion"
         android:layout_width="340dp"
         android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/forma_boton_contraria"
         android:fontFamily="@font/yanone_kaffeesatz"
         android:text="@string/aceptar"

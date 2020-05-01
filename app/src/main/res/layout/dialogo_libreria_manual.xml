@@ -7,8 +7,8 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="373dp"
-        android:layout_height="700dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -131,6 +131,7 @@
             android:fontFamily="@font/nova_slim"
             android:gravity="start|top"
             android:hint="@string/introduce_una_breve_sinopsis"
+            android:importantForAutofill="no"
             android:inputType="textMultiLine"
             android:maxLength="140"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -138,8 +139,7 @@
             app:layout_constraintHorizontal_bias="0.484"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.616"
-            android:importantForAutofill="no" />
+            app:layout_constraintVertical_bias="0.616" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
