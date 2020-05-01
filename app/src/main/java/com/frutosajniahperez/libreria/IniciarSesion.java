@@ -98,7 +98,7 @@ public class IniciarSesion extends AppCompatActivity {
                         } else {
                             Toast.makeText(IniciarSesion.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-
+                            progressDialog.dismiss();
                         }
                     }
                 });
