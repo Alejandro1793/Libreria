@@ -181,6 +181,8 @@ public class PrestamosFragment extends Fragment {
                                         });
                         AlertDialog dialog = builder.create();
                         dialog.show();
+                    }else{
+                        subirPrestamo();
                     }
                 } else {
                     Toast.makeText(getContext(), "Debes seleccionar una fecha de entrega", Toast.LENGTH_SHORT).show();
