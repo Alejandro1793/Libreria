@@ -19,7 +19,6 @@ import androidx.fragment.app.Fragment;
 import com.frutosajniahperez.libreria.Colegio;
 import com.frutosajniahperez.libreria.Libro;
 import com.frutosajniahperez.libreria.R;
-import com.frutosajniahperez.libreria.ui.alumnos.ArrayAdapterAlumnos;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,20 +30,20 @@ import java.util.HashMap;
 
 public class LibreriaFragment extends Fragment implements Dialogo_busqueda_google.ResultadoDialogoBusquedaGoogle, Dialogo_libreria_manual.ResultadoDialogoBusqueda {
 
-    Float translationY = 100f;
-    OvershootInterpolator interpolator = new OvershootInterpolator();
+    private Float translationY = 100f;
+    private OvershootInterpolator interpolator = new OvershootInterpolator();
 
-    FloatingActionButton fab_opcionesLibro, fab_anadirLibroManual, btnAnadirGoogle;
-    TextView lbAnadirLibroManual, lbAnadirLibroGoogle;
-    String idCole, idAula, idProfe;
-    FirebaseFirestore database;
-    Colegio cole;
-    HashMap<String, Libro> libreria;
-    ArrayList<Libro> libros;
-    ListView listLibros;
+    private FloatingActionButton fab_opcionesLibro, fab_anadirLibroManual, btnAnadirGoogle;
+    private TextView lbAnadirLibroManual, lbAnadirLibroGoogle;
+    private String idCole, idAula, idProfe;
+    private FirebaseFirestore database;
+    private Colegio cole;
+    private HashMap<String, Libro> libreria;
+    private ArrayList<Libro> libros;
+    private ListView listLibros;
 
-    //CAMBIAR EL FONDO CUANDO PASE FECHA || AVISAR SI VA A REPETIR LIBRO || COMENZAR CON ALUMNO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    boolean menuAbierto = false;
+    //COMENZAR CON ALUMNO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    private boolean menuAbierto = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,10 +85,10 @@ public class LibreriaFragment extends Fragment implements Dialogo_busqueda_googl
         fab_opcionesLibro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    if (menuAbierto) {
-                        cierraMenu();
-                    } else {
-                        abreMenu();
+                if (menuAbierto) {
+                    cierraMenu();
+                } else {
+                    abreMenu();
 
                 }
             }
@@ -174,7 +173,7 @@ public class LibreriaFragment extends Fragment implements Dialogo_busqueda_googl
         subirLibro(libro);
     }
 
-    public void subirLibro(Libro libro){
+    private void subirLibro(Libro libro) {
         if (!cole.getAulas().get(idAula).getLibreria().containsKey(libro.getIsbn())) {
             libreria.put(libro.getIsbn(), libro);
             cole.getAulas().get(idAula).setLibreria(libreria);
@@ -184,7 +183,19 @@ public class LibreriaFragment extends Fragment implements Dialogo_busqueda_googl
         }
     }
 
-    public void abreMenu() {
+    private void subirDatos() {
+        database.collection("Colegios").document(idCole).set(cole).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(getContext(), "Base de datos actualizada", Toast.LENGTH_SHORT).show();
+                    cargarDatos();
+                }
+            }
+        });
+    }
+
+    private void abreMenu() {
         menuAbierto = !menuAbierto;
 
         fab_opcionesLibro.animate().setInterpolator(interpolator).rotation(45f).setDuration(300).start();
@@ -196,7 +207,7 @@ public class LibreriaFragment extends Fragment implements Dialogo_busqueda_googl
 
     }
 
-    public void cierraMenu() {
+    private void cierraMenu() {
         menuAbierto = !menuAbierto;
 
         fab_opcionesLibro.animate().setInterpolator(interpolator).rotation(0f).setDuration(300).start();
@@ -208,21 +219,10 @@ public class LibreriaFragment extends Fragment implements Dialogo_busqueda_googl
 
     }
 
-    public void cargarDatos() {
+    private void cargarDatos() {
         libros = new ArrayList<>(libreria.values());
         ArrayAdapterLibreria adapterInicio = new ArrayAdapterLibreria(getContext(), libros);
         listLibros.setAdapter(adapterInicio);
     }
 
-    public void subirDatos() {
-        database.collection("Colegios").document(idCole).set(cole).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(getContext(), "Base de datos actualizada", Toast.LENGTH_SHORT).show();
-                    cargarDatos();
-                }
-            }
-        });
-    }
 }

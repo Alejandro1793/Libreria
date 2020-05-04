@@ -35,7 +35,7 @@ public class LectorCodigoBarras extends AppCompatActivity implements ZBarScanner
 
     @Override
     public void handleResult(Result rawResult) {
-        Dialogo_busqueda_google.txtBuscaIsbn.setText(rawResult.getContents());
+        Dialogo_busqueda_google.searchView.setQuery(rawResult.getContents(), true);
         onBackPressed();
     }
 }

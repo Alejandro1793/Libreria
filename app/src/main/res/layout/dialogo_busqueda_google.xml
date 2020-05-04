@@ -72,6 +72,7 @@
             android:id="@+id/btnAceptarLibroGoogle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:enabled="false"
             android:fontFamily="@font/yanone_kaffeesatz"
             android:text="@string/aceptar"
             android:textColor="#6680D4"
@@ -85,16 +86,15 @@
 
         <SearchView
             android:id="@+id/svLibros"
-            android:layout_width="49dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:background="@drawable/forma_boton_contraria"
             android:inputType="number"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.917"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.42" />
+            app:layout_constraintVertical_bias="0.391" />
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -165,20 +165,6 @@
 
             </LinearLayout>
         </LinearLayout>
-
-        <EditText
-            android:id="@+id/txtBuscaIsbn"
-            android:layout_width="260dp"
-            android:layout_height="50dp"
-            android:ems="10"
-            android:hint="@string/introduce_el_isbn"
-            android:inputType="number"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.403"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.42" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,9 +1,6 @@
 package com.frutosajniahperez.libreria.ui.libreria;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.os.Handler;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +20,6 @@ import java.util.concurrent.ExecutionException;
 
 public class ArrayAdapterLibreria extends ArrayAdapter<Libro> {
 
-    ImageView iv;
-
     public ArrayAdapterLibreria(@NonNull Context context, @NonNull List<Libro> objects) {
         super(context, 0, objects);
     }
@@ -37,7 +32,7 @@ public class ArrayAdapterLibreria extends ArrayAdapter<Libro> {
         View v;
         v = LayoutInflater.from(getContext()).inflate(R.layout.lista_libros, parent, false);
         TextView tv = v.findViewById(R.id.txtTituloLibro);
-        iv = v.findViewById(R.id.ivPortada);
+        ImageView iv = v.findViewById(R.id.ivPortada);
         tv.setText(libro.getTitulo());
         tv = v.findViewById(R.id.txtAutorLibro);
         StringBuilder cadena = new StringBuilder();
@@ -65,10 +60,6 @@ public class ArrayAdapterLibreria extends ArrayAdapter<Libro> {
         }
         return v;
     }
-
-
-
-
 }
 
 

@@ -26,8 +26,12 @@ import java.util.HashMap;
 public class Dialogo_busqueda_google implements EncontrarLibro.ObtenerDatos {
 
     private ImageView portada;
-    public static TextView txtBuscaIsbn;
-    private TextView txtTitulo, txtAutores, txtEditorial, txtAnioPublicacion, btnIniciarCamara;
+    private TextView txtTitulo;
+    private TextView txtAutores;
+    private TextView txtEditorial;
+    private TextView txtAnioPublicacion;
+    private TextView btnAceptarLibroGoogle;
+    public static SearchView searchView;
     private Dialog dialog;
     private String titulo, editorial, anio, isbn, imagen, sinopsis;
     private HashMap<String, String> autores = new HashMap<>();
@@ -52,25 +56,31 @@ public class Dialogo_busqueda_google implements EncontrarLibro.ObtenerDatos {
         dialog.setCanceledOnTouchOutside(true);
 
 
-        final SearchView searchView = dialog.findViewById(R.id.svLibros);
+        searchView = dialog.findViewById(R.id.svLibros);
         portada = dialog.findViewById(R.id.ivPortada);
         txtTitulo = dialog.findViewById(R.id.txtTituloLibro);
         txtAutores = dialog.findViewById(R.id.txtAutorLibro);
         txtEditorial = dialog.findViewById(R.id.txtEditorialLibro);
         txtAnioPublicacion = dialog.findViewById(R.id.txtAnioPublicacion);
-        btnIniciarCamara = dialog.findViewById(R.id.btnIniciarCamara);
-        txtBuscaIsbn = dialog.findViewById(R.id.txtBuscaIsbn);
-        TextView btnAceptarLibroGoogle  = dialog.findViewById(R.id.btnAceptarLibroGoogle);
+        TextView btnIniciarCamara = dialog.findViewById(R.id.btnIniciarCamara);
 
-        searchView.setOnSearchClickListener(new View.OnClickListener() {
+        btnAceptarLibroGoogle  = dialog.findViewById(R.id.btnAceptarLibroGoogle);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onClick(View v) {
-                String query = txtBuscaIsbn.getText().toString();
+            public boolean onQueryTextSubmit(String query) {
                 if (query.length() > 0) {
                     new EncontrarLibro(Dialogo_busqueda_google.this).execute(query);
+                    isbn = query;
                 } else {
                     Toast.makeText(dialog.getContext(), "Tienes que introducir un ISBN", Toast.LENGTH_SHORT).show();
                 }
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
             }
         });
 
@@ -80,6 +90,8 @@ public class Dialogo_busqueda_google implements EncontrarLibro.ObtenerDatos {
                 dialog.getContext().startActivity(new Intent(dialog.getContext(), LectorCodigoBarras.class));
             }
         });
+
+
 
         btnAceptarLibroGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,13 +151,6 @@ public class Dialogo_busqueda_google implements EncontrarLibro.ObtenerDatos {
                     txtAnioPublicacion.setText(R.string.no_ha_dado_resultados);
                 }
                 try {
-                    JSONArray isbnArray = libroInfo.getJSONArray("industryIdentifiers");
-                    JSONObject isbn13 = isbnArray.getJSONObject(1);
-                    isbn = isbn13.getString("identifier");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                try {
                     JSONObject imagenes = libroInfo.getJSONObject("imageLinks");
                     imagen = imagenes.getString("smallThumbnail");
                     portada.setImageBitmap(new CargarImagen().execute(imagen).get());
@@ -156,6 +161,7 @@ public class Dialogo_busqueda_google implements EncontrarLibro.ObtenerDatos {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+            btnAceptarLibroGoogle.setEnabled(true);
         } catch (Exception ex){
             Toast.makeText(dialog.getContext(), "No se encuentra el libro", Toast.LENGTH_SHORT).show();
         }

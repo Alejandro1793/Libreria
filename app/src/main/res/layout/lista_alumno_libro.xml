@@ -7,9 +7,11 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/lyPrestamo"
         android:layout_width="0dp"
-        android:layout_height="208dp"
+        android:layout_height="222dp"
         android:orientation="vertical"
+        android:paddingTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -123,4 +125,5 @@
             android:layout_height="5dp"
             android:background="@drawable/separador" />
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

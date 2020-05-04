@@ -1,6 +1,8 @@
 package com.frutosajniahperez.libreria.ui.prestamos;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
@@ -50,6 +52,8 @@ public class PrestamosFragment extends Fragment {
     private ArrayList<String> listadoAlumnos, listadoLibros;
     private FirebaseFirestore database;
     private Date fechaEntrega;
+    private Spinner spAlumno, spTituloLibro;
+    private TextView btnElegirFecha;
 
     public PrestamosFragment() {
     }
@@ -67,10 +71,10 @@ public class PrestamosFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_prestamos, container, false);
-        final Spinner spAlumno = root.findViewById(R.id.spAlumno);
-        final Spinner spTituloLibro = root.findViewById(R.id.spTituloLibro);
+        spAlumno = root.findViewById(R.id.spAlumno);
+        spTituloLibro = root.findViewById(R.id.spTituloLibro);
         final Button btnAceptarPrestamo = root.findViewById(R.id.btnAceptarPrestamo);
-        final TextView btnElegirFecha = root.findViewById(R.id.btnElegirFecha);
+        btnElegirFecha = root.findViewById(R.id.btnElegirFecha);
         listadoAlumnos = new ArrayList<>();
         listadoLibros = new ArrayList<>();
         Calendar.getInstance();
@@ -135,21 +139,67 @@ public class PrestamosFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (fechaEntrega != null) {
-                    cole.getAulas().get(idAula).getListadoPrestamos().put(spAlumno.getSelectedItem().toString(), new Prestamo(spAlumno.getSelectedItem().toString(), spTituloLibro.getSelectedItem().toString(), new Timestamp(new Date().getTime()), new Timestamp(fechaEntrega.getTime())));
-                    database.collection("Colegios").document(idCole).set(cole).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(getContext(), "Préstamo guardado", Toast.LENGTH_SHORT).show();
-                                btnElegirFecha.setText(R.string.selecciona_la_fecha_de_entrega);
-                            }
-                        }
-                    });
+                    if (cole.getAulas().get(idAula).getListadoAlumnos().get(spAlumno.getSelectedItem().toString()).getLibrosLeidos().contains(spTituloLibro.getSelectedItem().toString())) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setTitle("Libro leído")
+                                .setMessage("Este alumno ya ha leído este libro. ¿Seguro que quiere volver a leerlo?")
+                                .setPositiveButton("Sí",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                if (cole.getAulas().get(idAula).getListadoPrestamos().containsKey(spAlumno.getSelectedItem().toString())) {
+                                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                                    builder.setTitle("Sobreescribir")
+                                                            .setMessage("Este alumno ya tiene un préstamo activo. ¿Seguro que quieres sobreescribirlo?")
+                                                            .setPositiveButton("Sí",
+                                                                    new DialogInterface.OnClickListener() {
+                                                                        @Override
+                                                                        public void onClick(DialogInterface dialog, int which) {
+                                                                            subirPrestamo();
+                                                                        }
+                                                                    })
+                                                            .setNegativeButton("No",
+                                                                    new DialogInterface.OnClickListener() {
+                                                                        @Override
+                                                                        public void onClick(DialogInterface dialog, int which) {
+                                                                            dialog.dismiss();
+                                                                        }
+                                                                    });
+                                                    AlertDialog dialog2 = builder.create();
+                                                    dialog2.show();
+                                                } else {
+                                                    subirPrestamo();
+                                                }
+                                            }
+                                        })
+                                .setNegativeButton("No",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
                 } else {
                     Toast.makeText(getContext(), "Debes seleccionar una fecha de entrega", Toast.LENGTH_SHORT).show();
                 }
             }
         });
         return root;
+    }
+
+    public void subirPrestamo(){
+        cole.getAulas().get(idAula).getListadoPrestamos().put(spAlumno.getSelectedItem().toString(), new Prestamo(spAlumno.getSelectedItem().toString(), spTituloLibro.getSelectedItem().toString(), new Timestamp(new Date().getTime()), new Timestamp(fechaEntrega.getTime())));
+        database.collection("Colegios").document(idCole).set(cole).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(getContext(), "Préstamo guardado", Toast.LENGTH_SHORT).show();
+                    btnElegirFecha.setText(R.string.selecciona_la_fecha_de_entrega);
+                }
+            }
+        });
     }
 }
