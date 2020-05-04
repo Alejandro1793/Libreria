@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 
@@ -30,13 +31,13 @@ import java.util.HashMap;
 
 public class HomeFragment extends Fragment {
 
-    String idCole, idAula, idProfe;
-    Colegio cole;
-    HashMap<String, Prestamo> prestamos;
-    HashMap<String, Alumno> alumnos;
-    ArrayList<Prestamo> listaPrestamos;
-    FirebaseFirestore database;
-    ListView lvPrestamos;
+    private String idCole, idAula, idProfe;
+    private Colegio cole;
+    private HashMap<String, Prestamo> prestamos;
+    private HashMap<String, Alumno> alumnos;
+    private ArrayList<Prestamo> listaPrestamos;
+    private FirebaseFirestore database;
+    private ListView lvPrestamos;
 
     public HomeFragment() {
     }
@@ -57,6 +58,7 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         lvPrestamos = root.findViewById(R.id.listInicio);
+        SearchView svLista = root.findViewById(R.id.svLista);
         //Cargar lista de préstamos de la base de datos
         if (idCole != null) {
             database.collection("Colegios").document(idCole).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -81,6 +83,21 @@ public class HomeFragment extends Fragment {
                 }
             });
         }
+
+        svLista.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                cargarDatos(newText);
+                return false;
+            }
+        });
+
+
 
         lvPrestamos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -117,6 +134,12 @@ public class HomeFragment extends Fragment {
     public void cargarDatos() {
         listaPrestamos = new ArrayList<>(prestamos.values());
         ArrayAdapterInicio adapterInicio = new ArrayAdapterInicio(getContext(), listaPrestamos, alumnos);
+        lvPrestamos.setAdapter(adapterInicio);
+    }
+
+    public void cargarDatos(String nombre) {
+        listaPrestamos = new ArrayList<>(prestamos.values());
+        ArrayAdapterInicio adapterInicio = new ArrayAdapterInicio(getContext(), listaPrestamos, alumnos, nombre);
         lvPrestamos.setAdapter(adapterInicio);
     }
 

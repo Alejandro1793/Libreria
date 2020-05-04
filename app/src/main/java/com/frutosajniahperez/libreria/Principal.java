@@ -19,12 +19,10 @@ public class Principal extends AppCompatActivity {
         btnInicioSesion = (findViewById(R.id.btnInicioSesion));
 
         //Pantalla para iniciar Sesion
-
         btnInicioSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Principal.this, IniciarSesion.class));
-                //startActivity(new Intent(Principal.this, MainActivity.class));
             }
         });
 
