@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 public class RegistroAdministrador extends AppCompatActivity {
 
     Button btnAceptarDatos;
-    TextView txtPassGenerada, txtEmail, txtRegistroCole;
+    TextView txtEmail, txtRegistroCole;
     EditText txtContrasenia;
     FirebaseAuth mAuth;
     ImageView btnRegresar;
