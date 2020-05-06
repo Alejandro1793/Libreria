@@ -136,7 +136,7 @@ public class RegistroAlumno extends AppCompatActivity {
 
     public boolean comprobarEmail(String email) {
 
-        // Patrón para validar el email
+        // Patrón para verificar el email
         Pattern pattern = Pattern
                 .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                         + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
