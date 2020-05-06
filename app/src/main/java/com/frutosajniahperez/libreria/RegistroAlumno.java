@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
 public class RegistroAlumno extends AppCompatActivity {
 
     Button btnAceptarDatosAlumno;
-    EditText txtEmailAlumno, txtIdAlumnoRegistro, txtContraseniaAlumno;
+    EditText txtEmailAlumno, txtIdAlumnoRegistro, txtContraseniaAlumno, txtIdAulaAlumno;
     FirebaseAuth mAuth;
     ImageView btnRegresar;
     ArrayList<String> listadoColegios;
@@ -53,10 +53,11 @@ public class RegistroAlumno extends AppCompatActivity {
         colegios = new HashMap<>();
 
         btnRegresar = findViewById(R.id.btnRegresar);
-        txtEmailAlumno = findViewById(R.id.txtEmail);
+        txtEmailAlumno = findViewById(R.id.txtEmailAlumno);
         txtIdAlumnoRegistro = findViewById(R.id.txtIdAlumnoRegistro);
         btnAceptarDatosAlumno = findViewById(R.id.btnAceptarDatosAlumno);
         txtContraseniaAlumno = findViewById((R.id.txtContraseniaAlumno));
+        txtIdAulaAlumno = findViewById((R.id.txtIdAulaAlumno));
         final Spinner spIdColegios = findViewById(R.id.spIdColegioAlumno);
 
         database.collection("Colegios").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -72,6 +73,14 @@ public class RegistroAlumno extends AppCompatActivity {
                     spIdColegios.setAdapter(adapter);
                 }
 
+            }
+        });
+
+        btnRegresar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RegistroAlumno.this, Principal.class));
+                finish();
             }
         });
 
@@ -91,13 +100,13 @@ public class RegistroAlumno extends AppCompatActivity {
                 }
                 idCole = spIdColegios.getSelectedItem().toString();
                 cole = colegios.get(idCole);
-                if (cole.getProfesorado().containsKey(txtIdAlumnoRegistro.getText().toString())){
+                if (cole.getAulas().get(txtIdAulaAlumno.getText().toString()).getListadoAlumnos().containsKey(txtIdAlumnoRegistro.getText().toString())){
                     mAuth.createUserWithEmailAndPassword(txtEmailAlumno.getText().toString(), txtContraseniaAlumno.getText().toString())
                             .addOnCompleteListener(RegistroAlumno.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        // Registro del usuario realizado con éxito
+                                        //Registro del usuario realizado con éxito
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         usuario = new Usuario(txtEmailAlumno.getText().toString(), txtContraseniaAlumno.getText().toString(), idCole, txtIdAlumnoRegistro.getText().toString(),"Alumno");
                                         database.collection("users").document(txtEmailAlumno.getText().toString()).set(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -107,7 +116,7 @@ public class RegistroAlumno extends AppCompatActivity {
                                                         Toast.LENGTH_SHORT).show();
                                             }
                                         });
-                                        updateUI(user);
+                                        //updateUI(user);
                                     } else {
                                         Toast.makeText(RegistroAlumno.this, "Error al registrar el usuario",
                                                 Toast.LENGTH_SHORT).show();
@@ -117,19 +126,12 @@ public class RegistroAlumno extends AppCompatActivity {
                                 }
                             });
                 } else {
-                    Toast.makeText(RegistroAlumno.this, "No estás registrado en este colegio como Alumno. Habla con tu administrador", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegistroAlumno.this, "No estás registrado en este colegio como alumno. Habla con tu administrador", Toast.LENGTH_LONG).show();
                 }
 
             }
         });
 
-        btnRegresar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(RegistroAlumno.this, Principal.class));
-                finish();
-            }
-        });
     }
 
     public boolean comprobarEmail(String email) {
@@ -148,7 +150,7 @@ public class RegistroAlumno extends AppCompatActivity {
         if (user != null) {
             Intent intent = new Intent(RegistroAlumno.this, PrincipalProfesor.class);
             intent.putExtra("idcole", idCole);
-            intent.putExtra("idaula", cole.getProfesorado().get(txtIdAlumnoRegistro.getText().toString()).getIdAula());
+            //intent.putExtra("idaula", cole.getProfesorado().get(txtIdProfeRegistro.getText().toString()).getIdAula());
             startActivity(intent);
             finish();
         }
@@ -187,4 +189,5 @@ public class RegistroAlumno extends AppCompatActivity {
         }
         return valida;
     }
+
 }
