@@ -1,4 +1,4 @@
-package com.frutosajniahperez.libreria.ui.home;
+package com.frutosajniahperez.libreria.ui.inicio;
 
 import android.content.Context;
 import android.graphics.Color;

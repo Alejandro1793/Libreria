@@ -67,5 +67,9 @@
     <string name="introduce_la_editorial">Introduce la editorial</string>
     <string name="introduce_una_breve_sinopsis">Introduce una breve sinopsis</string>
     <string name="introduce_el_ano_de_publicacion">Introduce el año de publicación</string>
+    <string name="title_activity_principal_alumno">PrincipalAlumno</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="valoracion">Valoración</string>
 
 </resources>

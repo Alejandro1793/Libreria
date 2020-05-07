@@ -1,4 +1,4 @@
-package com.frutosajniahperez.libreria.ui.alumnos;
+package com.frutosajniahperez.libreria.ui.inicio;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -7,55 +7,59 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+
 import com.frutosajniahperez.libreria.Alumno;
 import com.frutosajniahperez.libreria.Colegio;
+import com.frutosajniahperez.libreria.Prestamo;
 import com.frutosajniahperez.libreria.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class AlumnosFragment extends Fragment implements Dialogo_alumno.ResultadoDialogoAlumno {
+public class InicioFragment extends Fragment {
 
-    String idCole, idAula, idProfe;
-    Colegio cole;
-    HashMap<String, Alumno> alumnos;
-    ArrayList<Alumno> listaAlumnos;
-    FirebaseFirestore database;
-    ListView listAlumno;
+    private String idCole, idAula, idProfe;
+    private Colegio cole;
+    private HashMap<String, Prestamo> prestamos;
+    private HashMap<String, Alumno> alumnos;
+    private ArrayList<Prestamo> listaPrestamos;
+    private FirebaseFirestore database;
+    private ListView lvPrestamos;
 
-    public AlumnosFragment() {
+    public InicioFragment() {
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        database = FirebaseFirestore.getInstance();
         if (getArguments() != null) {
             idCole = getArguments().getString("idcole");
             idAula = getArguments().getString("idaula");
             idProfe = getArguments().getString("idprofe");
         }
-        database = FirebaseFirestore.getInstance();
-    }
 
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_alumnos, container, false);
-        FloatingActionButton btnAnadirAlumno = root.findViewById(R.id.btnAceptarAlumno);
-        listAlumno = root.findViewById(R.id.listAlumnos);
+        View root = inflater.inflate(R.layout.fragment_inicio, container, false);
+        lvPrestamos = root.findViewById(R.id.listInicio);
+        SearchView svLista = root.findViewById(R.id.svLista);
+        //Cargar lista de préstamos de la base de datos
         if (idCole != null) {
             database.collection("Colegios").document(idCole).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
@@ -67,9 +71,10 @@ public class AlumnosFragment extends Fragment implements Dialogo_alumno.Resultad
                             if (idAula == null) {
                                 idAula = cole.getProfesorado().get(idProfe).getIdAula();
                             }
+                            prestamos = cole.getAulas().get(idAula).getListadoPrestamos();
                             alumnos = cole.getAulas().get(idAula).getListadoAlumnos();
-                            if (alumnos.isEmpty()) {
-                                Toast.makeText(getContext(), "Todavía no hay alumnos", Toast.LENGTH_SHORT).show();
+                            if (prestamos.isEmpty()) {
+                                Toast.makeText(getContext(), "Todavía no hay préstamos", Toast.LENGTH_SHORT).show();
                             } else {
                                 cargarDatos();
                             }
@@ -79,19 +84,35 @@ public class AlumnosFragment extends Fragment implements Dialogo_alumno.Resultad
             });
         }
 
-        listAlumno.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        svLista.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                cargarDatos(newText);
+                return false;
+            }
+        });
+
+
+
+        lvPrestamos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Borrado")
-                        .setMessage("¿Seguro que quieres eliminar este alumno?")
+                builder.setTitle("Entregar")
+                        .setMessage("¿Seguro que quieres marcar este préstamo como entregado?")
                         .setPositiveButton("Sí",
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        alumnos.remove(listaAlumnos.get(position).getIdAlumno());
-                                        listaAlumnos.remove(position);
-                                        cole.getAulas().get(idAula).setListadoAlumnos(alumnos);
+                                        alumnos.get(listaPrestamos.get(position).getAlumno()).getLibrosLeidos().add(listaPrestamos.get(position).getLibro());
+                                        prestamos.remove(listaPrestamos.get(position).getAlumno());
+                                        listaPrestamos.remove(position);
+                                        cole.getAulas().get(idAula).setListadoPrestamos(prestamos);
                                         subirDatos();
                                     }
                                 })
@@ -107,38 +128,19 @@ public class AlumnosFragment extends Fragment implements Dialogo_alumno.Resultad
                 return true;
             }
         });
-
-
-        btnAnadirAlumno.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new Dialogo_alumno(getContext(), AlumnosFragment.this);
-            }
-        });
         return root;
     }
 
-    @Override
-    public void ResultadoDialogoAlumno(String idAlumno, String nombreAlumno, String email) {
-
-        if (!cole.getAulas().get(idAula).getListadoAlumnos().containsKey(idAlumno)) {
-            Alumno alumno = new Alumno();
-            alumno.setIdAlumno(idAlumno);
-            alumno.setNombre(nombreAlumno);
-            alumno.setEmail(email);
-            alumno.setIdAula(idAula);
-            alumno.setLibrosLeidos(new ArrayList<String>());
-            cole.getAulas().get(idAula).getListadoAlumnos().put(idAlumno, alumno);
-            subirDatos();
-        } else {
-            Toast.makeText(getContext(), "Ya existe un alumno con este ID", Toast.LENGTH_SHORT).show();
-        }
+    public void cargarDatos() {
+        listaPrestamos = new ArrayList<>(prestamos.values());
+        ArrayAdapterInicio adapterInicio = new ArrayAdapterInicio(getContext(), listaPrestamos, alumnos);
+        lvPrestamos.setAdapter(adapterInicio);
     }
 
-    public void cargarDatos() {
-        listaAlumnos = new ArrayList<>(alumnos.values());
-        ArrayAdapterAlumnos adapterInicio = new ArrayAdapterAlumnos(getContext(), listaAlumnos);
-        listAlumno.setAdapter(adapterInicio);
+    public void cargarDatos(String nombre) {
+        listaPrestamos = new ArrayList<>(prestamos.values());
+        ArrayAdapterInicio adapterInicio = new ArrayAdapterInicio(getContext(), listaPrestamos, alumnos, nombre);
+        lvPrestamos.setAdapter(adapterInicio);
     }
 
     public void subirDatos() {

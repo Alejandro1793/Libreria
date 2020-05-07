@@ -11,7 +11,6 @@ public class Alumno {
     private ArrayList<String> librosLeidos;
 
     public Alumno(){
-
     }
 
     public Alumno(String idAlumno, String nombre, String email, ArrayList<String> librosLeidos, String idAula) {
@@ -61,4 +60,5 @@ public class Alumno {
     public void setIdAula(String idAula) {
         this.idAula = idAula;
     }
+
 }
