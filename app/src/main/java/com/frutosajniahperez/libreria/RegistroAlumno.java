@@ -110,7 +110,7 @@ public class RegistroAlumno extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (task.isSuccessful()) {
-                                            //Registro del usuario realizado con éxito
+                                            //Registro del usuario realizadoo con éxito
                                             FirebaseUser user = mAuth.getCurrentUser();
                                             usuario = new Usuario(txtEmailAlumno.getText().toString(), txtContraseniaAlumno.getText().toString(), idCole, txtIdAlumnoRegistro.getText().toString(),"Alumno");
                                             database.collection("users").document(txtEmailAlumno.getText().toString()).set(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {
