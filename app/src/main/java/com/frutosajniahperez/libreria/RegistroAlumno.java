@@ -87,6 +87,9 @@ public class RegistroAlumno extends AppCompatActivity {
         btnAceptarDatosAlumno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(txtEmailAlumno.getText().toString().isEmpty() || txtIdAlumnoRegistro.getText().toString().isEmpty() || txtIdAulaAlumno.getText().toString().isEmpty()){
+                    Toast.makeText(RegistroAlumno.this, "Rellena todos los datos", Toast.LENGTH_LONG).show();
+                }else{
                 if (comprobarEmail(txtEmailAlumno.getText().toString())) {
                     txtEmailAlumno.setEnabled(false);
                 } else {
@@ -101,34 +104,40 @@ public class RegistroAlumno extends AppCompatActivity {
                 idCole = spIdColegios.getSelectedItem().toString();
                 cole = colegios.get(idCole);
                 if (cole.getAulas().get(txtIdAulaAlumno.getText().toString()).getListadoAlumnos().containsKey(txtIdAlumnoRegistro.getText().toString())){
-                    mAuth.createUserWithEmailAndPassword(txtEmailAlumno.getText().toString(), txtContraseniaAlumno.getText().toString())
-                            .addOnCompleteListener(RegistroAlumno.this, new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        //Registro del usuario realizado con éxito
-                                        FirebaseUser user = mAuth.getCurrentUser();
-                                        usuario = new Usuario(txtEmailAlumno.getText().toString(), txtContraseniaAlumno.getText().toString(), idCole, txtIdAlumnoRegistro.getText().toString(),"Alumno");
-                                        database.collection("users").document(txtEmailAlumno.getText().toString()).set(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                Toast.makeText(RegistroAlumno.this, "Usuario creado con éxito.",
-                                                        Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
-                                        //updateUI(user);
-                                    } else {
-                                        Toast.makeText(RegistroAlumno.this, "Error al registrar el usuario",
-                                                Toast.LENGTH_SHORT).show();
-                                        mAuth.getCurrentUser().delete();
-                                        startActivity(new Intent(RegistroAlumno.this, EleccionRegistro.class));
+                    if (cole.getAulas().get(txtIdAulaAlumno.getText().toString()).getListadoAlumnos().containsKey(txtEmailAlumno.getText().toString())){
+                        mAuth.createUserWithEmailAndPassword(txtEmailAlumno.getText().toString(), txtContraseniaAlumno.getText().toString())
+                                .addOnCompleteListener(RegistroAlumno.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            //Registro del usuario realizado con éxito
+                                            FirebaseUser user = mAuth.getCurrentUser();
+                                            usuario = new Usuario(txtEmailAlumno.getText().toString(), txtContraseniaAlumno.getText().toString(), idCole, txtIdAlumnoRegistro.getText().toString(),"Alumno");
+                                            database.collection("users").document(txtEmailAlumno.getText().toString()).set(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    Toast.makeText(RegistroAlumno.this, "Usuario creado con éxito.",
+                                                            Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                            //updateUI(user);
+                                        } else {
+                                            Toast.makeText(RegistroAlumno.this, "Error al registrar el usuario",
+                                                    Toast.LENGTH_SHORT).show();
+                                            mAuth.getCurrentUser().delete();
+                                            startActivity(new Intent(RegistroAlumno.this, EleccionRegistro.class));
+                                        }
                                     }
-                                }
-                            });
+                                });
+                    }else{
+                        Toast.makeText(RegistroAlumno.this, "Tu profesor te ha registrado con otro correo", Toast.LENGTH_LONG).show();
+                    }
+
                 } else {
-                    Toast.makeText(RegistroAlumno.this, "No estás registrado en este colegio como alumno. Habla con tu administrador", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegistroAlumno.this, "No estás registrado en este aula como alumno. Habla con tu profesor", Toast.LENGTH_LONG).show();
                 }
 
+            }
             }
         });
 
