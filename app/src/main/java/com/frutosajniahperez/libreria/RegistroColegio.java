@@ -29,8 +29,8 @@ public class RegistroColegio extends AppCompatActivity implements Dialogo_aula.R
     HashMap<String, Aula> aulas;
     ArrayList<String> listadoAulas;
     HashMap<String, Profesor> profesorado;
+    HashMap<String, Alumno> alumnado;
     Context context;
-    Boolean exito = true;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -49,6 +49,7 @@ public class RegistroColegio extends AppCompatActivity implements Dialogo_aula.R
         cole = new Colegio();
         aulas = new HashMap<>();
         profesorado = new HashMap<>();
+        alumnado = new HashMap<>();
         context = this;
 
 
@@ -77,26 +78,23 @@ public class RegistroColegio extends AppCompatActivity implements Dialogo_aula.R
                 cole.setIdColegio(idCole);
                 cole.setAulas(aulas);
                 cole.setProfesorado(profesorado);
+                cole.setAlumnado(alumnado);
 
                 database.collection("Colegios").document(idCole).set(cole).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(RegistroColegio.this, "Colegio registrado correctamente", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(RegistroColegio.this, ModificarColegio.class);
+                        intent.putExtra("idcole", idCole);
+                        startActivity(intent);
+                        finish();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(RegistroColegio.this, "Fallo en el registro del colegio", Toast.LENGTH_LONG).show();
-                        exito = false;
                     }
                 });
-
-                if (exito) {
-                    Intent intent = new Intent(RegistroColegio.this, ModificarColegio.class);
-                    intent.putExtra("idcole", idCole);
-                    startActivity(intent);
-                    finish();
-                }
 
             }
         });
@@ -110,11 +108,7 @@ public class RegistroColegio extends AppCompatActivity implements Dialogo_aula.R
         if (aulas.containsKey(idAula)) {
             Toast.makeText(RegistroColegio.this, "Este aula ya existe", Toast.LENGTH_LONG).show();
         } else {
-            Aula aula = new Aula();
-            aula.setIdAula(idAula);
-            aula.setLibreria(new HashMap<String, Libro>());
-            aula.setListadoAlumnos(new HashMap<String, Alumno>());
-            aula.setListadoPrestamos(new HashMap<String, Prestamo>());
+            Aula aula = new Aula(idAula, new HashMap<String, Libro>(), new ArrayList<String>(), new HashMap<String, Prestamo>());
             aulas.put(idAula, aula);
             Toast.makeText(RegistroColegio.this, "Aula creada", Toast.LENGTH_LONG).show();
 

@@ -72,7 +72,7 @@ public class InicioFragment extends Fragment {
                                 idAula = cole.getProfesorado().get(idProfe).getIdAula();
                             }
                             prestamos = cole.getAulas().get(idAula).getListadoPrestamos();
-                            alumnos = cole.getAulas().get(idAula).getListadoAlumnos();
+                            alumnos = cole.getAlumnado();
                             if (prestamos.isEmpty()) {
                                 Toast.makeText(getContext(), "Todavía no hay préstamos", Toast.LENGTH_SHORT).show();
                             } else {

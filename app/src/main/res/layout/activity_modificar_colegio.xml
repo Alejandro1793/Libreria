@@ -164,6 +164,32 @@
                 app:srcCompat="@drawable/ic_mode_edit_black_24dp" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end">
+
+            <TextView
+                android:id="@+id/lbReiniciarCurso"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="5dp"
+                android:fontFamily="@font/yanone_kaffeesatz"
+                android:text="@string/reiniciar_curso"
+                android:textSize="18sp" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_reiniciarCurso"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:tint="@color/white"
+                app:backgroundTint="#6680d4"
+                app:fabSize="mini"
+                app:srcCompat="@drawable/ic_refresh_black_24dp" />
+        </LinearLayout>
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_opciones"
             android:layout_width="match_parent"

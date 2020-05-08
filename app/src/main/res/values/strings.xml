@@ -71,5 +71,6 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="valoracion">Valoración</string>
+    <string name="reiniciar_curso">Reiniciar curso</string>
 
 </resources>

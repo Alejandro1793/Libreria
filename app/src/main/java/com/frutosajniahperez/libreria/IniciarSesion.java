@@ -77,7 +77,6 @@ public class IniciarSesion extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
                             Toast.makeText(IniciarSesion.this, "Sesión Iniciada",
                                     Toast.LENGTH_SHORT).show();
                             //Obtiene el usuario de la base de datos

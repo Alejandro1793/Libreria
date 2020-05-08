@@ -85,7 +85,7 @@ public class RegistroAlumno extends AppCompatActivity {
             }
         });
 
-        //CREAR ALUMNADO EN LA BASE DE DATOS || AÑADIR BOTÓN DE RESET PARA NUEVO CURSO || EMAIL A LOS ALUMNOS || BORRAR USUARIOS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //TERMINAR ALUMNO || EMAIL A LOS ALUMNOS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         btnAceptarDatosAlumno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,8 +107,8 @@ public class RegistroAlumno extends AppCompatActivity {
                     cole = colegios.get(idCole);
                     if (cole.getAulas().containsKey(txtIdAulaAlumno.getText().toString())) {
                         Aula aula = cole.getAulas().get(txtIdAulaAlumno.getText().toString());
-                        if (aula.getListadoAlumnos().containsKey(txtIdAlumnoRegistro.getText().toString())) {
-                            Alumno alumno = cole.getAulas().get(txtIdAulaAlumno.getText().toString()).getListadoAlumnos().get(txtIdAlumnoRegistro.getText().toString());
+                        if (aula.getListadoAlumnos().contains(txtIdAlumnoRegistro.getText().toString())) {
+                            Alumno alumno = cole.getAlumnado().get(txtIdAlumnoRegistro.getText().toString());
                             if (alumno.getEmail().equals(txtEmailAlumno.getText().toString())) {
                                 mAuth.createUserWithEmailAndPassword(txtEmailAlumno.getText().toString(), txtContraseniaAlumno.getText().toString())
                                         .addOnCompleteListener(RegistroAlumno.this, new OnCompleteListener<AuthResult>() {

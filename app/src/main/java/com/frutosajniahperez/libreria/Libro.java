@@ -88,7 +88,9 @@ public class Libro {
     }
 
     public int getValoracion() {
-        return this.valoracion / this.numValoraciones;
+        if (this.numValoraciones != 0)
+            return this.valoracion / this.numValoraciones;
+        return 0;
     }
 
     public void setValoracion(int valoracion){

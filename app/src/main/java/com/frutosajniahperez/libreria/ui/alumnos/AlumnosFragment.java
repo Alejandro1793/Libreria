@@ -67,7 +67,7 @@ public class AlumnosFragment extends Fragment implements Dialogo_alumno.Resultad
                             if (idAula == null) {
                                 idAula = cole.getProfesorado().get(idProfe).getIdAula();
                             }
-                            alumnos = cole.getAulas().get(idAula).getListadoAlumnos();
+                            alumnos = cole.getAlumnado();
                             if (alumnos.isEmpty()) {
                                 Toast.makeText(getContext(), "Todavía no hay alumnos", Toast.LENGTH_SHORT).show();
                             } else {
@@ -90,8 +90,9 @@ public class AlumnosFragment extends Fragment implements Dialogo_alumno.Resultad
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         alumnos.remove(listaAlumnos.get(position).getIdAlumno());
+                                        cole.getAulas().get(idAula).getListadoAlumnos().remove(listaAlumnos.get(position).getIdAlumno());
                                         listaAlumnos.remove(position);
-                                        cole.getAulas().get(idAula).setListadoAlumnos(alumnos);
+                                        cole.setAlumnado(alumnos);
                                         subirDatos();
                                     }
                                 })
@@ -121,14 +122,10 @@ public class AlumnosFragment extends Fragment implements Dialogo_alumno.Resultad
     @Override
     public void ResultadoDialogoAlumno(String idAlumno, String nombreAlumno, String email) {
 
-        if (!cole.getAulas().get(idAula).getListadoAlumnos().containsKey(idAlumno)) {
-            Alumno alumno = new Alumno();
-            alumno.setIdAlumno(idAlumno);
-            alumno.setNombre(nombreAlumno);
-            alumno.setEmail(email);
-            alumno.setIdAula(idAula);
-            alumno.setLibrosLeidos(new ArrayList<String>());
-            cole.getAulas().get(idAula).getListadoAlumnos().put(idAlumno, alumno);
+        if (!alumnos.containsKey(idAlumno)) {
+            Alumno alumno = new Alumno(idAlumno, nombreAlumno, email, new ArrayList<String>(), idAula);
+            cole.getAlumnado().put(idAlumno, alumno);
+            cole.getAulas().get(idAula).getListadoAlumnos().add(idAlumno);
             subirDatos();
         } else {
             Toast.makeText(getContext(), "Ya existe un alumno con este ID", Toast.LENGTH_SHORT).show();
@@ -137,6 +134,11 @@ public class AlumnosFragment extends Fragment implements Dialogo_alumno.Resultad
 
     public void cargarDatos() {
         listaAlumnos = new ArrayList<>(alumnos.values());
+        for (Alumno alumno : listaAlumnos){
+            if (!alumno.getIdAula().equals(idAula)){
+                listaAlumnos.remove(alumno);
+            }
+        }
         ArrayAdapterAlumnos adapterInicio = new ArrayAdapterAlumnos(getContext(), listaAlumnos);
         listAlumno.setAdapter(adapterInicio);
     }
