@@ -4,19 +4,14 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.frutosajniahperez.libreria.ui.alumnos.AlumnosFragment;
-import com.frutosajniahperez.libreria.ui.home.HomeFragment;
+import com.frutosajniahperez.libreria.ui.inicio.InicioFragment;
 import com.frutosajniahperez.libreria.ui.libreria.LibreriaFragment;
 import com.frutosajniahperez.libreria.ui.prestamos.PrestamosFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 public class PrincipalProfesor extends AppCompatActivity {
 
@@ -32,11 +27,11 @@ public class PrincipalProfesor extends AppCompatActivity {
         final String idAula = getIntent().getStringExtra("idaula");
         final String idProfe = getIntent().getStringExtra("idprofe");
 
-        //Cargamos el bundle y lanzamos el fragment_home
+        //Cargamos el bundle y lanzamos el fragment_inicio
         bundle.putString("idcole", idCole);
         bundle.putString("idaula", idAula);
         bundle.putString("idprofe", idProfe);
-        HomeFragment inicio = new HomeFragment();
+        InicioFragment inicio = new InicioFragment();
         inicio.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, inicio).commit();
 
@@ -46,8 +41,8 @@ public class PrincipalProfesor extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment selectedFragment = null;
                 switch (item.getItemId()){
-                    case R.id.navigation_home:
-                        selectedFragment = new HomeFragment();
+                    case R.id.navigation_inicio:
+                        selectedFragment = new InicioFragment();
                         break;
                     case R.id.navigation_libreria:
                         selectedFragment = new LibreriaFragment();

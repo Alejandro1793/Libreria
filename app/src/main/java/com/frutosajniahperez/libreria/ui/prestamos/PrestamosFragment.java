@@ -90,11 +90,13 @@ public class PrestamosFragment extends Fragment {
                             if (idAula == null) {
                                 idAula = cole.getProfesorado().get(idProfe).getIdAula();
                             }
-                            alumnado = cole.getAulas().get(idAula).getListadoAlumnos();
+                            alumnado = cole.getAlumnado();
                             libreria = cole.getAulas().get(idAula).getLibreria();
                             if (!alumnado.isEmpty() && !libreria.isEmpty()) {
                                 for (Alumno alumno : alumnado.values()) {
-                                    listadoAlumnos.add(alumno.getIdAlumno());
+                                    if (alumno.getIdAula().equals(idAula)) {
+                                        listadoAlumnos.add(alumno.getIdAlumno());
+                                    }
                                 }
                                 for (Libro libro : libreria.values()) {
                                     listadoLibros.add(libro.getTitulo());
@@ -139,7 +141,7 @@ public class PrestamosFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (fechaEntrega != null) {
-                    if (cole.getAulas().get(idAula).getListadoAlumnos().get(spAlumno.getSelectedItem().toString()).getLibrosLeidos().contains(spTituloLibro.getSelectedItem().toString())) {
+                    if (alumnado.get(spAlumno.getSelectedItem().toString()).getLibrosLeidos().contains(spTituloLibro.getSelectedItem().toString())) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setTitle("Libro leído")
                                 .setMessage("Este alumno ya ha leído este libro. ¿Seguro que quiere volver a leerlo?")

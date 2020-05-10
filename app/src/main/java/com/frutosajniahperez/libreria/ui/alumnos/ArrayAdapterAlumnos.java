@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.frutosajniahperez.libreria.Alumno;
-import com.frutosajniahperez.libreria.Libro;
 import com.frutosajniahperez.libreria.R;
 
 import java.util.List;

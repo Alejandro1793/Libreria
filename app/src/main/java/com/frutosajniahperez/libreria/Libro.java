@@ -11,8 +11,13 @@ public class Libro {
     private String sinopsis;
     private String año;
     private String imagen;
+    private int valoracion;
+    private int numValoraciones;
 
-    public Libro() {}
+    public Libro() {
+        this.valoracion = 0;
+        this.numValoraciones = 0;
+    }
 
     public Libro(String isbn, String titulo, HashMap<String, String> autores, String editorial, String sinopsis, String año, String imagen) {
         this.isbn = isbn;
@@ -22,6 +27,8 @@ public class Libro {
         this.sinopsis = sinopsis;
         this.año = año;
         this.imagen = imagen;
+        this.valoracion = 0;
+        this.numValoraciones = 0;
     }
 
     public String getIsbn() {
@@ -78,5 +85,16 @@ public class Libro {
 
     public void setImagen(String imagen) {
         this.imagen = imagen;
+    }
+
+    public int getValoracion() {
+        if (this.numValoraciones != 0)
+            return this.valoracion / this.numValoraciones;
+        return 0;
+    }
+
+    public void setValoracion(int valoracion){
+        this.valoracion += valoracion;
+        this.numValoraciones++;
     }
 }

@@ -4,7 +4,6 @@ package com.frutosajniahperez.libreria;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -78,7 +77,6 @@ public class IniciarSesion extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
                             Toast.makeText(IniciarSesion.this, "Sesión Iniciada",
                                     Toast.LENGTH_SHORT).show();
                             //Obtiene el usuario de la base de datos

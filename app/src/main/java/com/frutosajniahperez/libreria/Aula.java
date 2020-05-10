@@ -1,6 +1,7 @@
 package com.frutosajniahperez.libreria;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -8,12 +9,12 @@ public class Aula implements Serializable {
 
     private String idAula;
     private HashMap<String, Libro> libreria;
-    private HashMap<String, Alumno> listadoAlumnos;
+    private ArrayList<String> listadoAlumnos;
     private HashMap<String, Prestamo> listadoPrestamos;
 
     public Aula() {}
 
-    public Aula(String idAula, HashMap<String, Libro> libreria, HashMap<String, Alumno> listadoAlumnos, HashMap<String, Prestamo> listadoPrestamos) {
+    public Aula(String idAula, HashMap<String, Libro> libreria, ArrayList<String> listadoAlumnos, HashMap<String, Prestamo> listadoPrestamos) {
         this.idAula = idAula;
         this.libreria = libreria;
         this.listadoAlumnos = listadoAlumnos;
@@ -36,11 +37,11 @@ public class Aula implements Serializable {
         this.libreria = libreria;
     }
 
-    public HashMap<String, Alumno> getListadoAlumnos() {
+    public ArrayList<String> getListadoAlumnos() {
         return listadoAlumnos;
     }
 
-    public void setListadoAlumnos(HashMap<String, Alumno> listadoAlumnos) {
+    public void setListadoAlumnos(ArrayList<String> listadoAlumnos) {
         this.listadoAlumnos = listadoAlumnos;
     }
 

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item
-        android:id="@+id/navigation_inicio"
+        android:id="@+id/navigation_home"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/title_home" />
 
@@ -12,13 +11,7 @@
         android:title="@string/title_libreria" />
 
     <item
-        android:id="@+id/navigation_alumnos"
-        android:icon="@drawable/ic_person_black_24dp"
-        android:title="@string/title_alumnos" />
-
-    <item
-        android:id="@+id/navigation_prestamos"
-        android:icon="@drawable/ic_book_black_24dp"
-        android:title="@string/prestamos" />
-
+        android:id="@+id/navigation_valoracion"
+        android:icon="@drawable/ic_star_black_24dp"
+        android:title="@string/valoracion" />
 </menu>

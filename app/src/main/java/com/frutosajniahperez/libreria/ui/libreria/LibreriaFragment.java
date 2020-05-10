@@ -42,7 +42,6 @@ public class LibreriaFragment extends Fragment implements Dialogo_busqueda_googl
     private ArrayList<Libro> libros;
     private ListView listLibros;
 
-    //COMENZAR CON ALUMNO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     private boolean menuAbierto = false;
 
     @Override
