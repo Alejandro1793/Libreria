@@ -11,9 +11,8 @@
         android:layout_width="335dp"
         android:layout_height="42dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="26dp"
+        android:layout_marginBottom="120dp"
         android:autofillHints=""
         android:backgroundTint="#6680d4"
         android:drawableStart="@drawable/ic_id_24dp"
@@ -25,8 +24,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.55"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/label2"
-        app:layout_constraintVertical_bias="0.594"
         tools:targetApi="lollipop" />
 
     <TextView
@@ -93,15 +90,15 @@
         android:id="@+id/label2"
         android:layout_width="335dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="424dp"
+        android:layout_marginBottom="344dp"
         android:fontFamily="@font/nova_slim"
         android:text="@string/requisitos_contrasenia"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.539"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtContraseniaProfe"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/txtContraseniaAlumno"
+        app:layout_constraintVertical_bias="0.156" />
 
     <TextView
         android:id="@+id/label4"
@@ -113,10 +110,9 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.539"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.564" />
+        app:layout_constraintVertical_bias="0.595" />
 
     <EditText
         android:id="@+id/txtEmailAlumno"
@@ -159,7 +155,7 @@
         app:layout_constraintHorizontal_bias="0.55"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/label2"
-        app:layout_constraintVertical_bias="0.051"
+        app:layout_constraintVertical_bias="0.048"
         tools:targetApi="lollipop" />
 
     <Spinner
@@ -170,6 +166,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.644" />
+        app:layout_constraintVertical_bias="0.672" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
