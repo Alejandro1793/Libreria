@@ -30,6 +30,7 @@ import com.frutosajniahperez.libreria.Prestamo;
 import com.frutosajniahperez.libreria.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -54,6 +55,7 @@ public class PrestamosFragment extends Fragment {
     private Date fechaEntrega;
     private Spinner spAlumno, spTituloLibro;
     private TextView btnElegirFecha;
+    private FloatingActionButton btnAceptarPrestamo;
 
     public PrestamosFragment() {
     }
@@ -73,7 +75,7 @@ public class PrestamosFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_prestamos, container, false);
         spAlumno = root.findViewById(R.id.spAlumno);
         spTituloLibro = root.findViewById(R.id.spTituloLibro);
-        final Button btnAceptarPrestamo = root.findViewById(R.id.btnAceptarPrestamo);
+        btnAceptarPrestamo = root.findViewById(R.id.btnAceptarPrestamo);
         btnElegirFecha = root.findViewById(R.id.btnElegirFecha);
         listadoAlumnos = new ArrayList<>();
         listadoLibros = new ArrayList<>();
