@@ -17,19 +17,15 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.gson.internal.$Gson$Preconditions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 
 public class ModificarColegio extends AppCompatActivity implements Dialogo_aula.ResultadoDialogoAula, Dialogo_profe.ResultadoDialogoProfe, Dialogo_eliminar_aula.ResultadoDialogoEliminarAula, Dialogo_eliminar_profe.ResultadoDialogoEliminarProfe, Dialogo_modificar_profe.ResultadoDialogoModificarProfe {
 
@@ -251,14 +247,12 @@ public class ModificarColegio extends AppCompatActivity implements Dialogo_aula.
         ArrayAdapter<String> adapter = null;
 
         if (listado.equals("aulas")) {
-            Set<String> setAulas = aulas.keySet();
-            listadoAulas = new ArrayList<>(setAulas);
+            listadoAulas = new ArrayList<>(aulas.keySet());
             adapter = new ArrayAdapter<>(ModificarColegio.this, android.R.layout.simple_spinner_item, listadoAulas);
 
 
         } else if (listado.equals("profes")) {
-            Set<String> profes = profesorado.keySet();
-            listadoProfes = new ArrayList<>(profes);
+            listadoProfes = new ArrayList<>(profesorado.keySet());
             adapter = new ArrayAdapter<>(ModificarColegio.this, android.R.layout.simple_spinner_item, listadoProfes);
 
         }

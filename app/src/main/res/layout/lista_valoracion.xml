@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="119dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/ivPortadaValoracion"
+                android:layout_width="42dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="@string/imglibro"
+                app:srcCompat="@drawable/noimg" />
+
+            <LinearLayout
+                android:layout_width="218dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtTituloLibroValoracion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/francois_one"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="1dp"
+                    android:paddingRight="3dp"
+                    android:textColor="#6680D4"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/txtPuntuacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nova_slim"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="1dp"
+                    android:paddingRight="3dp"
+                    android:textSize="45sp" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/ivEstrella1"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                app:srcCompat="@android:drawable/btn_star_big_off" />
+
+            <ImageView
+                android:id="@+id/ivEstrella2"
+                android:layout_width="49dp"
+                android:layout_height="match_parent"
+                app:srcCompat="@android:drawable/btn_star_big_off" />
+
+            <ImageView
+                android:id="@+id/ivEstrella3"
+                android:layout_width="52dp"
+                android:layout_height="match_parent"
+                app:srcCompat="@android:drawable/btn_star_big_off" />
+
+            <ImageView
+                android:id="@+id/ivEstrella4"
+                android:layout_width="49dp"
+                android:layout_height="match_parent"
+                app:srcCompat="@android:drawable/btn_star_big_off" />
+
+            <ImageView
+                android:id="@+id/ivEstrella5"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                app:srcCompat="@android:drawable/btn_star_big_off" />
+
+            <Button
+                android:id="@+id/btEnviarValoracion"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/forma_boton_contraria"
+                android:text="Enviar" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/separador" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

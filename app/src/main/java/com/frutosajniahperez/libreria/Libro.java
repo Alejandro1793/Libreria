@@ -1,5 +1,6 @@
 package com.frutosajniahperez.libreria;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 
 public class Libro {
@@ -11,11 +12,13 @@ public class Libro {
     private String sinopsis;
     private String año;
     private String imagen;
-    private int valoracion;
+    private int valoracionTotal;
+    private double valoracionMedia;
     private int numValoraciones;
 
     public Libro() {
-        this.valoracion = 0;
+        this.valoracionTotal = 0;
+        this.valoracionMedia = 0;
         this.numValoraciones = 0;
     }
 
@@ -27,7 +30,8 @@ public class Libro {
         this.sinopsis = sinopsis;
         this.año = año;
         this.imagen = imagen;
-        this.valoracion = 0;
+        this.valoracionTotal = 0;
+        this.valoracionMedia = 0;
         this.numValoraciones = 0;
     }
 
@@ -87,14 +91,14 @@ public class Libro {
         this.imagen = imagen;
     }
 
-    public int getValoracion() {
-        if (this.numValoraciones != 0)
-            return this.valoracion / this.numValoraciones;
-        return 0;
+    public double getValoracion() {
+       return this.valoracionMedia;
     }
 
     public void setValoracion(int valoracion){
-        this.valoracion += valoracion;
+        this.valoracionTotal += valoracion;
         this.numValoraciones++;
+        this.valoracionMedia = (double) this.valoracionTotal / this.numValoraciones;
+
     }
 }
