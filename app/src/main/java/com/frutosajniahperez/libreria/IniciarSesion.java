@@ -124,6 +124,8 @@ public class IniciarSesion extends AppCompatActivity {
                         //FALTAN LOS ROLES DE ALUMNO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                         switch (usuario.getRol()) {
                             case "Alumno":
+                                intent = new Intent(IniciarSesion.this, PrincipalAlumno.class);
+                                intent.putExtra("idalumno", usuario.getIdUsuario());
                                 break;
                             case "Administrador":
                                 intent = new Intent(IniciarSesion.this, ModificarColegio.class);

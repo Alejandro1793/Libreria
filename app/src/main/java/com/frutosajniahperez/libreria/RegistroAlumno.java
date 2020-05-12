@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,15 +32,16 @@ import java.util.regex.Pattern;
 public class RegistroAlumno extends AppCompatActivity {
 
     Button btnAceptarDatosAlumno;
-    EditText txtEmailAlumno, txtIdAlumnoRegistro, txtContraseniaAlumno, txtIdAulaAlumno;
+    EditText txtEmailAlumno, txtIdAlumnoRegistro, txtContraseniaAlumno;
     FirebaseAuth mAuth;
     ImageView btnRegresar;
     ArrayList<String> listadoColegios;
-    ArrayAdapter<String> adapter;
+    ArrayAdapter<String> adapterColegios, adapterAulas;
     Colegio cole;
     Usuario usuario;
     String idCole;
     Map<String, Colegio> colegios;
+    Spinner spIdAula;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +59,7 @@ public class RegistroAlumno extends AppCompatActivity {
         txtIdAlumnoRegistro = findViewById(R.id.txtIdAlumnoRegistro);
         btnAceptarDatosAlumno = findViewById(R.id.btnAceptarDatosAlumno);
         txtContraseniaAlumno = findViewById((R.id.txtContraseniaAlumno));
-        txtIdAulaAlumno = findViewById((R.id.txtIdAulaAlumno));
+        spIdAula = findViewById((R.id.spIdAulaAlumno));
         final Spinner spIdColegios = findViewById(R.id.spIdColegioAlumno);
 
         //Obtenemos todos los colegios de la base de datos y cargamos el spinner con sus ID
@@ -70,12 +72,28 @@ public class RegistroAlumno extends AppCompatActivity {
                         colegios.put(cole.getIdColegio(), cole);
                         listadoColegios.add(cole.getIdColegio());
                     }
-                    adapter = new ArrayAdapter<>(RegistroAlumno.this, android.R.layout.simple_spinner_item, listadoColegios);
-                    spIdColegios.setAdapter(adapter);
+                    adapterColegios = new ArrayAdapter<>(RegistroAlumno.this, android.R.layout.simple_spinner_item, listadoColegios);
+                    spIdColegios.setAdapter(adapterColegios);
+                    adapterAulas = new ArrayAdapter<>(RegistroAlumno.this, android.R.layout.simple_spinner_item, new ArrayList<>(colegios.get(spIdColegios.getSelectedItem().toString()).getAulas().keySet()));
+                    spIdAula.setAdapter(adapterAulas);
                 }
 
             }
         });
+
+        spIdColegios.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                adapterAulas = new ArrayAdapter<>(RegistroAlumno.this, android.R.layout.simple_spinner_item, new ArrayList<>(colegios.get(spIdColegios.getSelectedItem().toString()).getAulas().keySet()));
+                spIdAula.setAdapter(adapterAulas);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         btnRegresar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +107,7 @@ public class RegistroAlumno extends AppCompatActivity {
         btnAceptarDatosAlumno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (txtEmailAlumno.getText().toString().isEmpty() || txtIdAlumnoRegistro.getText().toString().isEmpty() || txtIdAulaAlumno.getText().toString().isEmpty()) {
+                if (txtEmailAlumno.getText().toString().isEmpty() || txtIdAlumnoRegistro.getText().toString().isEmpty()) {
                     Toast.makeText(RegistroAlumno.this, "Rellena todos los datos", Toast.LENGTH_LONG).show();
                 } else {
                     if (comprobarEmail(txtEmailAlumno.getText().toString())) {
@@ -105,8 +123,8 @@ public class RegistroAlumno extends AppCompatActivity {
                     }
                     idCole = spIdColegios.getSelectedItem().toString();
                     cole = colegios.get(idCole);
-                    if (cole.getAulas().containsKey(txtIdAulaAlumno.getText().toString())) {
-                        Aula aula = cole.getAulas().get(txtIdAulaAlumno.getText().toString());
+                    if (cole.getAulas().containsKey(spIdAula.getSelectedItem().toString())) {
+                        Aula aula = cole.getAulas().get(spIdAula.getSelectedItem().toString());
                         if (aula.getListadoAlumnos().contains(txtIdAlumnoRegistro.getText().toString())) {
                             Alumno alumno = cole.getAlumnado().get(txtIdAlumnoRegistro.getText().toString());
                             if (alumno.getEmail().equals(txtEmailAlumno.getText().toString())) {
@@ -125,7 +143,7 @@ public class RegistroAlumno extends AppCompatActivity {
                                                                     Toast.LENGTH_SHORT).show();
                                                         }
                                                     });
-                                                    //updateUI(user);
+                                                    updateUI(user);
                                                 } else {
                                                     Toast.makeText(RegistroAlumno.this, "Error al registrar el usuario",
                                                             Toast.LENGTH_SHORT).show();
@@ -163,9 +181,9 @@ public class RegistroAlumno extends AppCompatActivity {
 
     public void updateUI(FirebaseUser user) {
         if (user != null) {
-            Intent intent = new Intent(RegistroAlumno.this, PrincipalProfesor.class);
+            Intent intent = new Intent(RegistroAlumno.this, PrincipalAlumno.class);
             intent.putExtra("idcole", idCole);
-            //intent.putExtra("idaula", cole.getProfesorado().get(txtIdProfeRegistro.getText().toString()).getIdAula());
+            intent.putExtra("idalumno", txtIdAlumnoRegistro.getText().toString());
             startActivity(intent);
             finish();
         }

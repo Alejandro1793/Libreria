@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.frutosajniahperez.libreria.Alumno;
 import com.frutosajniahperez.libreria.Colegio;
 import com.frutosajniahperez.libreria.Libro;
 import com.frutosajniahperez.libreria.R;
@@ -25,9 +26,10 @@ import java.util.HashMap;
 
 public class LibreriaAlumnoFragment extends Fragment {
 
-    private String idCole, idAula, idProfe;
+    private String idCole;
     private FirebaseFirestore database;
     private Colegio cole;
+    private Alumno alumno;
     private HashMap<String, Libro> libreria;
     private ArrayList<Libro> libros;
     private ListView listLibros;
@@ -37,8 +39,7 @@ public class LibreriaAlumnoFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             idCole = getArguments().getString("idcole");
-            idAula = getArguments().getString("idaula");
-            idProfe = getArguments().getString("idprofe");
+            alumno = (Alumno) getArguments().getSerializable("alumno");
         }
         database = FirebaseFirestore.getInstance();
     }
@@ -57,10 +58,7 @@ public class LibreriaAlumnoFragment extends Fragment {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
                             cole = document.toObject(Colegio.class);
-                            if (idAula == null) {
-                                idAula = cole.getProfesorado().get(idProfe).getIdAula();
-                            }
-                            libreria = cole.getAulas().get(idAula).getLibreria();
+                            libreria = cole.getAulas().get(alumno.getIdAula()).getLibreria();
                             if (libreria.isEmpty()) {
                                 Toast.makeText(getContext(), "Todavía no hay libros", Toast.LENGTH_SHORT).show();
                             } else {
