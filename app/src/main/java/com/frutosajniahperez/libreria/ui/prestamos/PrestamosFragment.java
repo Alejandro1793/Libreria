@@ -154,7 +154,8 @@ public class PrestamosFragment extends Fragment {
                                                                     new DialogInterface.OnClickListener() {
                                                                         @Override
                                                                         public void onClick(DialogInterface dialog, int which) {
-                                                                            subirPrestamo();
+                                                                            String libroSust = cole.getAulas().get(idAula).getListadoPrestamos().get(spAlumno.getSelectedItem().toString()).getLibro();
+                                                                            subirPrestamo(libroSust);
                                                                             cargarDatosLibros();
                                                                         }
                                                                     })
@@ -217,6 +218,33 @@ public class PrestamosFragment extends Fragment {
         for (Libro libro : libreria.values()) {
             if (libro.getTitulo().equals(spTituloLibro.getSelectedItem().toString())) {
                 libro.setPrestado(true);
+                break;
+            }
+        }
+        database.collection("Colegios").document(idCole).set(cole).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(getContext(), "Préstamo guardado", Toast.LENGTH_SHORT).show();
+                    btnElegirFecha.setText(R.string.selecciona_la_fecha_de_entrega);
+                }
+            }
+        });
+    }
+
+    public void subirPrestamo(String sustituto) {
+        cole.getAulas().get(idAula).getListadoPrestamos().put(spAlumno.getSelectedItem().toString(), new Prestamo(spAlumno.getSelectedItem().toString(), spTituloLibro.getSelectedItem().toString(), new Timestamp(new Date().getTime()), new Timestamp(fechaEntrega.getTime())));
+        int contFor = 0;
+        for (Libro libro : libreria.values()) {
+            if (libro.getTitulo().equals(spTituloLibro.getSelectedItem().toString())) {
+                libro.setPrestado(true);
+                contFor++;
+            }
+            if (libro.getTitulo().equals(sustituto)){
+                libro.setPrestado(false);
+                contFor++;
+            }
+            if (contFor == 2){
                 break;
             }
         }

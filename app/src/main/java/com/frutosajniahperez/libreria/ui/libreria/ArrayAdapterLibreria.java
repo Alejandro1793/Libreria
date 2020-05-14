@@ -62,7 +62,7 @@ public class ArrayAdapterLibreria extends ArrayAdapter<Libro> {
             }
         }
         tv = v.findViewById(R.id.txtPuntuacionAlumnado);
-        tv.setText(df.format(libro.getValoracion()));
+        tv.setText(df.format(libro.getValoracionMedia()));
         return v;
     }
 }

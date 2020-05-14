@@ -101,14 +101,33 @@ public class Libro {
         this.prestado = prestado;
     }
 
-    public double getValoracion() {
-       return this.valoracionMedia;
+    public int getValoracionTotal() {
+        return valoracionTotal;
     }
 
-    public void setValoracion(int valoracion){
+    public void setValoracionTotal(int valoracionTotal) {
+        this.valoracionTotal = valoracionTotal;
+    }
+
+    public double getValoracionMedia() {
+        return valoracionMedia;
+    }
+
+    public void setValoracionMedia(double valoracionMedia) {
+        this.valoracionMedia = valoracionMedia;
+    }
+
+    public int getNumValoraciones() {
+        return numValoraciones;
+    }
+
+    public void setNumValoraciones(int numValoraciones) {
+        this.numValoraciones = numValoraciones;
+    }
+
+    public void añadirValoracion(int valoracion){
         this.valoracionTotal += valoracion;
         this.numValoraciones++;
         this.valoracionMedia = (double) this.valoracionTotal / this.numValoraciones;
-
     }
 }

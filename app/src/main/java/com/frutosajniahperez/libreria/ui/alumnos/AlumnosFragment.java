@@ -18,11 +18,15 @@ import androidx.fragment.app.Fragment;
 import com.frutosajniahperez.libreria.Alumno;
 import com.frutosajniahperez.libreria.Colegio;
 import com.frutosajniahperez.libreria.R;
+import com.frutosajniahperez.libreria.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,6 +38,8 @@ public class AlumnosFragment extends Fragment implements Dialogo_alumno.Resultad
     HashMap<String, Alumno> alumnos;
     ArrayList<Alumno> listaAlumnos;
     FirebaseFirestore database;
+    FirebaseAuth mAuth;
+    Usuario usuario;
     ListView listAlumno;
 
     public AlumnosFragment() {
@@ -48,6 +54,7 @@ public class AlumnosFragment extends Fragment implements Dialogo_alumno.Resultad
             idProfe = getArguments().getString("idprofe");
         }
         database = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
     }
 
 
@@ -89,6 +96,26 @@ public class AlumnosFragment extends Fragment implements Dialogo_alumno.Resultad
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+                                        database.collection("users").whereEqualTo("idUsuario", listaAlumnos.get(position).getIdAlumno()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    for (DocumentSnapshot documentSnapshot : task.getResult()) {
+                                                        usuario = documentSnapshot.toObject(Usuario.class);
+                                                    }
+                                                    if (usuario != null) {
+                                                        database.collection("users").document(usuario.getEmail()).delete();
+                                                        mAuth.signInWithEmailAndPassword(usuario.getEmail(), usuario.getContraseña()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                                mAuth.getCurrentUser().delete();
+                                                            }
+                                                        });
+                                                    }
+
+                                                }
+                                            }
+                                        });
                                         alumnos.remove(listaAlumnos.get(position).getIdAlumno());
                                         cole.getAulas().get(idAula).getListadoAlumnos().remove(listaAlumnos.get(position).getIdAlumno());
                                         listaAlumnos.remove(position);
@@ -134,8 +161,8 @@ public class AlumnosFragment extends Fragment implements Dialogo_alumno.Resultad
 
     public void cargarDatos() {
         listaAlumnos = new ArrayList<>(alumnos.values());
-        for (Alumno alumno : listaAlumnos){
-            if (!alumno.getIdAula().equals(idAula)){
+        for (Alumno alumno : listaAlumnos) {
+            if (!alumno.getIdAula().equals(idAula)) {
                 listaAlumnos.remove(alumno);
             }
         }
