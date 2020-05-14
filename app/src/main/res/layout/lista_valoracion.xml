@@ -71,7 +71,7 @@
                 android:id="@+id/ivEstrella1"
                 android:layout_width="45dp"
                 android:layout_height="match_parent"
-                app:srcCompat="@android:drawable/btn_star_big_off" />
+                app:srcCompat="@android:drawable/btn_star_big_on" />
 
             <ImageView
                 android:id="@+id/ivEstrella2"

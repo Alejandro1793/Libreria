@@ -15,10 +15,13 @@ import androidx.annotation.Nullable;
 import com.frutosajniahperez.libreria.Libro;
 import com.frutosajniahperez.libreria.R;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class ArrayAdapterLibreria extends ArrayAdapter<Libro> {
+
+    DecimalFormat df;
 
     public ArrayAdapterLibreria(@NonNull Context context, @NonNull List<Libro> objects) {
         super(context, 0, objects);
@@ -31,6 +34,7 @@ public class ArrayAdapterLibreria extends ArrayAdapter<Libro> {
         Libro libro = getItem(position);
         View v;
         v = LayoutInflater.from(getContext()).inflate(R.layout.lista_libros, parent, false);
+        df = new DecimalFormat("0.0");
         TextView tv = v.findViewById(R.id.txtTituloLibro);
         ImageView iv = v.findViewById(R.id.ivPortada);
         tv.setText(libro.getTitulo());
@@ -48,7 +52,6 @@ public class ArrayAdapterLibreria extends ArrayAdapter<Libro> {
         tv.setText(libro.getIsbn());
         tv = v.findViewById(R.id.txtSinopsis);
         tv.setText(libro.getSinopsis());
-
         if (libro.getImagen().equals("Sin imagen")){
             iv.setImageResource(R.drawable.noimg);
         } else {
@@ -58,6 +61,8 @@ public class ArrayAdapterLibreria extends ArrayAdapter<Libro> {
                 e.printStackTrace();
             }
         }
+        tv = v.findViewById(R.id.txtPuntuacionAlumnado);
+        tv.setText(df.format(libro.getValoracion()));
         return v;
     }
 }

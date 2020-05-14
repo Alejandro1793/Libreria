@@ -26,23 +26,24 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class ArrayAdapterValoracion extends ArrayAdapter<Libro> {
+public abstract class ArrayAdapterValoracion extends ArrayAdapter<Libro> {
 
-    ImageView star1, star2, star3, star4, star5;
-    Button btnEnviarValoracion;
-    int valoracion;
-    TextView tv, tvPuntuacion;
-    Colegio cole;
-    FirebaseFirestore database;
-    String idCole, idAula;
-    DecimalFormat df;
+    private ImageView star1, star2, star3, star4, star5;
+    private Button btnEnviarValoracion;
+    private int valoracion;
+    private TextView tvPuntuacion;
+    private Colegio cole;
+    private FirebaseFirestore database;
+    private String idCole, idAula;
+    private DecimalFormat df;
+    private List<Libro> libros;
 
     public ArrayAdapterValoracion(@NonNull Context context, @NonNull List<Libro> objects, String idCole, String idAula) {
         super(context, 0, objects);
+        this.libros = objects;
         this.idCole = idCole;
         this.idAula = idAula;
         database = FirebaseFirestore.getInstance();
-        df = new DecimalFormat("#.0");
         database.collection("Colegios").document(this.idCole).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -54,6 +55,7 @@ public class ArrayAdapterValoracion extends ArrayAdapter<Libro> {
                 }
             }
         });
+        df = new DecimalFormat("0.0");
     }
 
     @NonNull
@@ -63,12 +65,14 @@ public class ArrayAdapterValoracion extends ArrayAdapter<Libro> {
         Libro libro = getItem(position);
         View v;
         v = LayoutInflater.from(getContext()).inflate(R.layout.lista_valoracion, parent, false);
-        tv = v.findViewById(R.id.txtTituloLibroValoracion);
+        onLibro(libros.get(position), v, position);
+        TextView tv = v.findViewById(R.id.txtTituloLibroValoracion);
         tv.setText(libro.getTitulo());
-        tvPuntuacion = v.findViewById(R.id.txtPuntuacion);
-        tvPuntuacion.setText(df.format(getItem(position).getValoracion()));
         ImageView iv = v.findViewById(R.id.ivPortadaValoracion);
-        if (libro.getImagen().equals("Sin imagen")){
+        tvPuntuacion = v.findViewById(R.id.txtPuntuacion);
+        tvPuntuacion.setTag("tv" + position);
+        tvPuntuacion.setText(df.format(libro.getValoracion()));
+        if (libro.getImagen().equals("Sin imagen")) {
             iv.setImageResource(R.drawable.noimg);
         } else {
             try {
@@ -77,86 +81,8 @@ public class ArrayAdapterValoracion extends ArrayAdapter<Libro> {
                 e.printStackTrace();
             }
         }
-        star1 = v.findViewById(R.id.ivEstrella1);
-        star2 = v.findViewById(R.id.ivEstrella2);
-        star3 = v.findViewById(R.id.ivEstrella3);
-        star4 = v.findViewById(R.id.ivEstrella4);
-        star5 = v.findViewById(R.id.ivEstrella5);
-        btnEnviarValoracion = v.findViewById(R.id.btEnviarValoracion);
-
-        star1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                valoracion = 1;
-                star1.setImageResource(android.R.drawable.btn_star_big_on);
-                star2.setImageResource(android.R.drawable.btn_star_big_off);
-                star3.setImageResource(android.R.drawable.btn_star_big_off);
-                star4.setImageResource(android.R.drawable.btn_star_big_off);
-                star5.setImageResource(android.R.drawable.btn_star_big_off);
-            }
-        });
-
-        star2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                valoracion = 2;
-                star1.setImageResource(android.R.drawable.btn_star_big_on);
-                star2.setImageResource(android.R.drawable.btn_star_big_on);
-                star3.setImageResource(android.R.drawable.btn_star_big_off);
-                star4.setImageResource(android.R.drawable.btn_star_big_off);
-                star5.setImageResource(android.R.drawable.btn_star_big_off);
-            }
-        });
-
-        star3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                valoracion = 3;
-                star1.setImageResource(android.R.drawable.btn_star_big_on);
-                star2.setImageResource(android.R.drawable.btn_star_big_on);
-                star3.setImageResource(android.R.drawable.btn_star_big_on);
-                star4.setImageResource(android.R.drawable.btn_star_big_off);
-                star5.setImageResource(android.R.drawable.btn_star_big_off);
-            }
-        });
-
-        star4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                valoracion = 4;
-                star1.setImageResource(android.R.drawable.btn_star_big_on);
-                star2.setImageResource(android.R.drawable.btn_star_big_on);
-                star3.setImageResource(android.R.drawable.btn_star_big_on);
-                star4.setImageResource(android.R.drawable.btn_star_big_on);
-                star5.setImageResource(android.R.drawable.btn_star_big_off);
-            }
-        });
-
-        star5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                valoracion = 5;
-                star1.setImageResource(android.R.drawable.btn_star_big_on);
-                star2.setImageResource(android.R.drawable.btn_star_big_on);
-                star3.setImageResource(android.R.drawable.btn_star_big_on);
-                star4.setImageResource(android.R.drawable.btn_star_big_on);
-                star5.setImageResource(android.R.drawable.btn_star_big_on);
-            }
-        });
-
-        btnEnviarValoracion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getItem(position).setValoracion(valoracion);
-                tvPuntuacion.setText(df.format(getItem(position).getValoracion()));
-                cole.getAulas().get(idAula).getLibreria().put(getItem(position).getIsbn(), getItem(position));
-                database.collection("Colegios").document(idCole).set(cole);
-                btnEnviarValoracion.setEnabled(false);
-                //ELIMINAR EL LIBRO CUANDO VALORE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            }
-        });
         return v;
     }
 
-
+    public abstract void onLibro(Libro libro, View view, int position);
 }

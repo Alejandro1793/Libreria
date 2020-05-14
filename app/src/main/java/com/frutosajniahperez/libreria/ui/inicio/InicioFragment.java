@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 
 import com.frutosajniahperez.libreria.Alumno;
 import com.frutosajniahperez.libreria.Colegio;
+import com.frutosajniahperez.libreria.Libro;
 import com.frutosajniahperez.libreria.Prestamo;
 import com.frutosajniahperez.libreria.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,6 +36,7 @@ public class InicioFragment extends Fragment {
     private Colegio cole;
     private HashMap<String, Prestamo> prestamos;
     private HashMap<String, Alumno> alumnos;
+    private HashMap<String, Libro> libreria;
     private ArrayList<Prestamo> listaPrestamos;
     private FirebaseFirestore database;
     private ListView lvPrestamos;
@@ -72,6 +74,7 @@ public class InicioFragment extends Fragment {
                                 idAula = cole.getProfesorado().get(idProfe).getIdAula();
                             }
                             prestamos = cole.getAulas().get(idAula).getListadoPrestamos();
+                            libreria = cole.getAulas().get(idAula).getLibreria();
                             alumnos = cole.getAlumnado();
                             if (prestamos.isEmpty()) {
                                 Toast.makeText(getContext(), "Todavía no hay préstamos", Toast.LENGTH_SHORT).show();
@@ -110,9 +113,16 @@ public class InicioFragment extends Fragment {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         alumnos.get(listaPrestamos.get(position).getAlumno()).getLibrosLeidos().add(listaPrestamos.get(position).getLibro());
+                                        for (Libro libro : libreria.values()){
+                                            if (libro.getTitulo().equals(listaPrestamos.get(position).getLibro())){
+                                                libro.setPrestado(false);
+                                                break;
+                                            }
+                                        }
                                         prestamos.remove(listaPrestamos.get(position).getAlumno());
                                         listaPrestamos.remove(position);
                                         cole.getAulas().get(idAula).setListadoPrestamos(prestamos);
+                                        cole.getAulas().get(idAula).setLibreria(libreria);
                                         subirDatos();
                                     }
                                 })

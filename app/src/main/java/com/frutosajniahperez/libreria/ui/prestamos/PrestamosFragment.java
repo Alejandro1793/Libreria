@@ -100,14 +100,9 @@ public class PrestamosFragment extends Fragment {
                                         listadoAlumnos.add(alumno.getIdAlumno());
                                     }
                                 }
-                                for (Libro libro : libreria.values()) {
-                                    listadoLibros.add(libro.getTitulo());
-                                }
                                 ArrayAdapter<String> adapterAlumno = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listadoAlumnos);
-                                ArrayAdapter<String> adapterLibro = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listadoLibros);
                                 spAlumno.setAdapter(adapterAlumno);
-                                spTituloLibro.setAdapter(adapterLibro);
-                                btnAceptarPrestamo.setEnabled(true);
+                                cargarDatosLibros();
                             } else {
                                 Toast.makeText(getContext(), "Faltan datos que mostrar", Toast.LENGTH_SHORT).show();
                             }
@@ -160,6 +155,7 @@ public class PrestamosFragment extends Fragment {
                                                                         @Override
                                                                         public void onClick(DialogInterface dialog, int which) {
                                                                             subirPrestamo();
+                                                                            cargarDatosLibros();
                                                                         }
                                                                     })
                                                             .setNegativeButton("No",
@@ -173,6 +169,7 @@ public class PrestamosFragment extends Fragment {
                                                     dialog2.show();
                                                 } else {
                                                     subirPrestamo();
+                                                    cargarDatosLibros();
                                                 }
                                             }
                                         })
@@ -185,8 +182,9 @@ public class PrestamosFragment extends Fragment {
                                         });
                         AlertDialog dialog = builder.create();
                         dialog.show();
-                    }else{
+                    } else {
                         subirPrestamo();
+                        cargarDatosLibros();
                     }
                 } else {
                     Toast.makeText(getContext(), "Debes seleccionar una fecha de entrega", Toast.LENGTH_SHORT).show();
@@ -196,8 +194,32 @@ public class PrestamosFragment extends Fragment {
         return root;
     }
 
-    public void subirPrestamo(){
+    public void cargarDatosLibros() {
+        btnAceptarPrestamo.setEnabled(false);
+        listadoLibros = new ArrayList<>();
+        for (Libro libro : libreria.values()) {
+            if (!libro.isPrestado()) {
+                listadoLibros.add(libro.getTitulo());
+            }
+        }
+        ArrayAdapter<String> adapterLibro = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listadoLibros);
+        spTituloLibro.setAdapter(adapterLibro);
+        if (!listadoLibros.isEmpty()) {
+            btnAceptarPrestamo.setEnabled(true);
+        } else {
+            Toast.makeText(getContext(), "Todos los libros están prestados", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    public void subirPrestamo() {
         cole.getAulas().get(idAula).getListadoPrestamos().put(spAlumno.getSelectedItem().toString(), new Prestamo(spAlumno.getSelectedItem().toString(), spTituloLibro.getSelectedItem().toString(), new Timestamp(new Date().getTime()), new Timestamp(fechaEntrega.getTime())));
+        for (Libro libro : libreria.values()) {
+            if (libro.getTitulo().equals(spTituloLibro.getSelectedItem().toString())) {
+                libro.setPrestado(true);
+                break;
+            }
+        }
         database.collection("Colegios").document(idCole).set(cole).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

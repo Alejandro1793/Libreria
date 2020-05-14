@@ -61,7 +61,6 @@ public class ArrayAdapterInicio extends ArrayAdapter<Prestamo> {
             if (prestamo.getFechaEntrega().before(new Date())) {
                 LinearLayout linearLayout = v.findViewById(R.id.LinealFechaEntrega);
                 linearLayout.setBackgroundColor(Color.rgb(225, 155, 155));
-
             }
         } else {
             LinearLayout linearLayout = v.findViewById(R.id.lyPrestamo);

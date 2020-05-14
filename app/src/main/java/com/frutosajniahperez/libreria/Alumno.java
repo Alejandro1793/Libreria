@@ -2,6 +2,7 @@ package com.frutosajniahperez.libreria;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Alumno implements Serializable {
 
@@ -10,8 +11,10 @@ public class Alumno implements Serializable {
     private String email;
     private String idAula;
     private ArrayList<String> librosLeidos;
+    private HashMap<String, Integer> librosPuntuados;
 
     public Alumno(){
+        librosPuntuados = new HashMap<>();
     }
 
     public Alumno(String idAlumno, String nombre, String email, ArrayList<String> librosLeidos, String idAula) {
@@ -20,6 +23,7 @@ public class Alumno implements Serializable {
         this.email = email;
         this.librosLeidos = librosLeidos;
         this.idAula = idAula;
+        this.librosPuntuados = new HashMap<>();
     }
 
     public String getIdAlumno() {
@@ -62,4 +66,11 @@ public class Alumno implements Serializable {
         this.idAula = idAula;
     }
 
+    public HashMap<String, Integer> getLibrosPuntuados() {
+        return librosPuntuados;
+    }
+
+    public void setLibrosPuntuados(HashMap<String, Integer> librosPuntuados) {
+        this.librosPuntuados = librosPuntuados;
+    }
 }
