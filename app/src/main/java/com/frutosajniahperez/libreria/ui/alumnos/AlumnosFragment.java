@@ -160,10 +160,10 @@ public class AlumnosFragment extends Fragment implements Dialogo_alumno.Resultad
     }
 
     public void cargarDatos() {
-        listaAlumnos = new ArrayList<>(alumnos.values());
-        for (Alumno alumno : listaAlumnos) {
-            if (!alumno.getIdAula().equals(idAula)) {
-                listaAlumnos.remove(alumno);
+        listaAlumnos = new ArrayList<>();
+        for (Alumno alumno : alumnos.values()) {
+            if (alumno.getIdAula().equals(idAula)) {
+                listaAlumnos.add(alumno);
             }
         }
         ArrayAdapterAlumnos adapterInicio = new ArrayAdapterAlumnos(getContext(), listaAlumnos);
