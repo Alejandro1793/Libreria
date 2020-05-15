@@ -170,6 +170,7 @@ public class ArrayAdapterValoracion extends ArrayAdapter<Libro> {
                     alumno.getLibrosPuntuados().put(getItem(position).getTitulo(), valoracion);
                     getItem(position).añadirValoracion(valoracion);
                     viewHolder.txtValoracion.setText(df.format(getItem(position).getValoracionMedia()));
+                    cole.getAlumnado().put(alumno.getIdAlumno(),alumno);
                     cole.getAulas().get(alumno.getIdAula()).getLibreria().put(getItem(position).getIsbn(), getItem(position));
                     database.collection("Colegios").document(idCole).set(cole);
                     viewHolder.btnEnviar.setEnabled(false);
