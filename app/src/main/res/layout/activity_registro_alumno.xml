@@ -18,7 +18,7 @@
         android:paddingRight="20dp"
         android:text="@string/registro"
         android:textColor="#6680d4"
-        android:textSize="36sp"
+        android:textSize="30sp"
         app:layout_constraintStart_toEndOf="@+id/btnRegresar"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,10 +47,9 @@
         android:maxLength="16"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.539"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.259" />
+        app:layout_constraintVertical_bias="0.265" />
 
     <Button
         android:id="@+id/btnAceptarDatosAlumno"
@@ -77,10 +76,10 @@
         android:text="@string/requisitos_contrasenia"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.539"
+        app:layout_constraintHorizontal_bias="0.565"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtContraseniaAlumno"
-        app:layout_constraintVertical_bias="0.156" />
+        app:layout_constraintVertical_bias="0.306" />
 
     <TextView
         android:id="@+id/label4"
@@ -116,7 +115,7 @@
         android:layout_width="335dp"
         android:layout_height="42dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="104dp"
+        android:layout_marginTop="92dp"
         android:layout_marginEnd="8dp"
         android:autofillHints=""
         android:backgroundTint="#6680d4"

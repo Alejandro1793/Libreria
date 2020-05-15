@@ -45,7 +45,7 @@
                     android:paddingTop="1dp"
                     android:paddingRight="3dp"
                     android:textColor="#6680D4"
-                    android:textSize="24sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/txtPuntuacion"
@@ -56,7 +56,7 @@
                     android:paddingLeft="3dp"
                     android:paddingTop="1dp"
                     android:paddingRight="3dp"
-                    android:textSize="45sp" />
+                    android:textSize="35sp" />
 
 
             </LinearLayout>
@@ -71,30 +71,35 @@
                 android:id="@+id/ivEstrella1"
                 android:layout_width="45dp"
                 android:layout_height="match_parent"
+                android:contentDescription="@string/estrellas"
                 app:srcCompat="@android:drawable/btn_star_big_on" />
 
             <ImageView
                 android:id="@+id/ivEstrella2"
                 android:layout_width="49dp"
                 android:layout_height="match_parent"
-                app:srcCompat="@android:drawable/btn_star_big_off" />
+                app:srcCompat="@android:drawable/btn_star_big_off"
+                android:contentDescription="@string/estrellas" />
 
             <ImageView
                 android:id="@+id/ivEstrella3"
                 android:layout_width="52dp"
                 android:layout_height="match_parent"
+                android:contentDescription="@string/estrellas"
                 app:srcCompat="@android:drawable/btn_star_big_off" />
 
             <ImageView
                 android:id="@+id/ivEstrella4"
                 android:layout_width="49dp"
                 android:layout_height="match_parent"
+                android:contentDescription="@string/estrellas"
                 app:srcCompat="@android:drawable/btn_star_big_off" />
 
             <ImageView
                 android:id="@+id/ivEstrella5"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
+                android:contentDescription="@string/estrellas"
                 app:srcCompat="@android:drawable/btn_star_big_off" />
 
             <Button
@@ -103,7 +108,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/forma_boton_contraria"
-                android:text="Enviar" />
+                android:text="@string/enviar"
+                android:textSize="12sp" />
 
         </LinearLayout>
 

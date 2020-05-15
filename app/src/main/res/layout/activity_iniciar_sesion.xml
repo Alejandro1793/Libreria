@@ -18,7 +18,7 @@
         android:paddingRight="20dp"
         android:text="@string/inicia_sesion"
         android:textColor="#6680d4"
-        android:textSize="36sp"
+        android:textSize="30sp"
         app:layout_constraintStart_toEndOf="@+id/btnRegresar"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -10,8 +10,6 @@
         android:id="@+id/btnInicioSesion"
         android:layout_width="340dp"
         android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
         android:background="@drawable/forma_boton"
         android:fontFamily="@font/yanone_kaffeesatz"
         android:text="@string/inicia_sesion"
@@ -19,6 +17,7 @@
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imagelogo" />
 
@@ -35,21 +34,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnInicioSesion"
-        app:layout_constraintVertical_bias="0.45" />
+        app:layout_constraintVertical_bias="0.37" />
 
     <ImageView
         android:id="@+id/imagelogo"
         android:layout_width="313dp"
         android:layout_height="268dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="39dp"
         android:contentDescription="@string/imagenizq"
 
         app:layout_constraintBottom_toTopOf="@+id/btnInicioSesion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.35000002"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

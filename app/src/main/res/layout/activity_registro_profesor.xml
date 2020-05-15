@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegistroProfesor">
+
     <TextView
         android:id="@+id/tvTitulo"
         android:layout_width="0dp"
@@ -17,7 +18,7 @@
         android:paddingRight="20dp"
         android:text="@string/registro"
         android:textColor="#6680d4"
-        android:textSize="36sp"
+        android:textSize="30sp"
         app:layout_constraintStart_toEndOf="@+id/btnRegresar"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,16 +46,16 @@
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.305" />
+        app:layout_constraintVertical_bias="0.281" />
 
     <Button
         android:id="@+id/btnAceptarDatos"
         android:layout_width="340dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="56dp"
         android:background="@drawable/forma_boton"
         android:enabled="true"
         android:fontFamily="@font/yanone_kaffeesatz"
@@ -63,6 +64,7 @@
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.535"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -74,10 +76,9 @@
         android:text="@string/requisitos_contrasenia"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.539"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtContraseniaProfe"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.415" />
 
     <TextView
         android:id="@+id/label4"
@@ -101,7 +102,7 @@
         android:layout_width="335dp"
         android:layout_height="42dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="104dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="8dp"
         android:autofillHints=""
         android:backgroundTint="#6680d4"
@@ -111,7 +112,7 @@
         android:hint="@string/introduce_el_email"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.55"
+        app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:targetApi="lollipop" />
@@ -137,7 +138,7 @@
         app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/label2"
-        app:layout_constraintVertical_bias="0.135"
+        app:layout_constraintVertical_bias="0.059"
         tools:targetApi="lollipop" />
 
     <Spinner
@@ -147,6 +148,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btnAceptarDatos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtIdProfeRegistro" />
+        app:layout_constraintTop_toBottomOf="@+id/txtIdProfeRegistro"
+        app:layout_constraintVertical_bias="0.518" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
