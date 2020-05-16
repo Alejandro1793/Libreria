@@ -1,5 +1,6 @@
 package com.frutosajniahperez.libreria.ui.libreria;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.frutosajniahperez.libreria.Libro;
 import com.frutosajniahperez.libreria.R;
 
@@ -20,7 +22,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-
 
 
 public class Dialogo_busqueda_google implements EncontrarLibro.ObtenerDatos {
@@ -41,9 +42,10 @@ public class Dialogo_busqueda_google implements EncontrarLibro.ObtenerDatos {
     public interface ResultadoDialogoBusquedaGoogle {
         void ResultadoDialogoBusquedaGoogle(Libro libro);
     }
+
     private ResultadoDialogoBusquedaGoogle interfaz;
 
-    public Dialogo_busqueda_google(Context context, ResultadoDialogoBusquedaGoogle actividad) {
+    public Dialogo_busqueda_google(final Context context, ResultadoDialogoBusquedaGoogle actividad, final Activity activity) {
 
         interfaz = actividad;
 
@@ -64,7 +66,7 @@ public class Dialogo_busqueda_google implements EncontrarLibro.ObtenerDatos {
         txtAnioPublicacion = dialog.findViewById(R.id.txtAnioPublicacion);
         TextView btnIniciarCamara = dialog.findViewById(R.id.btnIniciarCamara);
 
-        btnAceptarLibroGoogle  = dialog.findViewById(R.id.btnAceptarLibroGoogle);
+        btnAceptarLibroGoogle = dialog.findViewById(R.id.btnAceptarLibroGoogle);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -90,7 +92,6 @@ public class Dialogo_busqueda_google implements EncontrarLibro.ObtenerDatos {
                 dialog.getContext().startActivity(new Intent(dialog.getContext(), LectorCodigoBarras.class));
             }
         });
-
 
 
         btnAceptarLibroGoogle.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +127,7 @@ public class Dialogo_busqueda_google implements EncontrarLibro.ObtenerDatos {
                         contAutores++;
                     }
                     StringBuilder aut = new StringBuilder();
-                    for (String autor : autores.values()){
+                    for (String autor : autores.values()) {
                         aut.append(autor).append(System.getProperty("line.separator"));
                     }
                     txtAutores.setText(aut);
@@ -162,8 +163,10 @@ public class Dialogo_busqueda_google implements EncontrarLibro.ObtenerDatos {
                 ex.printStackTrace();
             }
             btnAceptarLibroGoogle.setEnabled(true);
-        } catch (Exception ex){
+        } catch (Exception ex) {
             Toast.makeText(dialog.getContext(), "No se encuentra el libro", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 }
