@@ -3,6 +3,7 @@ package com.frutosajniahperez.libreria;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -20,23 +21,30 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegistroAdministrador extends AppCompatActivity {
 
-    Button btnAceptarDatos;
-    TextView txtEmail, txtRegistroCole;
-    EditText txtContrasenia;
-    FirebaseAuth mAuth;
-    ImageView btnRegresar;
-    Boolean existe = false;
-    Usuario usuario;
+    private Button btnAceptarDatos;
+    private TextView txtEmail, txtRegistroCole;
+    private EditText txtContrasenia;
+    private FirebaseAuth mAuth;
+    private ImageView btnRegresar;
+    private Usuario usuario;
 
+    private ProgressDialog progressDialog;
+
+
+    public void mostrarDialogo() {
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle("Creando usuario administrador");
+        progressDialog.setMessage("creando tu usuario...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.show();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +84,8 @@ public class RegistroAdministrador extends AppCompatActivity {
                                     Toast.makeText(RegistroAdministrador.this, "Fallo en el registro. El colegio ya existe",
                                             Toast.LENGTH_SHORT).show();
                                 } else {
+                                    progressDialog = new ProgressDialog(RegistroAdministrador.this);
+                                    mostrarDialogo();
                                     mAuth.createUserWithEmailAndPassword(txtEmail.getText().toString(), txtContrasenia.getText().toString())
                                             .addOnCompleteListener(RegistroAdministrador.this, new OnCompleteListener<AuthResult>() {
                                                 @Override
@@ -91,11 +101,14 @@ public class RegistroAdministrador extends AppCompatActivity {
                                                                         Toast.LENGTH_SHORT).show();
                                                             }
                                                         });
+                                                        progressDialog.dismiss();
                                                         updateUI(user);
                                                     } else {
+                                                        progressDialog.dismiss();
                                                         Toast.makeText(RegistroAdministrador.this, "Error al registrar el usuario",
                                                                 Toast.LENGTH_SHORT).show();
                                                         mAuth.getCurrentUser().delete();
+
                                                         startActivity(new Intent(RegistroAdministrador.this, EleccionRegistro.class));
                                                     }
                                                 }

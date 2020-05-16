@@ -121,7 +121,6 @@ public class IniciarSesion extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     Intent intent = null;
                     if (document.exists()) {
-                        //FALTAN LOS ROLES DE ALUMNO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                         switch (usuario.getRol()) {
                             case "Alumno":
                                 intent = new Intent(IniciarSesion.this, PrincipalAlumno.class);

@@ -3,8 +3,10 @@ package com.frutosajniahperez.libreria;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -31,24 +33,35 @@ import java.util.regex.Pattern;
 
 public class RegistroAlumno extends AppCompatActivity {
 
-    Button btnAceptarDatosAlumno;
-    EditText txtEmailAlumno, txtIdAlumnoRegistro, txtContraseniaAlumno;
-    FirebaseAuth mAuth;
-    ImageView btnRegresar;
-    ArrayList<String> listadoColegios;
-    ArrayAdapter<String> adapterColegios, adapterAulas;
-    Colegio cole;
-    Usuario usuario;
-    String idCole;
-    Map<String, Colegio> colegios;
-    Spinner spIdAula;
+    private Button btnAceptarDatosAlumno;
+    private EditText txtEmailAlumno, txtIdAlumnoRegistro, txtContraseniaAlumno;
+    private FirebaseAuth mAuth;
+    private ImageView btnRegresar;
+    private ArrayList<String> listadoColegios;
+    private ArrayAdapter<String> adapterColegios, adapterAulas;
+    private Colegio cole;
+    private Usuario usuario;
+    private String idCole;
+    private Map<String, Colegio> colegios;
+    private Spinner spIdAula;
 
+    private ProgressDialog progressDialog;
+
+    public void mostrarDialogo() {
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle("Creando usuario alumno/a");
+        progressDialog.setMessage("creando tu usuario...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.show();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro_alumno);
 
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
+
         mAuth = FirebaseAuth.getInstance();
 
         listadoColegios = new ArrayList<>();
@@ -58,6 +71,7 @@ public class RegistroAlumno extends AppCompatActivity {
         txtEmailAlumno = findViewById(R.id.txtEmailAlumno);
         txtIdAlumnoRegistro = findViewById(R.id.txtIdAlumnoRegistro);
         btnAceptarDatosAlumno = findViewById(R.id.btnAceptarDatosAlumno);
+        btnAceptarDatosAlumno.setEnabled(false);
         txtContraseniaAlumno = findViewById((R.id.txtContraseniaAlumno));
         spIdAula = findViewById((R.id.spIdAulaAlumno));
         final Spinner spIdColegios = findViewById(R.id.spIdColegioAlumno);
@@ -74,8 +88,17 @@ public class RegistroAlumno extends AppCompatActivity {
                     }
                     adapterColegios = new ArrayAdapter<>(RegistroAlumno.this, android.R.layout.simple_spinner_item, listadoColegios);
                     spIdColegios.setAdapter(adapterColegios);
-                    adapterAulas = new ArrayAdapter<>(RegistroAlumno.this, android.R.layout.simple_spinner_item, new ArrayList<>(colegios.get(spIdColegios.getSelectedItem().toString()).getAulas().keySet()));
-                    spIdAula.setAdapter(adapterAulas);
+                    if(!listadoColegios.isEmpty()){
+                        btnAceptarDatosAlumno.setEnabled(true);
+                        adapterAulas = new ArrayAdapter<>(RegistroAlumno.this, android.R.layout.simple_spinner_item, new ArrayList<>(colegios.get(spIdColegios.getSelectedItem().toString()).getAulas().keySet()));
+                        spIdAula.setAdapter(adapterAulas);
+                    }else{
+                        Toast toast = Toast.makeText(RegistroAlumno.this, "No se permite el registro, espera hasta que el profesor active tu perfil",
+                                Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER|0,0,0);
+                        toast.show();
+                    }
+
                 }
 
             }
@@ -103,7 +126,6 @@ public class RegistroAlumno extends AppCompatActivity {
             }
         });
 
-        //TERMINAR ALUMNO || EMAIL A LOS ALUMNOS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         btnAceptarDatosAlumno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,6 +150,8 @@ public class RegistroAlumno extends AppCompatActivity {
                         if (aula.getListadoAlumnos().contains(txtIdAlumnoRegistro.getText().toString())) {
                             Alumno alumno = cole.getAlumnado().get(txtIdAlumnoRegistro.getText().toString());
                             if (alumno.getEmail().equals(txtEmailAlumno.getText().toString())) {
+                                progressDialog = new ProgressDialog(RegistroAlumno.this);
+                                mostrarDialogo();
                                 mAuth.createUserWithEmailAndPassword(txtEmailAlumno.getText().toString(), txtContraseniaAlumno.getText().toString())
                                         .addOnCompleteListener(RegistroAlumno.this, new OnCompleteListener<AuthResult>() {
                                             @Override
@@ -143,8 +167,10 @@ public class RegistroAlumno extends AppCompatActivity {
                                                                     Toast.LENGTH_SHORT).show();
                                                         }
                                                     });
+                                                    progressDialog.dismiss();
                                                     updateUI(user);
                                                 } else {
+                                                    progressDialog.dismiss();
                                                     Toast.makeText(RegistroAlumno.this, "Error al registrar el usuario",
                                                             Toast.LENGTH_SHORT).show();
                                                     mAuth.getCurrentUser().delete();

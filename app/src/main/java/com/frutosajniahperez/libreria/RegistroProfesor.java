@@ -3,15 +3,16 @@ package com.frutosajniahperez.libreria;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,16 +32,28 @@ import java.util.regex.Pattern;
 
 public class RegistroProfesor extends AppCompatActivity {
 
-    Button btnAceptarDatos;
-    EditText txtEmail, txtIdProfeRegistro, txtContrasenia;
-    FirebaseAuth mAuth;
-    ImageView btnRegresar;
-    ArrayList<String> listadoColegios;
-    ArrayAdapter<String> adapter;
-    Colegio cole;
-    Usuario usuario;
-    String idCole;
-    Map<String, Colegio> colegios;
+    private Button btnAceptarDatos;
+    private EditText txtEmail, txtIdProfeRegistro, txtContrasenia;
+    private FirebaseAuth mAuth;
+    private ImageView btnRegresar;
+    private ArrayList<String> listadoColegios;
+    private ArrayAdapter<String> adapter;
+    private Colegio cole;
+    private Usuario usuario;
+    private  String idCole;
+    private Map<String, Colegio> colegios;
+
+    private ProgressDialog progressDialog;
+
+
+    public void mostrarDialogo() {
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle("Creando usuario profesor/a");
+        progressDialog.setMessage("creando tu usuario...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,22 +72,32 @@ public class RegistroProfesor extends AppCompatActivity {
         btnAceptarDatos = findViewById(R.id.btnAceptarDatos);
         txtContrasenia = findViewById((R.id.txtContraseniaProfe));
         final Spinner spIdColegios = findViewById(R.id.spIdColegios);
+        btnAceptarDatos.setEnabled(false);
 
         database.collection("Colegios").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()){
-                    for (QueryDocumentSnapshot document:task.getResult()){
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
                         cole = document.toObject(Colegio.class);
                         colegios.put(cole.getIdColegio(), cole);
                         listadoColegios.add(cole.getIdColegio());
                     }
                     adapter = new ArrayAdapter<>(RegistroProfesor.this, android.R.layout.simple_spinner_item, listadoColegios);
                     spIdColegios.setAdapter(adapter);
+                    if(!listadoColegios.isEmpty()){
+                        btnAceptarDatos.setEnabled(true);
+                    }else{
+                        Toast toast = Toast.makeText(RegistroProfesor.this, "Espera hasta que el administrador active tu centro escolar",
+                                Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER|0,0,0);
+                        toast.show();
+                    }
                 }
 
             }
         });
+
 
         btnAceptarDatos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +116,8 @@ public class RegistroProfesor extends AppCompatActivity {
                 idCole = spIdColegios.getSelectedItem().toString();
                 cole = colegios.get(idCole);
                 if (cole.getProfesorado().containsKey(txtIdProfeRegistro.getText().toString())){
+                    progressDialog = new ProgressDialog(RegistroProfesor.this);
+                    mostrarDialogo();
                     mAuth.createUserWithEmailAndPassword(txtEmail.getText().toString(), txtContrasenia.getText().toString())
                             .addOnCompleteListener(RegistroProfesor.this, new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -108,11 +133,14 @@ public class RegistroProfesor extends AppCompatActivity {
                                                         Toast.LENGTH_SHORT).show();
                                             }
                                         });
+                                        progressDialog.dismiss();
                                         updateUI(user);
                                     } else {
+                                        progressDialog.dismiss();
                                         Toast.makeText(RegistroProfesor.this, "Error al registrar el usuario",
                                                 Toast.LENGTH_SHORT).show();
                                         mAuth.getCurrentUser().delete();
+
                                         startActivity(new Intent(RegistroProfesor.this, EleccionRegistro.class));
                                     }
                                 }
