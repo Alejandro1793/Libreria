@@ -148,7 +148,7 @@ public class LibreriaFragment extends Fragment implements Dialogo_busqueda_googl
         btnAnadirGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Dialogo_busqueda_google(getContext(), LibreriaFragment.this);
+                new Dialogo_busqueda_google(getContext(), LibreriaFragment.this, getActivity());
             }
         });
 
@@ -223,5 +223,6 @@ public class LibreriaFragment extends Fragment implements Dialogo_busqueda_googl
         ArrayAdapterLibreria adapterInicio = new ArrayAdapterLibreria(getContext(), libros);
         listLibros.setAdapter(adapterInicio);
     }
+
 
 }
