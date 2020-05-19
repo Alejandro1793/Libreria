@@ -56,6 +56,7 @@ public class PrestamosFragment extends Fragment {
     private Spinner spAlumno, spTituloLibro;
     private TextView btnElegirFecha;
     private FloatingActionButton btnAceptarPrestamo;
+    private boolean releer, sobreescribir;
 
     public PrestamosFragment() {
     }
@@ -138,54 +139,19 @@ public class PrestamosFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (fechaEntrega != null) {
-                    if (alumnado.get(spAlumno.getSelectedItem().toString()).getLibrosLeidos().contains(spTituloLibro.getSelectedItem().toString())) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setTitle("Libro leído")
-                                .setMessage("Este alumno ya ha leído este libro. ¿Seguro que quiere volver a leerlo?")
-                                .setPositiveButton("Sí",
-                                        new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                if (cole.getAulas().get(idAula).getListadoPrestamos().containsKey(spAlumno.getSelectedItem().toString())) {
-                                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                                                    builder.setTitle("Sobreescribir")
-                                                            .setMessage("Este alumno ya tiene un préstamo activo. ¿Seguro que quieres sobreescribirlo?")
-                                                            .setPositiveButton("Sí",
-                                                                    new DialogInterface.OnClickListener() {
-                                                                        @Override
-                                                                        public void onClick(DialogInterface dialog, int which) {
-                                                                            String libroSust = cole.getAulas().get(idAula).getListadoPrestamos().get(spAlumno.getSelectedItem().toString()).getLibro();
-                                                                            subirPrestamo(libroSust);
-                                                                            cargarDatosLibros();
-                                                                        }
-                                                                    })
-                                                            .setNegativeButton("No",
-                                                                    new DialogInterface.OnClickListener() {
-                                                                        @Override
-                                                                        public void onClick(DialogInterface dialog, int which) {
-                                                                            dialog.dismiss();
-                                                                        }
-                                                                    });
-                                                    AlertDialog dialog2 = builder.create();
-                                                    dialog2.show();
-                                                } else {
-                                                    subirPrestamo();
-                                                    cargarDatosLibros();
-                                                }
-                                            }
-                                        })
-                                .setNegativeButton("No",
-                                        new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.dismiss();
-                                            }
-                                        });
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
-                    } else {
+
+                    releer = alumnado.get(spAlumno.getSelectedItem().toString()).getLibrosLeidos().contains(spTituloLibro.getSelectedItem().toString());
+                    sobreescribir = cole.getAulas().get(idAula).getListadoPrestamos().containsKey(spAlumno.getSelectedItem().toString());
+
+                    if (!sobreescribir && !releer) {
                         subirPrestamo();
                         cargarDatosLibros();
+                    } else if (sobreescribir && !releer){
+                        crearDialogoSobreescribir();
+                    } else if (!sobreescribir){
+                        crearDialogoReleer();
+                    } else {
+                        crearDialogoSobreescribir();
                     }
                 } else {
                     Toast.makeText(getContext(), "Debes seleccionar una fecha de entrega", Toast.LENGTH_SHORT).show();
@@ -240,11 +206,11 @@ public class PrestamosFragment extends Fragment {
                 libro.setPrestado(true);
                 contFor++;
             }
-            if (libro.getTitulo().equals(sustituto)){
+            if (libro.getTitulo().equals(sustituto)) {
                 libro.setPrestado(false);
                 contFor++;
             }
-            if (contFor == 2){
+            if (contFor == 2) {
                 break;
             }
         }
@@ -258,4 +224,76 @@ public class PrestamosFragment extends Fragment {
             }
         });
     }
+
+    public void crearDialogoReleer(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Libro leído")
+                .setMessage("Este alumno ya ha leído este libro. ¿Seguro que quiere volver a leerlo?")
+                .setPositiveButton("Sí",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                subirPrestamo();
+                                cargarDatosLibros();
+                            }
+                        })
+                .setNegativeButton("No",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void crearDialogoSobreescribir(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Sobreescribir")
+                .setMessage("Este alumno ya tiene un préstamo activo. ¿Seguro que quieres sobreescribirlo?")
+                .setPositiveButton("Sí",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (releer){
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                    builder.setTitle("Libro leído")
+                                            .setMessage("Este alumno ya ha leído este libro. ¿Seguro que quiere volver a leerlo?")
+                                            .setPositiveButton("Sí",
+                                                    new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            String libroSust = cole.getAulas().get(idAula).getListadoPrestamos().get(spAlumno.getSelectedItem().toString()).getLibro();
+                                                            subirPrestamo(libroSust);
+                                                            cargarDatosLibros();
+                                                        }
+                                                    })
+                                            .setNegativeButton("No",
+                                                    new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            dialog.dismiss();
+                                                        }
+                                                    });
+                                    AlertDialog dialog2 = builder.create();
+                                    dialog2.show();
+                                } else {
+                                    String libroSust = cole.getAulas().get(idAula).getListadoPrestamos().get(spAlumno.getSelectedItem().toString()).getLibro();
+                                    subirPrestamo(libroSust);
+                                    cargarDatosLibros();
+                                }
+                            }
+                        })
+                .setNegativeButton("No",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
 }
