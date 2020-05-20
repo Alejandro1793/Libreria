@@ -29,7 +29,7 @@
 
     <string name="introduce_el_nuevo_aula">Introduce el nuevo aula</string>
     <string name="selecciona_el_id_del_profesor">Selecciona el ID del profesor</string>
-    <string name="selecciona_el_id_del_aula">Selecciona el Id del Aula</string>
+    <string name="selecciona_el_id_del_aula">Selecciona el ID del Aula</string>
     <string name="introduce_el_id_del_colegio">Introduce el ID del colegio</string>
     <string name="introduce_tu_ID">Introduce tu ID</string>
     <string name="tu_colegio_es">Tu colegio es:</string>
